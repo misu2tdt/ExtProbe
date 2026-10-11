@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "ExtProbe"
+type: software
+abstract: >-
+  ExtProbe is an open-source dynamic-analysis tool for Chrome Manifest V3
+  extensions. It runs an extension in an instrumented, containerized Chrome
+  and records what the extension actually does at runtime (network requests,
+  DOM changes, opened tabs and API use), attributing each event to the
+  extension component that caused it. It produces an explainable report and a
+  risk score to help analysts review extensions before installation. An
+  optional probe mode (--probe) opens the extension's own pages and safely
+  exercises their controls to elicit behavior gated behind user actions.
+authors:
+  - family-names: "Tran"
+    given-names: "Duong Tien"
+    email: "<SCHOOL_EMAIL>"
+    affiliation: "Ho Chi Minh City University of Technology (HCMUT), VNU-HCM"
+  - family-names: "Tran"
+    given-names: "Truong Tuan Phat"
+    affiliation: "Ho Chi Minh City University of Technology (HCMUT), VNU-HCM"
+  - family-names: "Vu"
+    given-names: "Duc Ly"
+    affiliation: "Eastern International University"
+license: MIT
+repository-code: "<REPO_URL>"

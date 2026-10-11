@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Detector cases (synthetic traces + fixtures, no Docker)
+        run: PYTHONPATH=scoring python tests/detectors/run.py
+
+      - name: pytest
+        run: python -m pytest -q
+
+      - name: Frozen files unchanged (sha256 of content)
+        run: python -m extprobe verify-freeze
+
+      - name: Paper numbers from the precomputed result files
+        run: python evaluation/v2/check_paper_numbers.py --precomputed
+        # the two trace-dependent checks need the recorded traces (release asset) and are skipped here

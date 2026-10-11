@@ -1,0 +1,2 @@
+# Shell scripts phai LF: chay trong Linux container, CRLF se pha shebang
+*.sh text eol=lf

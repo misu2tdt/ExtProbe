@@ -1,0 +1,30 @@
+# --- never commit
+samples/
+*.crx
+*.zip
+data/                      # recorded traces and private files (release asset / on request)
+**/traces_*/
+**/_incomplete/
+*.log
+.env
+
+# --- Python / tooling
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# --- editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- local tooling / traces (added explicitly)
+.claude/
+CLAUDE.md
+*.crx
+traces*/
+__pycache__/
+.pytest_cache/
