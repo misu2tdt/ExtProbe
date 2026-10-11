@@ -1,0 +1,6 @@
+url,source_type,true_origin,predicted_origin,correct,note
+https://gt-page.bench/gt/page_js,page_js,page,page,1,
+https://gt-cscript.bench/gt/content_script,content_script,extension,extension,1,
+https://gt-sw.bench/gt/service_worker,service_worker,extension,extension,1,
+https://gt-injected.bench/gt/injected_script,injected_script,extension,extension,1,
+https://gt-async.bench/gt/async_callback,async_callback,extension,extension,1,

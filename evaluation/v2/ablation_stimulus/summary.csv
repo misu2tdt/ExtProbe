@@ -1,0 +1,15 @@
+metric,value
+"n_samples_scored (run_status=complete, events.json co)",310
+n_excluded_not_complete,13
+n_excluded_missing_events,31
+n_target_matched_active (target_matched_hosts non-empty),96
+"n_woken_signal (B->C, signal moi nho target_matched)",38
+"n_woken_level (B->C, tang band hoac vuot nguong 40)",21
+gained_A->B (n mau co signal moi),35
+gained_B->C (n mau co signal moi),38
+gained_C->D (n mau co signal moi),5
+phase_dong_gop_bien_lon_nhat,B->C
+"recall@40_A (TP/P, P=280)",0.5143
+"recall@40_B (TP/P, P=280)",0.5607
+"recall@40_C (TP/P, P=280)",0.6179
+"recall@40_D (TP/P, P=280)",0.6179

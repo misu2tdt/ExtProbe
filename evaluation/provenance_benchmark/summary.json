@@ -1,0 +1,53 @@
+{
+  "population": {
+    "n_ground_truth": 5,
+    "n_scored": 5,
+    "n_not_observed": 0
+  },
+  "confusion": {
+    "TP": 4,
+    "FP": 0,
+    "FN": 0,
+    "TN": 1
+  },
+  "precision": 1.0,
+  "recall": 1.0,
+  "per_source_type": [
+    {
+      "source_type": "page_js",
+      "true_origin": "page",
+      "predicted_origin": "page",
+      "expected_prediction_section_5_1": "page",
+      "matches_5_1_expectation": true
+    },
+    {
+      "source_type": "content_script",
+      "true_origin": "extension",
+      "predicted_origin": "extension",
+      "expected_prediction_section_5_1": "extension",
+      "matches_5_1_expectation": true
+    },
+    {
+      "source_type": "service_worker",
+      "true_origin": "extension",
+      "predicted_origin": "extension",
+      "expected_prediction_section_5_1": "extension",
+      "matches_5_1_expectation": true
+    },
+    {
+      "source_type": "injected_script",
+      "true_origin": "extension",
+      "predicted_origin": "extension",
+      "expected_prediction_section_5_1": "page",
+      "matches_5_1_expectation": false
+    },
+    {
+      "source_type": "async_callback",
+      "true_origin": "extension",
+      "predicted_origin": "extension",
+      "expected_prediction_section_5_1": "page",
+      "matches_5_1_expectation": false
+    }
+  ],
+  "not_observed": []
+}

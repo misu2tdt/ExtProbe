@@ -1,0 +1,18 @@
+{
+  "name": "ExtAnalyze Provenance Benchmark Fixture",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Synthetic MV3 extension - controlled ground truth for C1 request-provenance attribution benchmark (eval/provenance_benchmark). Not a real product.",
+  "background": { "service_worker": "sw.js" },
+  "host_permissions": [
+    "*://gt-cscript.bench/*",
+    "*://gt-injected.bench/*",
+    "*://gt-async.bench/*",
+    "*://gt-sw.bench/*"
+  ],
+  "content_scripts": [
+    { "matches": ["*://gt-cscript.bench/*"], "js": ["cs_direct.js"], "run_at": "document_idle" },
+    { "matches": ["*://gt-injected.bench/*"], "js": ["cs_inject.js"], "world": "MAIN", "run_at": "document_idle" },
+    { "matches": ["*://gt-async.bench/*"], "js": ["cs_async.js"], "run_at": "document_idle" }
+  ]
+}

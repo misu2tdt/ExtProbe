@@ -1,0 +1,126 @@
+# In-the-wild evaluation of ExtProbe v3: criteria, committed BEFORE any official sample is downloaded
+
+Nothing here has been downloaded or run for the official sets. A feasibility check (60 IDs, 30 + 30, files kept outside
+the repository, not reused) preceded this file; it fixed the numbers quoted as context below, not any result.
+
+## 1. Purpose
+
+Describe how the FROZEN v3 behaves on **live** extensions whose label is uncertain. This is **not a recall
+measurement**: a Sentry entry only says "suspected" (the Sentry repository warns of false positives, and its `reason`
+is a removal category, not a behaviour finding). The figures are flag rates, plus a manual audit of what the flags
+turn out to be. No claim of recall, precision or FPR on a labelled population is made from these sets.
+
+## 2. Configuration
+
+- Image `extprobe-sandbox:v3` at the freeze (`eval/v3/FREEZE_v3.md`, tag `v3.0-freeze`), `score_v3.py` as frozen,
+  flag = score >= 40. **Profile v3 only** (no v2).
+- Each set is run **exactly once**, within **24 hours** of its download. Infrastructure failures (no trace, Docker
+  error) are retried by the runner, up to 3 attempts, as in the benign and MADWeb runs; nothing else is re-run, no sample is
+  dropped after seeing results, no rule or label changes after the run.
+- For every sample the SHA-256 of the downloaded `.crx` and the UTC time of the download are recorded in a committed
+  manifest (IDs, hashes, times, version; no package).
+- Runner and checks follow `run_malware_test.ps1` (the 13 frozen files/trees must equal `FREEZE_v3.md` at HEAD and at
+  the tag; clean working tree; image id; sample checksums).
+
+## 3. Set A: Sentry-recent
+
+- Snapshot: `toborrm9/malicious_extension_sentry` at commit `b3d832c66fccd26f72bbed81678ee87887cbae4e`, file
+  `malicious_extensions_detailed.csv` (SHA-256 `c560a18ad879aeaca38758116acae1b41e6de096eadb7d89d6d8c07824cad2a0`,
+  7044 rows).
+- Population: rows with `store` = Google Chrome (or Chrome) and `insert_date_fmt` from 2026-08-26 to 2026-10-09
+  inclusive (the 45 days counted back from the snapshot day). Context from the feasibility check: 1102 rows in the
+  window, of which 1099 Chrome; 329 of the 386 `Malware` rows share one insert date (2026-09-03).
+- Steps, in this order:
+  1. Download each ID with `clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D<ID>%26uc`. Keep the IDs that return a package. Feasibility: 13 of 30 (43 %).
+  2. Keep `manifest_version` = 3 (feasibility: 13 of 13).
+  3. Remove IDs that are also in the dev malware (313), dev benign (297), held-out benign test (200) or MADWeb (517)
+     sets, by extension ID (feasibility: 4 IDs, see Appendix).
+  4. At most **40 samples per `insert_date`**: sort the date's IDs ascending, shuffle with `random.Random(2026)`,
+     take the first 40.
+  5. If more than **300** remain, sort ascending and take `random.Random(2026).sample(ids, 300)`.
+- Per sample the manifest records the Sentry `reason`, `source`, `insert_date`, and whether the Chrome Web Store page
+  is alive at download time (a `/detail/<name>/<id>` page with "Add to Chrome"; dead = the `empty-title` page or no
+  button). Alive or dead is a descriptor, not a label.
+
+## 4. Set B: CWS-random
+
+- Population: the Chrome Web Store sitemap (`/sitemap`, 44 shards). Snapshot: shards listed with `lastmod`
+  2026-10-09; 374 508 unique IDs, SHA-256 of the sorted ID list (one per line, `\n`) =
+  `5c896d5dff3a4f6221b52adb142a41fc3155fe0f2bc696bee6bf49064cb5521d`. The official draw uses this list; the ID list is
+  not committed, only its hash and the selected IDs.
+- Exclusions before drawing: every ID in the **whole** Sentry CSV above (not only the 45 days; feasibility: 2850 sitemap
+  IDs, about 0.8 %), and every ID in the dev / test / MADWeb sets.
+- Draw: sort the remaining IDs ascending, shuffle once with `random.Random(2026)`, and walk the list: download each
+  ID; keep it if a package is returned and `manifest_version` = 3; stop at **200** kept samples. All attempts are logged
+  (denominator for the download rate and the MV3 rate; feasibility: 30 of 30 downloadable, 29 of 30 MV3, 17 of 30
+  without a background).
+
+## 5. Primary measures
+
+- **Set A**: flag rate = flagged / complete runs, with a Wilson 95 % interval, overall and per Sentry `reason`.
+- **Set B**: flag rate with a Wilson 95 % interval, and the distribution of harmful / grey / benign / undetermined
+  (section 7) among the flagged samples.
+- Runs that are not `complete` (failed to load, partial) are listed separately with the reason from
+  `run_status.reason`, and a sensitivity row counts them as not flagged.
+- **Samples without a background** (no `background` key in the manifest) are reported as their own row in both sets,
+  because the harness can see only install-time and page-triggered behaviour from them (about 57 % of the feasibility
+  CWS sample).
+- Score distribution, detector fire counts and v3 flag rate by manifest background type (service worker / none) are
+  reported as descriptive tables.
+
+## 6. Predictions, registered before the run
+
+1. **Search Hijacking** (search provider or new-tab override declared in the manifest) will have a low flag rate: the
+   harness performs no search, so the behaviour is not exercised. This is a known blind spot, not a finding to be
+   explained away afterwards.
+2. **Policy Violation** and **Bundling Unwanted Software** may show no runtime behaviour at all, because their removal
+   reasons need not involve a runtime action.
+3. `Malware`-reason samples are expected to be flagged more often than the other reasons, but far below 100 %
+   (the MADWeb and dev results show that a large part of the malware is silent in a 45-second run).
+4. Set B is expected to flag at a rate in the range of the benign held-out set (8.9 % at 40) or higher; a lower rate
+   would indicate that live extensions differ from the benign test set in category mix, not that v3 improved.
+
+## 7. Manual audit
+
+- Scope: **every flagged sample in A and B**, plus **20 unflagged samples of Set A** drawn with `random.Random(2026)`
+  (sorted IDs, stratified by nothing).
+- Two annotators label independently from the trace, the code and the store listing / privacy policy, then report
+  Cohen's kappa on the four classes and reconcile. Annotators see the extension's trace and code, not the v3 score
+  order of other samples; the 20 unflagged samples are mixed with the flagged ones in a random order, without the flag.
+- **harmful**: a behaviour seen in the trace **and** confirmed in the code, **and not disclosed** in the store listing
+  or privacy policy: sending browsing history, cookies or page content to a third party; injecting code, affiliate links
+  or ads; downloading and executing remote code; hijacking search or the new tab without disclosure.
+- **grey**: data collection that is disclosed, or an analytics SDK.
+- **benign**: none of the above behaviours.
+- **undetermined**: not enough evidence (for example behaviour in the trace but code obfuscated and no disclosure
+  found either way).
+- VirusTotal verdicts and a later removal from the Chrome Web Store are **supporting evidence only**; they never decide
+  a label alone.
+
+## 8. Ethics and handling
+
+- Extension names are anonymised in any paper (IDs shown only as short hashes or labels).
+- Samples confirmed harmful are reported to Google (Chrome Web Store) before submission.
+- No `.crx` is redistributed; packages and unpacked folders stay outside the repository; only IDs, hashes,
+  aggregate tables and anonymised findings are committed.
+- Static reading of packages is done in memory or in a temporary folder outside the repository, deleted afterwards.
+
+## Appendix A. Benign dev/test IDs that are in Sentry (45-day window)
+
+Four IDs of the benign dev / test sets are listed by Sentry in the window. They are removed from Set A (rule 3.3) and
+kept in their original benign sets; a sensitivity analysis recomputes the benign FPR with them excluded. Labels are
+**not** changed.
+
+| set | ID | Sentry reason | Sentry date |
+|---|---|---|---|
+| dev benign (new) | `bkkbcggnhapdmkeljlodobbkopceiche` | Spyware | 2026-09-29 |
+| dev benign (new) | `gbdjcgalliefpinpmggefbloehmmknca` | Policy Violation | 2026-09-18 |
+| dev benign (new) | `ndgimibanhlabgdgjcpbbndiehljcpfh` | Adware | 2026-10-05 |
+| test benign | `abnmgemfnjndaolfflfpjcckiamamein` | Policy Violation | 2026-09-30 |
+
+## Appendix B. Unresolved observation from the feasibility check
+
+One Sentry ID (`<set-A-id>`) was downloadable as an MV3 package although its store page did not
+show "Add to Chrome". The cause is **not known** (page rendering, region, or a listing state not recognised by the
+check). The alive/dead descriptor in 3 is a heuristic for this reason; such cases are recorded as "package served,
+page not alive" and are not interpreted.

@@ -1,0 +1,355 @@
+ext_id,folder,name,manifest_version,label,run_status,static_score,dynamic_score,risk,level,credential_exfil,local_harvest,script_injection,beaconing,undeclared_domain_contact,unsolicited_tab,findings_mitre,n_findings,total_requests,duration_s,error,verified_label,verified
+benign-corpus-01,benign-corpus-01,benign-corpus-01,3,benign,unknown,9,0,9,MINIMAL,0,0,0,0,0,0,,0,0,161.8,,benign,no
+benign-corpus-02,benign-corpus-02,benign-corpus-02,3,benign,complete,18,45,50,MEDIUM,0,0,0,0,1,1,T1071,2,63,29.1,,benign,yes
+benign-corpus-03,benign-corpus-03,benign-corpus-03,3,benign,unknown,80,0,35,LOW,0,0,0,0,0,0,,0,0,156.0,,benign,no
+benign-corpus-04,benign-corpus-04,benign-corpus-04,3,benign,complete,47,0,35,LOW,0,0,0,0,0,0,,0,13,25.8,,benign,no
+benign-corpus-05,benign-corpus-05,benign-corpus-05,3,benign,complete,50,0,35,LOW,0,0,0,0,0,0,,0,9,26.7,,benign,no
+benign-corpus-06,benign-corpus-06,benign-corpus-06,3,benign,complete,24,0,24,LOW,0,0,0,0,0,0,,0,54,25.4,,benign,no
+benign-corpus-07,benign-corpus-07,benign-corpus-07,3,benign,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,3,24.3,,benign,no
+benign-corpus-08,benign-corpus-08,benign-corpus-08,3,benign,complete,15,0,15,LOW,0,0,0,0,0,0,,0,7,27.3,,benign,no
+benign-corpus-09,benign-corpus-09,benign-corpus-09,3,benign,complete,50,55,70,HIGH,0,0,0,0,1,1,T1071,2,191,30.4,,benign,yes
+benign-corpus-10,benign-corpus-10,benign-corpus-10,3,benign,complete,21,15,26,LOW,0,0,1,0,0,0,T1059.007,1,9,26.6,,benign,no
+benign-corpus-11,benign-corpus-11,benign-corpus-11,3,benign,complete,18,0,18,LOW,0,0,0,0,0,0,,0,9,30.3,,benign,no
+benign-corpus-12,benign-corpus-12,benign-corpus-12,3,benign,unknown,90,0,35,LOW,0,0,0,0,0,0,,0,0,165.6,,benign,no
+mislabel-01,mislabel-01,mislabel-01,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,31.4,,benign_mislabel,yes
+acaeafediijmccnjlokgcdiojiljfpbe,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,106,36.7,,malicious,no
+mislabel-02,mislabel-02,mislabel-02,3,malicious,complete,80,0,35,LOW,0,0,0,0,0,0,,0,15,30.3,,benign_mislabel,yes
+benign-corpus-13,benign-corpus-13,benign-corpus-13,3,benign,unknown,87,0,35,LOW,0,0,0,0,0,0,,0,0,166.7,,benign,no
+benign-corpus-14,benign-corpus-14,benign-corpus-14,3,benign,unknown,90,0,35,LOW,0,0,0,0,0,0,,0,0,161.2,,benign,no
+mislabel-03,mislabel-03,mislabel-03,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,34,26.3,,benign_mislabel,yes
+aecccajigpipkpioaidignbgbeekglkd,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,26.4,,grey,yes
+ahlnchhkedmjbdocaamkbmhppnligmoh,Malicious Browser Extensions,Amazon Seller Assistant - 10Xprofit Amazon Seller Tools (FBA & FBM),3,malicious,complete,67,15,72,HIGH,0,0,1,0,0,0,T1059.007,1,21,37.4,,malicious,no
+aikflfpejipbpjdlfabpgclhblkpaafo,Malicious Browser Extensions,__MSG_extension_name__,3,malicious,complete,6,40,42,MEDIUM,0,0,0,0,1,0,T1071,1,184,29.0,,grey,yes
+ajfanjhcdgaohcbphpaceglgpgaaohod,AutomatedExtensions,OmniBar AI Chat and Search,3,malicious,complete,3,45,46,MEDIUM,0,0,0,0,1,1,T1071,2,153,25.2,,grey,yes
+mislabel-04,mislabel-04,mislabel-04,3,malicious,complete,40,0,35,LOW,0,0,0,0,0,0,,0,9,34.3,,benign_mislabel,yes
+akdajpomgjgldidenledjjiemgkjcchc,AutomatedExtensions,Giant Coupons Official Extension,3,malicious,complete,18,45,50,MEDIUM,0,0,1,0,1,0,T1059.007|T1071,2,69,31.2,,malicious,no
+akebbllmckjphjiojeioooidhnddnplj,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,219,31.3,,malicious,no
+akifdnfipbeoonhoeabdicnlcdhghmpn,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,31.3,,malicious,no
+akkkopcadaalekbdgpdikhdablkgjagd,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,30.8,,malicious,no
+albakpncdngcejcjdahomfbkakbmafgb,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,25.9,,malicious,no
+alkfljfjkpiccfgbeocbbjjladigcleg,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,63,30.0,,malicious,no
+alllblhkgghelnejlggmmgjbkdabidie,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,318,31.7,,malicious,no
+almalgbpmcfpdaopimbdchdliminoign,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,90,15,94,CRITICAL,0,0,1,0,0,0,T1059.007,1,118,26.8,,malicious,no
+ambcheakfbokmebglefpbbphbccekhhl,Malicious Browser Extensions,__MSG_extension_name__,3,malicious,complete,6,40,42,MEDIUM,0,0,0,0,1,0,T1071,1,152,29.6,,malicious,no
+amkkjdjjgiiamenbopfpdmjcleecjjgg,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,31.5,,malicious,no
+amnaljnjmgajgajelnplfmidgjgbjfhe,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,108,30.6,,malicious,no
+mislabel-05,mislabel-05,mislabel-05,3,malicious,complete,0,15,15,LOW,0,0,0,0,1,0,T1071,1,24,28.1,,benign_mislabel,yes
+aofddmgnidinflambjlfkpboeamdldbd,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,28,26.6,,malicious,no
+aohfjaadlbiifnnajpobdhokecjokhab,Malicious Browser Extensions,Amazon ASIN Copy,3,malicious,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,13,53.5,,malicious,no
+mislabel-06,mislabel-06,mislabel-06,2,malicious,complete,6,0,6,MINIMAL,0,0,0,0,0,0,,0,3,26.3,,benign_mislabel,yes
+benign-corpus-15,benign-corpus-15,benign-corpus-15,3,benign,complete,77,15,82,HIGH,0,0,0,0,1,0,T1071,1,87,49.7,,benign,yes
+bajoeadpdidoahbhphmhejmbdmgnbdci,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,3,26.6,,unknown_verify,yes
+bbjdlbemjklojnbifkgameepcafflmem,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,173,29.1,,malicious,no
+bdcimkinofohfmldheklgfbjkfehfdhl,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,1,0,T1071,1,9,25.7,,malicious,no
+bdnanfggeppmkfhkgmpojkhanoplkacc,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,147,28.8,,malicious,no
+befflofjcniongenjmbkgkoljhgliihe,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,47,70,84,HIGH,0,0,1,0,1,1,T1059.007|T1071,3,154,29.6,,malicious,no
+behckapcoohededfbgjgkgefgkpodeho,Malicious Browser Extensions,Amazon Profit Calculator Lite,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,13,34.4,,malicious,no
+mislabel-07,mislabel-07,mislabel-07,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,6,25.1,,benign_mislabel,yes
+bfoofgelpmalhcmedaaeogahlmbkopfd,AutomatedExtensions,__MSG_name__,3,malicious,complete,36,50,61,MEDIUM,0,0,0,0,1,1,T1071,2,77,31.5,,malicious,no
+bgdkbjcdecedfoejdfgeafdodjgfohno,AutomatedExtensions,Clear Cache Plus,3,malicious,complete,0,15,15,LOW,0,0,0,0,1,0,T1071,1,30,26.1,,malicious,no
+bgnpgpfjdpmgfdegmmjdbppccdhjhdpe,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,48,15,52,MEDIUM,0,0,1,0,0,0,T1059.007,1,12,25.8,,malicious,no
+bhahpmoebdipfoaadcclkcnieeokebnf,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,27,26.0,,malicious,no
+bilfflcophfehljhpnklmcelkoiffapb,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,110,31.7,,malicious,no
+bjehnpiidogpaocjjfhnopdjcahigggm,Malicious Browser Extensions,__MSG_extensionName__,3,malicious,unknown,43,0,35,LOW,0,0,0,0,0,0,,0,0,154.1,,malicious,no
+bjoddpbfndnpeohkmpbjfhcppkhgobcg,Malicious Browser Extensions,__MSG_name__,2,malicious,complete,54,15,58,MEDIUM,0,0,0,0,0,1,,1,33,28.3,,malicious,no
+bnchgibgpgmlickioneccggfobljmhjc,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,27.5,,malicious,no
+bndkfmmbidllaiccmpnbdonijmicaafn,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,70,30,79,HIGH,0,0,1,0,0,1,T1059.007,2,18,33.8,,malicious,no
+bpljfbcejldmgeoodnogeefaihjdgbam,AutomatedExtensions,__MSG_name__,3,malicious,complete,33,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,59,27.0,,malicious,no
+benign-corpus-16,benign-corpus-16,benign-corpus-16,3,benign,complete,87,40,99,CRITICAL,0,0,0,0,1,0,T1071,1,165,46.3,,grey,yes
+cbnekafldflkmngbgmbnfmchjaelnhem,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,59,26.9,,malicious,no
+mislabel-08,mislabel-08,mislabel-08,3,malicious,complete,33,0,33,LOW,0,0,0,0,0,0,,0,8,24.6,,benign_mislabel,yes
+mislabel-09,mislabel-09,mislabel-09,3,malicious,complete,36,0,35,LOW,0,0,0,0,0,0,,0,9,29.0,,benign_mislabel,yes
+cdpiopekjeonfjeocbfebemgocjciepp,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,119,27.5,,malicious,no
+cedgndijpacnfbdggppddacngjfdkaca,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,40,15,44,MEDIUM,0,0,0,0,0,1,,1,82,36.4,,malicious,no
+cehdkmmfadpplgchnbjgdngdcjmhlfcc,AutomatedExtensions,__MSG_name__,3,malicious,complete,35,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,63,29.0,,malicious,no
+cehifnkfcddaeppdajpfldbpommggaca,Malicious Browser Extensions,Kahoot Hacker,3,malicious,complete,21,15,26,LOW,0,0,0,0,1,0,T1071,1,9,27.3,,malicious,no
+ceibjdigmfbbgcpkkdpmjokkokklodmc,AutomatedExtensions,Chat AI for Chrome,3,malicious,complete,33,15,38,LOW,0,0,0,0,0,1,,1,19,28.2,,malicious,no
+cfbgdmiobbicgjnaegnenlcgbdabkcli,AutomatedExtensions,__MSG_name__,3,malicious,complete,44,15,48,MEDIUM,0,0,1,0,0,0,T1059.007,1,12,33.8,,malicious,no
+cgmmcoandmabammnhfnjcakdeejbfimn,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,46,27.4,,malicious,no
+cicjlpmjmimeoempffghfglndokjihhn,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,111,31.8,,malicious,no
+cicnbbdlbjaoioilpbdioeeaockgbhfi,Malicious Browser Extensions,__MSG_extName__,3,malicious,complete,9,15,18,LOW,0,0,0,0,0,1,,1,36,26.3,,malicious,no
+mislabel-10,mislabel-10,mislabel-10,3,malicious,complete,9,0,9,MINIMAL,0,0,0,0,0,0,,0,12,37.8,,benign_mislabel,yes
+ckicoadchmmndbakbokhapncehanaeni,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,111,32.3,,malicious,no
+ckneindgfbjnbbiggcmnjeofelhflhaj,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,112,31.5,,malicious,no
+cljengcehefhflhoahaambmkknjekjib,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,27.9,,malicious,no
+clpgopiimdjcilllcjncdkoeikkkcfbi,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,55,55,MEDIUM,0,0,0,0,1,1,T1071,2,63,29.4,,malicious,no
+cmeoegkmpbpcoabhlklbamfeidebgmdf,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,102,31.8,,malicious,no
+cmlbghnlnbjkdgfjlegkbjmadpbmlgjb,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,31.8,,malicious,no
+cnibdhllkgidlgmaoanhkemjeklneolk,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,59,32.3,,malicious,no
+mislabel-11,mislabel-11,mislabel-11,2,malicious,complete,44,0,35,LOW,0,0,0,0,0,0,,0,9,39.7,,benign_mislabel,yes
+benign-corpus-17,benign-corpus-17,benign-corpus-17,3,benign,complete,9,15,18,LOW,0,0,0,0,0,1,,1,20,31.7,,benign,no
+benign-corpus-18,benign-corpus-18,benign-corpus-18,3,benign,complete,6,0,6,MINIMAL,0,0,0,0,0,0,,0,6,29.1,,benign,no
+coplmfnphahpcknbchcehdikbdieognn,Malicious Browser Extensions,TripChipper (TravelArrow) - Travel Better,3,malicious,complete,21,45,51,MEDIUM,0,0,0,0,1,1,T1071,2,97,28.0,,malicious,no
+cpcojeeblggnjjgnpiicndnahfhjdobd,Malicious Browser Extensions,Amazon Image Downloader with Videos | 10X,3,malicious,complete,38,15,42,MEDIUM,0,0,1,0,0,0,T1059.007,1,16,36.7,,malicious,no
+cplhlgabfijoiabgkigdafklbhhdkahj,Malicious Browser Extensions,__MSG_extName__,3,malicious,complete,72,50,87,HIGH,0,0,0,0,1,1,T1071,2,131,37.0,,malicious,no
+benign-corpus-19,benign-corpus-19,benign-corpus-19,3,benign,complete,85,55,100,CRITICAL,0,0,1,0,1,0,T1059.007|T1071,2,99,41.1,,benign,yes
+dbclhjpifdfkofnmjfpheiondafpkoed,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,110,31.7,,malicious,no
+dbfmnekepjoapopniengjbcpnbljalfg,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,0,40,40,MEDIUM,0,0,0,0,1,0,T1071,1,152,28.0,,malicious,no
+dbohcpohlgnhgjmfkakoniiplglpfhcb,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,61,30.1,,malicious,no
+dcamdpfclondppklabgkfaofjccpioil,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,59,28.0,,malicious,no
+dfnannaibdndmkienngjahldiofjbkmj,Malicious Browser Extensions,Amazon Weight Converter,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,12,36.4,,malicious,no
+dgeiaiglmhdhajbpfbmajaajdlfdinpi,AutomatedExtensions,会译:一站式 AI 翻译 Agent｜对照式DeepL翻译｜DeepSeek划词翻译｜免费,3,malicious,complete,24,70,77,HIGH,0,0,1,0,1,1,T1059.007|T1071,3,166,40.7,,malicious,no
+djhjckkfgancelbmgcamjimgphaphjdl,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,45,58,MEDIUM,0,0,0,0,1,1,T1071,2,45,29.1,,malicious,no
+dljlpildgknddpnahppkihgodokfjbnd,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,60,36.6,,malicious,no
+dlpiookhionidajbiopmaajeckifeehn,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,35.4,,malicious,no
+dmaibhbbpmdihedidicfeigilkbobcog,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,30.2,,malicious,no
+dnmfcojgjchpjcmjgpgonmhccibjopnb,Malicious Browser Extensions,Amazon Search Suggestion Expander | 10xProfit,3,malicious,complete,35,0,35,LOW,0,0,0,0,0,0,,0,12,34.9,,grey,yes
+doeomodlafdbbnajjllemacdfphbbohl,Malicious Browser Extensions,__MSG_extension_name__,3,malicious,complete,0,40,40,MEDIUM,0,0,0,0,1,0,T1071,1,116,35.0,,malicious,no
+dohenclhhdfljpjlnpjnephpccbdgmmb,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,100,30.4,,malicious,no
+dpdemambcedffmnkfmkephnhhnclmcio,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,38.2,,malicious,no
+dpggmcodlahmljkhlmpgpdcffdaoccni,Malicious Browser Extensions,"Internxt VPN - Free, Encrypted & Unlimited VPN",3,malicious,complete,24,30,37,LOW,0,0,0,0,1,1,T1071,2,160,31.3,,malicious,no
+benign-corpus-20,benign-corpus-20,benign-corpus-20,3,benign,unknown,80,0,35,LOW,0,0,0,0,0,0,,0,0,158.1,,benign,no
+eanofdhdfbcalhflpbdipkjjkoimeeod,Malicious Browser Extensions,Rewards Search Automator,3,malicious,complete,32,15,36,LOW,0,0,0,0,0,1,,1,1726,35.1,,malicious,no
+ebmmjmakencgmgoijdfnbailknaaiffh,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,44,30.6,,malicious,no
+ecikmpoikkcelnakpgaeplcjoickgacj,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,110,32.7,,malicious,no
+ecocgofdjmiomgmgnchijbghkikolkkl,AutomatedExtensions,__MSG_name__,3,malicious,complete,62,30,71,HIGH,0,0,0,0,1,0,T1071,1,10,30.8,,grey,yes
+benign-corpus-21,benign-corpus-21,benign-corpus-21,3,benign,complete,32,15,36,LOW,0,0,0,0,0,1,,1,71,30.1,,benign,yes
+eebihieclccoidddmjcencomodomdoei,AutomatedExtensions,Chat AI for Chrome,3,malicious,complete,33,15,38,LOW,0,0,0,0,0,1,,1,19,27.8,,malicious,no
+eeoonfhmbjlmienmmbgapfloddpmoalh,AutomatedExtensions,AI Output Algo Tool,3,malicious,complete,9,45,48,MEDIUM,0,0,0,0,1,1,T1071,2,153,27.5,,malicious,no
+mislabel-12,mislabel-12,mislabel-12,3,malicious,complete,45,0,35,LOW,0,0,0,0,0,0,,0,11,27.4,,benign_mislabel,yes
+egjidjbpglichdcondbcbdnbeeppgdph,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,64,40,76,HIGH,0,0,0,0,1,0,T1071,1,84,47.6,,malicious,no
+egmennebgadmncfjafcemlecimkepcle,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,50,15,54,MEDIUM,0,0,1,0,0,0,T1059.007,1,43,30.4,,malicious,no
+ehdkeonoccndeaggbnolijnmmeohkbpf,AutomatedExtensions,__MSG_name__,3,malicious,complete,44,15,48,MEDIUM,0,0,1,0,0,0,T1059.007,1,13,33.5,,malicious,no
+mislabel-13,mislabel-13,mislabel-13,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,21,28.5,,benign_mislabel,yes
+eijnkinhnplaekpllmgbbfieecdhcmcp,Malicious Browser Extensions,Github Profile,2,malicious,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,6,31.6,,malicious,no
+ejlcbfmhjbkgohopdkijfgggbikgbacb,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,55,55,MEDIUM,0,0,0,0,1,1,T1071,2,322,29.4,,malicious,no
+ekafoahfmdgaeefeeneiijbehnbocbij,Malicious Browser Extensions,__MSG_appName__,2,malicious,complete,51,0,35,LOW,0,0,0,0,0,0,,0,28,25.4,,malicious,no
+ekomkpgkmieaaekmaldmaljljahehkoi,Malicious Browser Extensions,Amazon Keyword Density & SEO Tool,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,13,36.3,,malicious,no
+ekpkdmohpdnebfedjjfklhpefgpgaaji,Malicious Browser Extensions,Tackker - Free keylogger tool,3,malicious,complete,18,35,40,MEDIUM,0,0,1,0,1,0,T1059.007|T1071,2,30,28.6,,malicious,no
+eljfpgehlncincemdmmnebmnlcmfamhm,AutomatedExtensions,__MSG_name__,3,malicious,complete,33,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,59,27.3,,malicious,no
+emedckhdnioeieppmeojgegjfkhdlaeo,Malicious Browser Extensions,Where is Cookie?,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,9,25.1,,malicious,no
+benign-corpus-22,benign-corpus-22,benign-corpus-22,3,benign,unknown,30,0,30,LOW,0,0,0,0,0,0,,0,0,154.6,,benign,no
+enmmilgindjmffoljaojkcgloakmloen,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,59,30.3,,malicious,no
+eoklnfefipnjfeknpmigmogeeepddcch,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,29.4,,malicious,no
+eppiocemhmnlbhjplcgkofciiegomcon,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,85,55,100,CRITICAL,0,0,1,0,1,0,T1059.007|T1071,2,128,28.0,,malicious,no
+benign-corpus-23,benign-corpus-23,benign-corpus-23,3,benign,complete,47,30,56,MEDIUM,0,0,0,0,1,0,T1071,1,10,27.1,,benign,yes
+fbmlcbhdmilaggedifpihjgkkmdgeljh,Malicious Browser Extensions,__MSG_extName__,3,malicious,complete,21,0,21,LOW,0,0,0,0,0,0,,0,9,26.2,,malicious,no
+fcoeoabgfenejglbffodgkkbkcdhcgfn,AutomatedExtensions,Claude,3,malicious,complete,50,50,65,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,252,39.3,,malicious,no
+fddajeklkkggbnppabbhkdmnkdjindlo,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,548,31.8,,malicious,no
+fdlagfnfaheppaigholhoojabfaapnhb,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,45,58,MEDIUM,0,0,0,0,1,1,T1071,2,44,26.5,,malicious,no
+feeonheemodpkdckaljcjogdncpiiban,Malicious Browser Extensions,Zuvu AI: The Ultimate AI Agent Sidebar for Google Search & Beyond,3,malicious,complete,9,0,9,MINIMAL,0,0,0,0,0,0,,0,9,30.1,,malicious,no
+feflcgofneboehfdeebcfglbodaceghj,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,90,15,94,CRITICAL,0,0,1,0,0,0,T1059.007,1,151,26.7,,malicious,no
+ffejlioijcokmblckiijnjcmfidjppdn,Malicious Browser Extensions,__MSG_extensionName__,3,malicious,complete,3,30,31,LOW,0,0,0,0,1,0,T1071,1,9,25.9,,malicious,no
+mislabel-14,mislabel-14,mislabel-14,3,malicious,complete,0,15,15,LOW,0,0,0,0,1,0,T1071,1,24,26.9,,benign_mislabel,yes
+fgimllnamdeacpaddbdafchhcmapebgj,Malicious Browser Extensions,VKSaver - скачать музыку ВК,3,malicious,complete,43,60,73,HIGH,0,0,1,0,1,1,T1059.007|T1071,3,334,37.5,,malicious,no
+fibgndhgobbaaekmnneapojgkcehaeac,AutomatedExtensions,__MSG_ext_name__,3,malicious,complete,3,50,51,MEDIUM,0,0,0,0,1,1,T1071,2,59,29.8,,malicious,no
+benign-corpus-24,benign-corpus-24,benign-corpus-24,3,benign,complete,3,15,16,LOW,0,0,0,0,0,1,,1,21,27.5,,benign,no
+fjfhejmbhpabkacpoddjbcfandjoacmb,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,31.4,,malicious,no
+flkdjodmoefccepdihipjdlianmkmhgc,AutomatedExtensions,__MSG_name__,3,malicious,complete,30,50,59,MEDIUM,0,0,0,0,1,1,T1071,2,112,29.1,,malicious,no
+flnecpdpbhdblkpnegekobahlijbmfok,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,109,31.1,,malicious,no
+fmajpchoiahphjiligpmghnhmabolhoh,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,61,28.0,,malicious,no
+fmncmpginchogfdnjfeopdopoiegjjjp,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,55,0,35,LOW,0,0,0,0,0,0,,0,47,38.3,,malicious,no
+fnjinbdmidgjkpmlihcginjipjaoapol,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,109,31.0,,malicious,no
+fnmihdojmnkclgjpcoonokmkhjpjechg,Malicious Browser Extensions,__MSG_extName__,3,malicious,unknown,21,0,21,LOW,0,0,0,0,0,0,,0,0,156.6,,malicious,no
+fogdlfdfpjlpmpmnmeepffaikefkacnc,AutomatedExtensions,Radial New Tab,3,malicious,complete,9,0,9,MINIMAL,0,0,0,0,0,0,,0,7,36.3,,malicious,no
+fpeabamapgecnidibdmjoepaiehokgda,AutomatedExtensions,会译:一站式 AI 翻译 Agent｜对照式DeepL翻译｜DeepSeek划词翻译｜免费,3,malicious,complete,24,63,70,HIGH,0,0,1,1,1,0,T1059.007|T1071|T1071.001,3,157,39.3,,malicious,no
+fpmkabpaklbhbhegegapfkenkmpipick,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,100,30.4,,malicious,no
+gaafhblhbnkekenogcjniofhbicchlke,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,61,32.7,,malicious,no
+gbaoddbbpompjhmilbgiaapkkakldlpc,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,28.3,,malicious,no
+gbhhgipmedccnankkjchgcidiigmioio,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,130,27.8,,malicious,no
+gcdfailafdfjbailcdcbjmeginhncjkb,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,46,27.7,,malicious,no
+gcfianbpjcfkafpiadmheejkokcmdkjl,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,45,58,MEDIUM,0,0,0,0,1,1,T1071,2,44,26.4,,malicious,no
+mislabel-15,mislabel-15,mislabel-15,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,9,36.1,,benign_mislabel,yes
+gfhcdakcnpahfdealajmhcapnhhablbp,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,59,28.1,,malicious,no
+gghdfkafnhfpaooiolhncejnlgglhkhe,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,45,58,MEDIUM,0,0,0,0,1,1,T1071,2,44,26.5,,malicious,no
+benign-corpus-25,benign-corpus-25,benign-corpus-25,3,benign,complete,85,30,94,CRITICAL,0,0,0,0,1,0,T1071,1,944,46.1,,benign,yes
+giaooddllfkkkblpaedgkhfmhocponbo,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,36,28.6,,malicious,no
+gidejehfgombmkfflghejpncblgfkagj,Malicious Browser Extensions,Cuponomia - Cupom e Cashback,3,malicious,complete,47,50,64,MEDIUM,0,0,0,0,1,1,T1071,2,222,38.3,,malicious,no
+giecgobdmgdamgffeoankaipjkdjbfep,Malicious Browser Extensions,Children Protection,2,malicious,complete,48,0,35,LOW,0,0,0,0,0,0,,0,3,24.7,,malicious,no
+gipmochingljoikdjakkdolfcbphmlom,AutomatedExtensions,__MSG_name__,3,malicious,complete,30,50,59,MEDIUM,0,0,0,0,1,1,T1071,2,59,28.2,,malicious,no
+gjlbbcimkbncedhofeknicfkhgaocohl,Malicious Browser Extensions,Shopify Search By Image,3,malicious,complete,18,0,18,LOW,0,0,0,0,0,0,,0,7,27.1,,malicious,no
+glckmpfajbjppappjlnhhlofhdhlcgaj,Malicious Browser Extensions,Good Tab,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,3,24.3,,unknown_verify,yes
+glofhphmolanicdaddgkmhfmjidjkaem,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,64,32.0,,malicious,no
+gmmhcbmmnclgmmjimiiefhiagmpamdlb,Malicious Browser Extensions,Edit anything - Boost any page,3,malicious,complete,21,0,21,LOW,0,0,0,0,0,0,,0,5,28.0,,malicious,no
+gnaekhndaddbimfllbgmecjijbbfpabc,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,44,26.6,,malicious,no
+gogbiohkminacikoppmljeolgccpmlop,AutomatedExtensions,"Adobe Express: AI Photo, Video",3,malicious,complete,15,0,15,LOW,0,0,0,0,0,0,,0,6,26.0,,malicious,no
+gohgeedemmaohocbaccllpkabadoogpl,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,35,26.7,,malicious,no
+mislabel-16,mislabel-16,mislabel-16,3,malicious,complete,40,0,35,LOW,0,0,0,0,0,0,,0,31,27.6,,benign_mislabel,yes
+goikoilmhcgfidolicnbgggdpckdcoam,Malicious Browser Extensions,Amazon Character Count & Seller Tools,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,14,36.5,,malicious,no
+gomekmidlodglbbmalcneegieacbdmki,Malicious Browser Extensions,Avast Online Security & Privacy,3,malicious,complete,54,55,71,HIGH,0,0,1,0,1,0,T1059.007|T1071,2,35,25.4,,malicious,no
+gpdfpljioapjogbnlpmganakfjcemifk,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,54,0,35,LOW,0,0,0,0,0,0,,0,139,33.4,,malicious,no
+benign-corpus-26,benign-corpus-26,benign-corpus-26,3,benign,complete,64,55,80,HIGH,0,0,0,0,1,1,T1071,2,374,44.3,,benign,yes
+mislabel-17,mislabel-17,mislabel-17,3,malicious,complete,0,15,15,LOW,0,0,0,0,1,0,T1071,1,24,25.6,,benign_mislabel,yes
+haochenfmhglpholokliifmlpafilfdc,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,59,28.0,,malicious,no
+hbobdcfpgonejphpemijgjddanoipbkj,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,149,28.0,,malicious,no
+hdmppejcahhppjhkncagagopecddokpi,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,29.8,,malicious,no
+heljkmdknlfhiecpknceodpbokeipigo,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,35.6,,malicious,no
+hgnjolbjpjmhepcbjgeeallnamkjnfgi,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,111,31.4,,malicious,no
+mislabel-18,mislabel-18,mislabel-18,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,6,26.9,,benign_mislabel,yes
+hihblcmlaaademjlakdpicchbjnnnkbo,Malicious Browser Extensions,Proxy SwitchyOmega (V3),3,malicious,complete,47,0,35,LOW,0,0,0,0,0,0,,0,57,29.7,,malicious,no
+hiiildgldbpfbegcfgemoliikibfhaeh,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,33,78,88,HIGH,0,0,1,1,1,1,T1059.007|T1071|T1071.001,4,157,30.9,,malicious,no
+hiofkndodabpioiheinoiojjobadpgmj,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,64,38.1,,malicious,no
+hjngolefdpdnooamgdldlkjgmdcmcjnc,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,64,45,78,HIGH,0,0,1,0,1,0,T1059.007|T1071,2,18,36.3,,malicious,no
+hkbihmjhjmehlocilifheeaeiljabenb,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,195,32.5,,malicious,no
+hkhmodcdjhcidbcncgmnknjppphcpgmh,Malicious Browser Extensions,Amazon Sticky Notes,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,11,36.5,,malicious,no
+hkkkipfcdagiocekjdhobgmlkhejjfoj,Malicious Browser Extensions,Amazon Negative Review Highlighter,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,13,36.3,,malicious,no
+hlmdnedepbbihmbddepemmbkenbnoegd,AutomatedExtensions,__MSG_name__,3,malicious,complete,35,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,63,46.7,,malicious,no
+hmkcidjcpomiegnklmplkimmbcbklglb,AutomatedExtensions,会译:一站式 AI 翻译 Agent｜对照式DeepL翻译｜DeepSeek划词翻译｜免费,3,malicious,complete,24,70,77,HIGH,0,0,1,0,1,1,T1059.007|T1071,3,166,45.8,,malicious,no
+hmlnefhgicedcmebmkjdcogieefbaagl,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,60,39.2,,malicious,no
+hnpbijogiiaegambgpaenjbcbgaeimlf,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,127,32.5,,malicious,no
+mislabel-19,mislabel-19,mislabel-19,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,6,24.6,,benign_mislabel,yes
+hodiladlefdpcbemnbbcpclbmknkiaem,Malicious Browser Extensions,Google Meet Enhanced Experience,3,malicious,complete,0,15,15,LOW,0,0,1,0,0,0,T1059.007,1,21,32.1,,malicious,no
+hokdpdlchkgcenfpiibjjfkfmleoknkp,AutomatedExtensions,Serpey.com official extension,3,malicious,complete,9,50,53,MEDIUM,0,0,0,0,1,1,T1071,2,150,26.1,,malicious,no
+benign-corpus-27,benign-corpus-27,benign-corpus-27,3,benign,complete,54,55,71,HIGH,0,0,0,0,1,1,T1071,2,154,31.3,,grey,yes
+hpkfkbmcphnigepfjmapkdaedglohgjg,Malicious Browser Extensions,__MSG_AppName__,3,malicious,complete,45,0,35,LOW,0,0,0,0,0,0,,0,6,25.4,,malicious,no
+ibbkokjdcfjakihkpihlffljabiepdag,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,51,15,56,MEDIUM,0,0,0,0,1,0,T1071,1,33,27.3,,malicious,no
+ibelidmkbnjmmpjgfibbdbkamgcbnjdm,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,32.6,,malicious,no
+iclckldkfemlnecocpphinnplnmijkol,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,38,25.8,,malicious,no
+idbhoeaiokcojcgappfigpifhpkjgmab,Malicious Browser Extensions,SEMRush Rank,3,malicious,complete,33,0,33,LOW,0,0,0,0,0,0,,0,8,24.6,,malicious,no
+idhknpoceajhnjokpnbicildeoligdgh,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,109,30.9,,malicious,no
+iedbphhbpflhgpihkcceocomcdnemcbj,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,54,45,68,MEDIUM,0,0,1,0,1,0,T1059.007|T1071,2,95,27.4,,malicious,no
+iefpkdilnfhogjbkhgnliaomoldgkdlj,AutomatedExtensions,"Adobe Express: AI Photo, Video",3,malicious,complete,15,0,15,LOW,0,0,0,0,0,0,,0,6,33.6,,malicious,no
+ieihbaicbgpebhkfebnfkdhkpdemljfb,Malicious Browser Extensions,Manuals Viewer,3,malicious,complete,54,8,37,LOW,0,0,0,1,0,0,T1071.001,1,34,27.5,,malicious,no
+mislabel-20,mislabel-20,mislabel-20,3,malicious,complete,0,15,15,LOW,0,0,0,0,1,0,T1071,1,24,25.6,,benign_mislabel,yes
+igbodamhgjohafcenbcljfegbipdfjpk,Malicious Browser Extensions,Keyboard History Recorder,3,malicious,complete,15,15,20,LOW,0,0,0,0,1,0,T1071,1,13,27.0,,malicious,no
+ihbkmfoadnfjgkpdmgcboiehapkiflme,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,78,33.6,,malicious,no
+ihdnbohcfnegemgomjcpckmpnkdgopon,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,25.9,,malicious,no
+ijccacgjefefdpglhclnbpfjlcbagafm,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,34.3,,malicious,no
+ijfmkphjcogaealhjgijjfjlkpdhhojk,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,98,30.4,,malicious,no
+ijpgccpmogehkjhdmomckpkfcpbjlmnj,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,30.4,,malicious,no
+imjmnghlhiimodfkdkgnfplhlobehnpm,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,106,28.9,,malicious,no
+inhcgfpbfdjbjogdfjbclgolkmhnooop,Malicious Browser Extensions,__MSG_extName__,3,malicious,unknown,45,0,35,LOW,0,0,0,0,0,0,,0,0,154.8,,malicious,no
+injnjbcogjhcjhnhcbmlahgikemedbko,AutomatedExtensions,__MSG_name__,3,malicious,complete,44,15,48,MEDIUM,0,0,1,0,0,0,T1059.007,1,12,37.5,,malicious,no
+jacilgchggenbmgbfnehcegalhlgpnhf,AutomatedExtensions,__MSG_name__,3,malicious,complete,72,15,76,HIGH,0,0,1,0,0,0,T1059.007,1,11,35.2,,malicious,no
+jaojpdijbaolkhkifpgbjnhfbmckoojh,Malicious Browser Extensions,Amazon Listing Score Checker,3,malicious,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,11,36.1,,malicious,no
+jhhjbaicgmecddbaobeobkikgmfffaeg,AutomatedExtensions,会译:一站式 AI 翻译 Agent｜对照式DeepL翻译｜DeepSeek划词翻译｜免费,3,malicious,complete,24,78,85,HIGH,0,0,1,1,1,1,T1059.007|T1071|T1071.001,4,159,44.3,,malicious,no
+jiofmdifioeejeilfkpegipdjiopiekl,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,48,0,35,LOW,0,0,0,0,0,0,,0,6,24.7,,malicious,no
+jlbpahgopcmomkgegpbmopfodolajhbl,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,87,15,92,CRITICAL,0,0,0,0,1,0,T1071,1,14,36.1,,malicious,no
+jmlgkeaofknfmnbpmlmadnfnfajdlehn,Malicious Browser Extensions,AliExpress Deals Countdown - Flash Sale Timer,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,18,36.2,,malicious,no
+jmopjanoebpdbopigcbpjhiigmjolikk,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,59,26.8,,malicious,no
+jmpcodajbcpgkebjipbmjdoboehfiddd,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,23,23,LOW,0,0,0,1,0,1,T1071.001,2,33,26.0,,malicious,no
+jnkmepoonohhfijlbajdphhinhkoefjn,Malicious Browser Extensions,HP Print Service Plugin,3,malicious,complete,40,15,44,MEDIUM,0,0,0,0,1,0,T1071,1,14,33.5,,malicious,no
+jnmmbmkmbkcccpihjgnhjmhhkokfdnfe,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,55,55,MEDIUM,0,0,0,0,1,1,T1071,2,135,26.0,,malicious,no
+jodocbbdcdclkhjkibnlfhbmllcpfkfo,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,31.6,,malicious,no
+johobikccpnmifjjpephegmfpipfbfme,Malicious Browser Extensions,Amazon Stock Checker & 999 Trick,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,13,35.9,,malicious,no
+benign-corpus-28,benign-corpus-28,benign-corpus-28,3,benign,complete,54,0,35,LOW,0,0,0,0,0,0,,0,9,25.9,,benign,no
+kahcolfecjbejjjadhjafmihdnifonjf,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,30.6,,malicious,no
+kbifpojhlkdoidmndacedmkbjopeekgl,AutomatedExtensions,__MSG_name__,3,malicious,complete,72,15,76,HIGH,0,0,1,0,0,0,T1059.007,1,11,44.1,,malicious,no
+kbkajekcpifoekenleplhefobiponkmp,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,30,15,34,LOW,0,0,0,0,0,1,,1,6,25.6,,malicious,no
+kblengdlefjpjkekanpoidgoghdngdgl,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,103,30.9,,malicious,no
+kblomapfkjidbbbdllmofkcakcenkmec,AutomatedExtensions,__MSG_name__,3,malicious,complete,35,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,61,34.9,,malicious,no
+kbmindomjiejdikjaagfdbdfpnlanobi,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,60,31.1,,malicious,no
+kbnkkecifeppobnemkielnpagifkobki,AutomatedExtensions,__MSG_name__,3,malicious,complete,33,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,59,31.6,,malicious,no
+kdgjiakonpbfmndaacfhamdoangincgp,Malicious Browser Extensions,DiyTab - 图片下载器,3,malicious,complete,18,0,18,LOW,0,0,0,0,0,0,,0,6,24.5,,malicious,no
+benign-corpus-29,benign-corpus-29,benign-corpus-29,3,benign,unknown,50,0,35,LOW,0,0,0,0,0,0,,0,0,155.2,,benign,no
+kepibgehhljlecgaeihhnmibnmikbnga,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,36,26.9,,malicious,no
+kfdopiiledmclnopmihkclnfgdiggjna,Malicious Browser Extensions,Become Waifu,3,malicious,complete,6,0,6,MINIMAL,0,0,0,0,0,0,,0,6,25.0,,malicious,no
+kjidkkncdchjnnfpclneimlcmghcfoon,Malicious Browser Extensions,intentleads - Engagement based LinkedIn Leads PREVIEW,3,malicious,complete,6,30,32,LOW,0,0,1,0,1,0,T1059.007|T1071,2,24,29.7,,malicious,no
+kjnakdbpijigdbfepipnbafnhbcfdkga,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,29.7,,malicious,no
+kkhjihaeddnhknninbekkhaklnailngh,AutomatedExtensions,__MSG_name__,3,malicious,complete,72,15,76,HIGH,0,0,1,0,0,0,T1059.007,1,11,35.4,,malicious,no
+kknakidneabpfgepadgpkibalcnabnnh,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,55,55,MEDIUM,0,0,0,0,1,1,T1071,2,257,33.1,,malicious,no
+kkodiihpgodmdankclfibbiphjkfdenh,Malicious Browser Extensions,__MSG_extension_name__,3,malicious,complete,64,0,35,LOW,0,0,0,0,0,0,,0,46,39.6,,malicious,no
+klglejfbdeipgklgaepnodpjcnhaihkd,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,392,31.2,,malicious,no
+kmiidcaojgeepjlccoalkdimgpfnbagj,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,59,28.1,,malicious,no
+koecfhecfkmjkjplbmbclgacdclnnpei,AutomatedExtensions,Token Rewards Claim,3,malicious,complete,33,0,33,LOW,0,0,0,0,0,0,,0,9,34.0,,malicious,no
+kppfbknppimnoociaomjcdgkebdmenkh,Malicious Browser Extensions,Amazon Price History Saver,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,14,36.1,,malicious,no
+benign-corpus-30,benign-corpus-30,benign-corpus-30,3,benign,complete,58,70,87,HIGH,0,0,1,0,1,1,T1059.007|T1071,3,106,43.2,,benign,yes
+lcijkepobdokkgmefebkiejhealgblle,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,37.7,,malicious,no
+ldmnhdllijbchflpbmnlgndfnlgmkgif,AutomatedExtensions,Page Locker,3,malicious,complete,47,0,35,LOW,0,0,0,0,0,0,,0,17,34.5,,malicious,no
+lfkknbmaifjomagejflmjklcmpadmmdg,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,35.9,,malicious,no
+lgakkahjfibfgmacigibnhcgepajgfdb,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,38,15,42,MEDIUM,0,0,1,0,0,0,T1059.007,1,12,29.2,,malicious,no
+lgbjhdkjmpgjgcbcdlhkokkckpjmedgc,Malicious Browser Extensions,__MSG_extName__,3,malicious,complete,21,55,61,MEDIUM,0,0,1,0,1,0,T1059.007|T1071,2,183,29.6,,malicious,no
+ljbgkfbiifhpgpipepnfefijldolkhlm,AutomatedExtensions,__MSG_name__,3,malicious,complete,43,50,63,MEDIUM,0,0,0,0,1,1,T1071,2,59,28.4,,malicious,no
+ljcgnobemekghgobhlplpehijemdgcgo,Malicious Browser Extensions,Amazon ASIN Lookup | 10Xprofit,3,malicious,complete,44,15,48,MEDIUM,0,0,1,0,0,0,T1059.007,1,14,33.9,,malicious,no
+lklfbkdigihjaaeamncibechhgalldgl,Malicious Browser Extensions,__MSG_ExtnName__,3,malicious,complete,38,15,42,MEDIUM,0,0,0,0,0,1,,1,249,31.0,,malicious,no
+llaficoajjainaijghjlofdfmbjpebpa,Malicious Browser Extensions,"Speed Dial [FVD] - New Tab Page, 3D, Sync...",3,malicious,complete,75,40,87,HIGH,0,0,0,0,1,0,T1071,1,286,39.1,,malicious,no
+llimhhconnjiflfimocjggfjdlmlhblm,Malicious Browser Extensions,Reader Mode,3,malicious,complete,24,60,67,MEDIUM,0,1,0,0,1,0,T1071|T1074.001,2,143,33.2,,malicious,no
+llojfncgbabajmdglnkbhmiebiinohek,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,45,58,MEDIUM,0,0,0,0,1,1,T1071,2,44,27.3,,malicious,no
+lmbopdiikkamfphhgcckcjhojnokgfeo,Malicious Browser Extensions,__MSG_nameChrome__,3,malicious,complete,90,15,94,CRITICAL,0,0,0,0,1,0,T1071,1,22,37.3,,malicious,no
+lmcpbhamfpbonaenickjclacodolkbdl,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,27.7,,malicious,no
+lmgenhmehbcolpikplhkoelmagdhoojn,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,59,31.1,,malicious,no
+lnajjhohknhgemncbaomjjjpmpdigedg,AutomatedExtensions,__MSG_name__,3,malicious,complete,51,50,66,MEDIUM,0,0,0,0,1,1,T1071,2,101,33.3,,malicious,no
+lnbmbgocenenhhhdojdielgnmeflbnfb,Malicious Browser Extensions,__MSG_main_name__,3,malicious,complete,49,0,35,LOW,0,0,0,0,0,0,,0,49,37.1,,malicious,no
+lodlcpnbppgipaimgbjgniokjcnpiiad,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,21,45,51,MEDIUM,0,0,1,0,1,1,T1059.007|T1071,3,112,32.0,,malicious,no
+loiofaagnefbonjdjklhacdhfkolcfgi,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,40,0,35,LOW,0,0,0,0,0,0,,0,13,36.9,,malicious,no
+mabbblhhnmlckjbfppkopnccllieeocp,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,40,0,35,LOW,0,0,0,0,0,0,,0,19,36.8,,malicious,no
+maeccdadgnadblfddcmanhpofobhgfme,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,60,32.1,,malicious,no
+mbindhfolmpijhodmgkloeeppmkhpmhc,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,24,40,47,MEDIUM,0,0,0,0,1,0,T1071,1,15,24.6,,malicious,no
+mcaglpclodnaiimhicpjemhcinjfnjce,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,40,0,35,LOW,0,0,0,0,0,0,,0,16,36.3,,malicious,no
+mchacgmgddefeohkjobefhihbadocneh,Malicious Browser Extensions,OurTab,3,malicious,complete,0,30,30,LOW,0,0,0,0,1,0,T1071,1,9,27.4,,malicious,no
+mdcfennpfgkngnibjbpnpaafcjnhcjno,AutomatedExtensions,__MSG_name__,3,malicious,complete,41,55,67,MEDIUM,0,0,0,0,1,1,T1071,2,80,33.9,,malicious,no
+medkneifmjcpgmmibfppjpfjbkgbgebl,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,122,28.6,,malicious,no
+mehpokgiebgcnelgnlfkeldlfnpdhdha,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,61,15,66,MEDIUM,0,0,0,0,0,1,,1,13,26.9,,malicious,no
+mejaghdgnidejbeofmfhnogbniipdjge,AutomatedExtensions,AudioMatch - YouTube Audio Selector,3,malicious,complete,6,0,6,MINIMAL,0,0,0,0,0,0,,0,10,32.3,,malicious,no
+mflibpdjoodmoppignjhciadahapkoch,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,38,15,42,MEDIUM,0,0,1,0,0,0,T1059.007,1,14,34.1,,malicious,no
+mfpiaehgjbbfednooihadalhehabhcjo,Malicious Browser Extensions,__MSG_extName__,3,malicious,complete,21,0,21,LOW,0,0,0,0,0,0,,0,19,32.6,,malicious,no
+midiombanaceofjhodpdibeppmnamfcj,Malicious Browser Extensions,__MSG_ExtnName__,3,malicious,complete,41,15,46,MEDIUM,0,0,0,0,0,1,,1,265,30.2,,malicious,no
+mjcgfimemamogfmekphcfdehfkkbmldn,Malicious Browser Extensions,Amazon Global Price Checker,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,14,36.5,,malicious,no
+mkhdiephfhifcgpmkaaboknnbdpjlneg,Malicious Browser Extensions,__MSG_app_name__,3,malicious,complete,24,23,31,LOW,0,0,1,1,0,0,T1059.007|T1071.001,2,63,28.2,,malicious,no
+mkkfklcadlnkhgapjeejemflhamcdjld,AutomatedExtensions,Consensus - Reddit Comment Summarizer,3,malicious,complete,30,15,34,LOW,0,0,0,0,0,1,,1,12,34.0,,malicious,no
+mldeggofnfaiinachdeidpecmflffoam,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,26.0,,malicious,no
+mleflnbfifngdmiknggikhfmjjmioofi,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,1,0,0,0,T1059.007,1,15,26.8,,malicious,no
+mmbbjakjlpmndjlbhihlddgcdppblpka,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,28.3,,malicious,no
+mmbkmjmlnhocfcnjmbchmflamalekbnb,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,692,30.5,,malicious,no
+mmecpiobcdbjkaijljohghhpfgngpjmk,AutomatedExtensions,__MSG_name__,3,malicious,complete,49,50,65,MEDIUM,0,0,0,0,1,1,T1071,2,76,36.4,,malicious,no
+mnacfoefejolpobogooghoclppjcgfcm,Malicious Browser Extensions,Amazon Product Scraper | 10X,3,malicious,complete,43,15,48,MEDIUM,0,0,1,0,0,0,T1059.007,1,14,33.7,,malicious,no
+mnhffkhmpnefgklngfmlndmkimimbphc,Malicious Browser Extensions,Castorus,3,malicious,complete,47,15,52,MEDIUM,0,0,0,0,0,1,,1,31,27.3,,malicious,no
+mofnafclpcapghpjdoaanahkgcjfcece,Malicious Browser Extensions,Swift Proton VPN: Unofficial Fork,3,malicious,complete,62,0,35,LOW,0,0,0,0,0,0,,0,37,37.8,,malicious,no
+benign-corpus-31,benign-corpus-31,benign-corpus-31,3,benign,complete,30,40,49,MEDIUM,0,0,0,0,1,0,T1071,1,384,35.4,,benign,yes
+mpalaahimeigibehbocnjipjfakekfia,AutomatedExtensions,__MSG_name__,3,malicious,complete,72,15,76,HIGH,0,0,1,0,0,0,T1059.007,1,11,34.4,,malicious,no
+mpgaodghdhmeljgogbeagpbhgdbfofgb,Malicious Browser Extensions,SHEIN Search By Image,3,malicious,complete,33,0,33,LOW,0,0,0,0,0,0,,0,16,36.2,,malicious,no
+nabbdpjneieneepdfnmkdhooellilgho,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,30,25.7,,malicious,no
+nbgligggjfgkpphhghhjdoiefbimgooc,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,106,28.3,,malicious,no
+nbmoafcmbajniiapeidgficgifbfmjfo,Malicious Browser Extensions,AVG Online Security,3,malicious,complete,54,40,66,MEDIUM,0,0,0,0,1,0,T1071,1,25,25.6,,malicious,no
+ncpdkpcgmdhhnmcjgiiifdhefmekdcnf,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,59,30.7,,malicious,no
+ndajcmifndknmkckdcdefkpgcodciggk,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,31.7,,malicious,no
+ndlbedplllcgconngcnfmkadhokfaaln,Malicious Browser Extensions,GraphQL Network Inspector,3,malicious,complete,39,45,57,MEDIUM,0,0,0,0,1,1,T1071,2,35,30.5,,malicious,no
+nelbpdjegmhhgpfcjclhdmkcglimkjpp,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,95,30.4,,malicious,no
+nfijbcmjagdmmkchgicfdidblofopkdp,Malicious Browser Extensions,Search with AI on Chrome™,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,3,24.1,,grey,yes
+nigamacoibifjohkmepefofohfedblgg,Malicious Browser Extensions,Amazon Quick Brand Search,3,malicious,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,20,36.0,,malicious,no
+nipfdfkjnidadibpbflijepbllfkokac,Malicious Browser Extensions,Amazon Result Numbering,3,malicious,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,12,36.7,,malicious,no
+njmhcidcdbaannpafjdljminaigdgolj,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,48,15,52,MEDIUM,0,0,1,0,0,0,T1059.007,1,18,26.8,,malicious,no
+nkacmelgoeejhjgmmgflbcdhonpaplcg,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,28.8,,malicious,no
+nkgbfengofophpmonladgaldioelckbe,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,46,26.7,,malicious,no
+nlfkaldinolmacagmiddfpnfaeclfibn,AutomatedExtensions,__MSG_appName__,3,malicious,complete,54,45,68,MEDIUM,0,0,0,0,1,1,T1071,2,31,27.3,,malicious,no
+nlhpidbjmmffhoogcennoiopekbiglbp,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,45,58,MEDIUM,0,0,0,0,1,1,T1071,2,44,27.1,,malicious,no
+nlipoenfbbikpbjkfpfillcgkoblgpmj,Malicious Browser Extensions,__MSG_extName__,3,malicious,complete,77,15,82,HIGH,0,0,0,0,1,0,T1071,1,86,42.8,,malicious,no
+nmegibgeklckejdlfhoadhhbgcdjnojb,AutomatedExtensions,__MSG_name__,3,malicious,complete,30,50,59,MEDIUM,0,0,0,0,1,1,T1071,2,59,27.8,,malicious,no
+nmijijenojhiaohkfedfgchgbmjnfcpp,AutomatedExtensions,__MSG_appName__,3,malicious,complete,48,15,52,MEDIUM,0,0,0,0,0,1,,1,65,30.2,,malicious,no
+nnnkddnnlpamobajfibfdgfnbcnkgngh,Malicious Browser Extensions,__MSG_name_pro__,3,malicious,complete,0,40,40,MEDIUM,0,0,0,0,1,0,T1071,1,154,27.3,,malicious,no
+nnpnnpemnckcfdebeekibpiijlicmpom,Malicious Browser Extensions,VPNCity - Fast & Unlimited VPN | Unblocker,3,malicious,complete,24,0,24,LOW,0,0,0,0,0,0,,0,23,28.8,,malicious,no
+nodobilhjanebkafmpihkpoabiggnnfl,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,29.3,,malicious,no
+nonajfcfdpeheinkafjiefpdhfalffof,Malicious Browser Extensions,AdBlock - Ads and Youtube,3,malicious,complete,54,0,35,LOW,0,0,0,0,0,0,,0,10,28.4,,malicious,no
+benign-corpus-32,benign-corpus-32,benign-corpus-32,3,benign,complete,64,40,76,HIGH,0,0,0,0,1,0,T1071,1,140,36.4,,benign,yes
+benign-corpus-33,benign-corpus-33,benign-corpus-33,3,benign,complete,41,0,35,LOW,0,0,0,0,0,0,,0,3,27.5,,benign,no
+npabddfopfjjlhlimlaknekipghedpfk,Malicious Browser Extensions,__MSG_name__,3,malicious,complete,38,45,56,MEDIUM,0,0,0,0,1,1,T1071,2,437,36.1,,malicious,no
+npphdmcakmfhllhblkealgkeefamebih,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,45,45,MEDIUM,0,0,0,0,1,1,T1071,2,40,27.1,,malicious,no
+nppjmiadmakeigiagilkfffplihgjlec,Malicious Browser Extensions,BestBuy Search By Image,3,malicious,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,16,36.4,,malicious,no
+oaikpkmjciadfpddlpjjdapglcihgdle,Malicious Browser Extensions,Uvoice,3,malicious,complete,62,23,69,MEDIUM,0,0,0,1,0,1,T1071.001,2,72,30.0,,malicious,no
+oanpifaoclmgmflmddlgkikfaggejobn,AutomatedExtensions,Pyramid Solitaire,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,106,28.3,,malicious,no
+ocflhkadmmnlbieoiiekfcdcmjcfeahe,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,438,35.6,,malicious,no
+odeccdcabdffpebnfancpkepjeecempn,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,131,33.7,,malicious,no
+oeefjlikahigmlnplgijgeeecbpemhip,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,6,25.6,,malicious,no
+oeiomhmbaapihbilkfkhmlajkeegnjhe,Malicious Browser Extensions,Primus,3,malicious,complete,64,30,73,HIGH,0,0,0,0,1,0,T1071,1,14,34.8,,malicious,no
+oejhnncfanbaogjlbknmlgjpleachclf,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,61,48.1,,malicious,no
+ofifhmaojnmphodmgkipjpjedgnhkbhl,AutomatedExtensions,SideWiki – Sidebar for Wikipedia,3,malicious,complete,3,15,16,LOW,0,0,0,0,1,0,T1071,1,13,36.3,,malicious,no
+ogbaedmbbmmipljceodeimlckohbnfan,AutomatedExtensions,__MSG_name__,3,malicious,complete,35,50,60,MEDIUM,0,0,0,0,1,1,T1071,2,60,39.5,,malicious,no
+ojkbafekojdcedacileemekjdfdpkbkf,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,30.0,,malicious,no
+okepehobneenpbhiendcjcanjodhmcbj,Malicious Browser Extensions,nbnhhsh - 能不能好好说话,2,malicious,complete,18,0,18,LOW,0,0,0,0,0,0,,0,3,24.8,,malicious,no
+oliiideaalkijolilhhaibhbjfhbdcnm,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,3,15,16,LOW,0,0,0,0,0,1,,1,26,25.5,,malicious,no
+omghfjlpggmjjaagoclmmobgdodcjboh,Malicious Browser Extensions,__MSG_extension_name__,3,malicious,complete,50,40,62,MEDIUM,0,0,0,0,1,0,T1071,1,151,30.6,,malicious,no
+benign-corpus-34,benign-corpus-34,benign-corpus-34,3,benign,complete,6,15,17,LOW,0,0,0,0,0,1,,1,39,31.7,,benign,no
+ooobfpifjkgeopllkalfgkbiefhooggl,Malicious Browser Extensions,Blooket Hacker Pro,3,malicious,complete,43,15,48,MEDIUM,0,0,0,0,1,0,T1071,1,12,36.6,,malicious,no
+pajkjnmeojmbapicmbpliphjmcekeaac,Malicious Browser Extensions,Cyberhaven security extension V3,3,malicious,complete,90,15,94,CRITICAL,0,0,1,0,0,0,T1059.007,1,117,37.2,,malicious,no
+pcdgkgbadeggbnodegejccjffnoakcoh,AutomatedExtensions,"Adobe Express: AI Photo, Video",3,malicious,complete,15,0,15,LOW,0,0,0,0,0,0,,0,6,28.3,,malicious,no
+pdgaknahllnfldmclpcllpieafkaibmf,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,101,27.9,,malicious,no
+peflgkmfmoijonfgcjdlpnnfdegnlaji,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,90,29.2,,malicious,no
+pfgpfmdiepmhhhkpnciogjhccppbcfhk,AutomatedExtensions,__MSG_extensionName__,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,6,31.7,,grey,yes
+pfpijacnpangmkfdpgodlbokpkhpkeka,AutomatedExtensions,__MSG_name__,3,malicious,complete,44,15,48,MEDIUM,0,0,1,0,0,0,T1059.007,1,13,32.0,,malicious,no
+mislabel-21,mislabel-21,mislabel-21,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,6,26.5,,benign_mislabel,yes
+pgfibniplgcnccdnkhblpmmlfodijppg,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,46,26.4,,malicious,no
+phfkdailnomcbcknpdmokejhellbecjb,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,201,27.6,,malicious,no
+phiphcloddhmndjbdedgfbglhpkjcffh,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,45,15,50,MEDIUM,0,0,0,0,0,1,,1,47,26.5,,malicious,no
+pjlheckmodimboibhpdcgkpkbpjfhooe,Malicious Browser Extensions,Font Expert: Identify Fonts from Images & Websites,3,malicious,complete,21,0,21,LOW,0,0,0,0,0,0,,0,45,25.4,,malicious,no
+pkghgkfjhjghinikeanecbgjehojfhdg,AutomatedExtensions,__MSG_name__,3,malicious,complete,0,50,50,MEDIUM,0,0,0,0,1,1,T1071,2,59,30.8,,malicious,no
+pllkanemicadpcmkfodglahcocfdgkhj,AutomatedExtensions,__MSG_name__,3,malicious,complete,40,50,62,MEDIUM,0,0,0,0,1,1,T1071,2,62,30.1,,malicious,no
+pndmbpnfolikhfnfnkmjkkpcgkmaibec,Malicious Browser Extensions,__MSG_appName__,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,38,26.2,,malicious,no
+pnmmfplemkekboaalbeeajfidkkepppl,Malicious Browser Extensions,Safe ChatGPT Search,3,malicious,complete,0,15,15,LOW,0,0,0,0,0,1,,1,89,24.9,,malicious,no
+pnpchphmplpdimbllknjoiopmfphellj,Malicious Browser Extensions,Amazon Ads Blocker,3,malicious,complete,0,0,0,MINIMAL,0,0,0,0,0,0,,0,13,36.1,,malicious,no
+benign-corpus-35,benign-corpus-35,benign-corpus-35,3,benign,complete,70,63,89,HIGH,0,0,0,1,1,1,T1071|T1071.001,3,297,38.9,,grey,yes
+benign-corpus-36,benign-corpus-36,benign-corpus-36,3,benign,complete,3,0,3,MINIMAL,0,0,0,0,0,0,,0,6,26.2,,benign,no
+benign-corpus-37,benign-corpus-37,benign-corpus-37,3,benign,complete,43,0,35,LOW,0,0,0,0,0,0,,0,38,40.2,,benign,yes
+benign-corpus-38,benign-corpus-38,benign-corpus-38,3,benign,unknown,9,0,9,MINIMAL,0,0,0,0,0,0,,0,0,159.8,,benign,no
+benign-corpus-39,benign-corpus-39,benign-corpus-39,3,benign,complete,75,60,93,CRITICAL,0,0,1,0,1,1,T1059.007|T1071,3,53,37.0,,benign,yes
+benign-corpus-40,benign-corpus-40,benign-corpus-40,3,benign,complete,21,15,26,LOW,0,0,1,0,0,0,T1059.007,1,12,25.7,,benign,no
+benign-corpus-41,benign-corpus-41,benign-corpus-41,3,benign,unknown,54,0,35,LOW,0,0,0,0,0,0,,0,0,183.0,,benign,no

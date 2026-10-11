@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head><title>gt-page.bench</title></head>
+<body>
+<h1>gt-page.bench</h1>
+<p>No extension content_scripts target this host (see manifest.json). Any request
+fired here is genuine page-authored traffic.</p>
+<script>
+// GT source_type=page_js: TRUE ORIGIN = page. This inline script is authored by the
+// page itself, not injected by the extension - the provenance-negative control,
+// modeled on sandbox/honey_pages/universal.html's own inline-script probe.
+fetch("/gt/page_js").catch(() => {});
+</script>
+</body>
+</html>

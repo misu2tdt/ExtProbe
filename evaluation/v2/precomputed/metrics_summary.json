@@ -1,0 +1,54 @@
+{
+  "source_csv": "evaluation\\v2\\precomputed\\summary.csv",
+  "source_csv_rows": 354,
+  "threshold_reported": 40,
+  "note": "AUC = trapezoidal tren ROC points (threshold-free). Logic tinh y het eval/pr_roc.py; script nay chi THEM phan luu ra file. Khong sua summary.csv.",
+  "modes": {
+    "raw": {
+      "auc_roc": 0.4853798126951093,
+      "P_malicious": 310,
+      "N_benign": 31,
+      "at_threshold_40": {
+        "threshold": 40,
+        "TP": 199,
+        "FP": 14,
+        "FN": 111,
+        "TN": 17,
+        "recall": 0.6419354838709678,
+        "fpr": 0.45161290322580644,
+        "precision": 0.9342723004694836
+      },
+      "dataset_composition": {
+        "n_rows_used": 341,
+        "n_excluded_run_status_not_complete": 13,
+        "n_excluded_label_unusable": 0,
+        "n_grey_separated": 0,
+        "n_unknown_verify_separated": 0
+      },
+      "points_csv": "pr_roc_points_raw.csv"
+    },
+    "verified": {
+      "auc_roc": 0.6954810495626822,
+      "P_malicious": 280,
+      "N_benign": 49,
+      "at_threshold_40": {
+        "threshold": 40,
+        "TP": 196,
+        "FP": 11,
+        "FN": 84,
+        "TN": 38,
+        "recall": 0.7,
+        "fpr": 0.22448979591836735,
+        "precision": 0.9468599033816425
+      },
+      "dataset_composition": {
+        "n_rows_used": 329,
+        "n_excluded_run_status_not_complete": 13,
+        "n_excluded_label_unusable": 0,
+        "n_grey_separated": 10,
+        "n_unknown_verify_separated": 2
+      },
+      "points_csv": "pr_roc_points_verified.csv"
+    }
+  }
+}

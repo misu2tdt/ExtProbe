@@ -1,0 +1,33 @@
+{
+  "_comment": "Ground truth by construction: each entry is keyed by the exact GET URL fired by one, and only one, fixture code path (see eval/provenance_benchmark/extension/*.js). true_origin is the human-known TRUE cause of the request; expected_prediction is what Section 5.1's documented, already-known behaviour of the current attributor (sandbox/sensors/cdp_sw.py + worker/risk.py:317-359) predicts BEFORE running - the benchmark's job is to measure whether that prediction actually holds, not to assume it.",
+  "https://gt-page.bench/gt/page_js": {
+    "source_type": "page_js",
+    "true_origin": "page",
+    "expected_prediction": "page",
+    "expected_rationale": "Page's own inline <script>, no extension code involved at all - baseline negative control."
+  },
+  "https://gt-cscript.bench/gt/content_script": {
+    "source_type": "content_script",
+    "true_origin": "extension",
+    "expected_prediction": "extension",
+    "expected_rationale": "Isolated-world content-script fetch, synchronous top-level call - the case _initiator_is_extension is designed to catch."
+  },
+  "https://gt-sw.bench/gt/service_worker": {
+    "source_type": "service_worker",
+    "true_origin": "extension",
+    "expected_prediction": "extension",
+    "expected_rationale": "origin==service_worker is trusted unconditionally by worker/risk.py, bypassing the initiator-stack check entirely."
+  },
+  "https://gt-injected.bench/gt/injected_script": {
+    "source_type": "injected_script",
+    "true_origin": "extension",
+    "expected_prediction": "page",
+    "expected_rationale": "Known limitation (Section 5.1): content_scripts world:MAIN executes as the page's own JS realm, http(s) URL not chrome-extension://, so the initiator stack shows no extension frame - expected miss. (Manual DOM script injection was tried first and found CSP-blocked by Chrome itself, independent of ExtAnalyze - see cs_inject.js comment.)"
+  },
+  "https://gt-async.bench/gt/async_callback": {
+    "source_type": "async_callback",
+    "true_origin": "extension",
+    "expected_prediction": "page",
+    "expected_rationale": "Known limitation (Section 5.1): the fetch fires across a setTimeout macrotask boundary from content-script code - expected miss if CDP's initiator.stack does not chain across the async boundary; NOT guaranteed, this is exactly what we measure."
+  }
+}
