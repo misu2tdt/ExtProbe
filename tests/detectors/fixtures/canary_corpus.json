@@ -1,0 +1,990 @@
+{
+  "schema_version": "1.0",
+  "manifest": {
+    "name": "ExtAnalyze Canary",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Test fixture - co tinh trigger 6 kenh quan sat",
+    "permissions": [
+      "storage",
+      "tabs"
+    ],
+    "background": {
+      "service_worker": "sw.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": [
+          "content.js"
+        ],
+        "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "*://*.canary-target.invalid/*"
+        ],
+        "js": [
+          "target_probe.js"
+        ],
+        "run_at": "document_idle"
+      }
+    ]
+  },
+  "network_requests": [
+    {
+      "url": "https://example.com/s.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "example.com",
+      "phase": "load",
+      "t": 1.389
+    },
+    {
+      "url": "https://canary-inject.invalid/x.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "canary-inject.invalid",
+      "phase": "load",
+      "t": 1.653
+    },
+    {
+      "url": "https://canary-frame.invalid/y.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "canary-frame.invalid",
+      "phase": "load",
+      "t": 1.657
+    },
+    {
+      "url": "https://canary-cs.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-cs.invalid",
+      "phase": "load",
+      "t": 1.658
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-c2.invalid",
+      "phase": "load",
+      "t": 1.662,
+      "post_data": "{\"cred\":\"HONEYPOT-PASSWORD\",\"note\":\"canary-exfil\"}",
+      "post_data_len": 50,
+      "honeypot_markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ]
+    },
+    {
+      "url": "http://localhost:8888/fake_bank.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "localhost",
+      "phase": "honeypot_pages",
+      "t": 4.265
+    },
+    {
+      "url": "https://canary-inject.invalid/x.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "canary-inject.invalid",
+      "phase": "honeypot_pages",
+      "t": 4.302
+    },
+    {
+      "url": "https://canary-frame.invalid/y.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "canary-frame.invalid",
+      "phase": "honeypot_pages",
+      "t": 4.307
+    },
+    {
+      "url": "https://canary-cs.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-cs.invalid",
+      "phase": "honeypot_pages",
+      "t": 4.309
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-c2.invalid",
+      "phase": "honeypot_pages",
+      "t": 4.322,
+      "post_data": "{\"cred\":\"HONEYPOT-PASSWORD\",\"note\":\"canary-exfil\"}",
+      "post_data_len": 50,
+      "honeypot_markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ]
+    },
+    {
+      "url": "https://canary-beacon.invalid/ping?seq=1",
+      "method": "GET",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-beacon.invalid",
+      "phase": "honeypot_pages",
+      "t": 5.136
+    },
+    {
+      "url": "https://canary-beacon.invalid/ping?seq=2",
+      "method": "GET",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-beacon.invalid",
+      "phase": "honeypot_pages",
+      "t": 7.137
+    },
+    {
+      "url": "http://localhost:8888/fake_gmail.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "localhost",
+      "phase": "honeypot_pages",
+      "t": 8.944
+    },
+    {
+      "url": "https://canary-inject.invalid/x.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "canary-inject.invalid",
+      "phase": "honeypot_pages",
+      "t": 8.979
+    },
+    {
+      "url": "https://canary-frame.invalid/y.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "canary-frame.invalid",
+      "phase": "honeypot_pages",
+      "t": 8.982
+    },
+    {
+      "url": "https://canary-cs.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-cs.invalid",
+      "phase": "honeypot_pages",
+      "t": 8.983
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-c2.invalid",
+      "phase": "honeypot_pages",
+      "t": 8.986,
+      "post_data": "{\"cred\":\"HONEYPOT-PASSWORD\",\"note\":\"canary-exfil\"}",
+      "post_data_len": 50,
+      "honeypot_markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ]
+    },
+    {
+      "url": "https://canary-beacon.invalid/ping?seq=3",
+      "method": "GET",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-beacon.invalid",
+      "phase": "honeypot_pages",
+      "t": 9.136
+    },
+    {
+      "url": "https://canary-beacon.invalid/ping?seq=4",
+      "method": "GET",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-beacon.invalid",
+      "phase": "honeypot_pages",
+      "t": 11.137
+    },
+    {
+      "url": "https://example.com/",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "example.com",
+      "phase": "honeypot_pages",
+      "t": 13.606
+    },
+    {
+      "url": "https://example.com/s.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "example.com",
+      "phase": "honeypot_pages",
+      "t": 13.722
+    },
+    {
+      "url": "https://canary-inject.invalid/x.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "canary-inject.invalid",
+      "phase": "honeypot_pages",
+      "t": 13.752
+    },
+    {
+      "url": "https://canary-frame.invalid/y.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "canary-frame.invalid",
+      "phase": "honeypot_pages",
+      "t": 13.755
+    },
+    {
+      "url": "https://canary-cs.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-cs.invalid",
+      "phase": "honeypot_pages",
+      "t": 13.757
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-c2.invalid",
+      "phase": "honeypot_pages",
+      "t": 13.762,
+      "post_data": "{\"cred\":\"HONEYPOT-PASSWORD\",\"note\":\"canary-exfil\"}",
+      "post_data_len": 50,
+      "honeypot_markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ]
+    },
+    {
+      "url": "https://canary-target.invalid/",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "canary-target.invalid",
+      "phase": "target_matched",
+      "t": 18.392
+    },
+    {
+      "url": "https://canary-page.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-page.invalid",
+      "phase": "target_matched",
+      "t": 18.413
+    },
+    {
+      "url": "https://canary-target.invalid/media/clip.mp4",
+      "method": "GET",
+      "resource_type": "media",
+      "origin": "page",
+      "host": "canary-target.invalid",
+      "phase": "target_matched",
+      "t": 18.421
+    },
+    {
+      "url": "https://canary-inject.invalid/x.js",
+      "method": "GET",
+      "resource_type": "script",
+      "origin": "page",
+      "host": "canary-inject.invalid",
+      "phase": "target_matched",
+      "t": 18.522
+    },
+    {
+      "url": "https://canary-cs.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-cs.invalid",
+      "phase": "target_matched",
+      "t": 18.527
+    },
+    {
+      "url": "https://canary-target-hit.invalid/probe",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "canary-target-hit.invalid",
+      "phase": "target_matched",
+      "t": 18.531
+    },
+    {
+      "url": "https://canary-frame.invalid/y.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "canary-frame.invalid",
+      "phase": "target_matched",
+      "t": 18.531
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "canary-c2.invalid",
+      "phase": "target_matched",
+      "t": 18.533,
+      "post_data": "{\"cred\":\"HONEYPOT-PASSWORD\",\"note\":\"canary-exfil\"}",
+      "post_data_len": 50,
+      "honeypot_markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ]
+    },
+    {
+      "url": "chrome-extension://inilfcbddblabakgkjcmakkgjhpogojl/popup.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "inilfcbddblabakgkjcmakkgjhpogojl",
+      "phase": "extension_pages",
+      "t": 22.965
+    },
+    {
+      "url": "chrome-extension://inilfcbddblabakgkjcmakkgjhpogojl/popup/popup.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "inilfcbddblabakgkjcmakkgjhpogojl",
+      "phase": "extension_pages",
+      "t": 23.014
+    },
+    {
+      "url": "chrome-extension://inilfcbddblabakgkjcmakkgjhpogojl/options.html",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "inilfcbddblabakgkjcmakkgjhpogojl",
+      "phase": "extension_pages",
+      "t": 23.066
+    }
+  ],
+  "responses": [
+    {
+      "url": "https://example.com/s.js",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8888/fake_bank.html",
+      "status": 200
+    },
+    {
+      "url": "http://localhost:8888/fake_gmail.html",
+      "status": 200
+    },
+    {
+      "url": "https://example.com/",
+      "status": 200
+    },
+    {
+      "url": "https://example.com/s.js",
+      "status": 200
+    },
+    {
+      "url": "https://canary-target.invalid/",
+      "status": 200
+    },
+    {
+      "url": "https://canary-target.invalid/media/clip.mp4",
+      "status": 200
+    }
+  ],
+  "console_logs": [
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"current-password\"): (More info: https://goo.gl/9p2vKq)"
+    },
+    {
+      "type": "error",
+      "text": "Refused to load the script 'https://canary-inject.invalid/x.js' because it violates the following Content Security Policy directive: \"script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' ht"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 (File not found)"
+    },
+    {
+      "type": "error",
+      "text": "Refused to load the script 'https://canary-inject.invalid/x.js' because it violates the following Content Security Policy directive: \"script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' ht"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Refused to load the script 'https://canary-inject.invalid/x.js' because it violates the following Content Security Policy directive: \"script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' ht"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "verbose",
+      "text": "[DOM] Input elements should have autocomplete attributes (suggested: \"username\"): (More info: https://goo.gl/9p2vKq) %o"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Refused to load the script 'https://canary-inject.invalid/x.js' because it violates the following Content Security Policy directive: \"script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' ht"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    }
+  ],
+  "errors": [],
+  "pages_visited": [
+    "http://localhost:8888/fake_bank.html",
+    "http://localhost:8888/fake_gmail.html",
+    "https://example.com"
+  ],
+  "new_tabs": [
+    {
+      "url": "https://example.com/canary-tab",
+      "phase": "load"
+    },
+    {
+      "url": "about:blank",
+      "phase": "honeypot_pages"
+    },
+    {
+      "url": "about:blank",
+      "phase": "honeypot_pages"
+    },
+    {
+      "url": "about:blank",
+      "phase": "honeypot_pages"
+    },
+    {
+      "url": "about:blank",
+      "phase": "target_matched"
+    },
+    {
+      "url": "about:blank",
+      "phase": "extension_pages"
+    },
+    {
+      "url": "about:blank",
+      "phase": "extension_pages"
+    },
+    {
+      "url": "about:blank",
+      "phase": "extension_pages"
+    }
+  ],
+  "navigations": [
+    {
+      "url": "chrome-error://chromewebdata/"
+    },
+    {
+      "url": "http://localhost:8888/fake_bank.html"
+    },
+    {
+      "url": "chrome-error://chromewebdata/"
+    },
+    {
+      "url": "http://localhost:8888/fake_gmail.html"
+    },
+    {
+      "url": "chrome-error://chromewebdata/"
+    },
+    {
+      "url": "https://example.com/"
+    },
+    {
+      "url": "chrome-error://chromewebdata/"
+    },
+    {
+      "url": "https://canary-target.invalid/"
+    },
+    {
+      "url": "chrome-error://chromewebdata/"
+    }
+  ],
+  "service_workers": [
+    {
+      "url": "chrome-extension://inilfcbddblabakgkjcmakkgjhpogojl/sw.js"
+    }
+  ],
+  "dom_activity": [
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "https://example.com/canary-tab",
+      "phase": "load",
+      "t": 1.712
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 81,
+      "page_url": "https://example.com/canary-tab",
+      "phase": "load",
+      "t": 4.2
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 0,
+      "page_url": "https://example.com/canary-tab",
+      "phase": "load",
+      "t": 4.234
+    },
+    {
+      "type": "node_injected",
+      "tag": "FORM",
+      "src": "http://localhost:8888/fake_bank.html",
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 4.285
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "https://canary-inject.invalid/x.js",
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 4.31
+    },
+    {
+      "type": "node_injected",
+      "tag": "IFRAME",
+      "src": "https://canary-frame.invalid/y.html",
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 4.312
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 4.346
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 12,
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 6.783
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 81,
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 6.838
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 0,
+      "page_url": "http://localhost:8888/fake_bank.html",
+      "phase": "honeypot_pages",
+      "t": 6.86
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "https://canary-inject.invalid/x.js",
+      "page_url": "http://localhost:8888/fake_gmail.html",
+      "phase": "honeypot_pages",
+      "t": 8.984
+    },
+    {
+      "type": "node_injected",
+      "tag": "IFRAME",
+      "src": "https://canary-frame.invalid/y.html",
+      "page_url": "http://localhost:8888/fake_gmail.html",
+      "phase": "honeypot_pages",
+      "t": 8.985
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "http://localhost:8888/fake_gmail.html",
+      "phase": "honeypot_pages",
+      "t": 9.023
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 12,
+      "page_url": "http://localhost:8888/fake_gmail.html",
+      "phase": "honeypot_pages",
+      "t": 11.457
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 81,
+      "page_url": "http://localhost:8888/fake_gmail.html",
+      "phase": "honeypot_pages",
+      "t": 11.516
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 0,
+      "page_url": "http://localhost:8888/fake_gmail.html",
+      "phase": "honeypot_pages",
+      "t": 11.538
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "https://example.com/s.js",
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 13.723
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "https://canary-inject.invalid/x.js",
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 13.757
+    },
+    {
+      "type": "node_injected",
+      "tag": "IFRAME",
+      "src": "https://canary-frame.invalid/y.html",
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 13.759
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 13.793
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 806,
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 16.221
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 81,
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 16.286
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 0,
+      "page_url": "https://example.com/",
+      "phase": "honeypot_pages",
+      "t": 16.307
+    },
+    {
+      "type": "node_injected",
+      "tag": "FORM",
+      "src": "https://canary-target.invalid/auth",
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 18.41
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 18.412
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "https://canary-inject.invalid/x.js",
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 18.527
+    },
+    {
+      "type": "node_injected",
+      "tag": "IFRAME",
+      "src": "https://canary-frame.invalid/y.html",
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 18.529
+    },
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 18.564
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 29,
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 20.905
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 81,
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 21.055
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 0,
+      "page_url": "https://canary-target.invalid/",
+      "phase": "target_matched",
+      "t": 21.079
+    }
+  ],
+  "extension_pages_opened": [],
+  "extension_ids_seen": [
+    "inilfcbddblabakgkjcmakkgjhpogojl"
+  ],
+  "extension_storage": {
+    "total_bytes": 674,
+    "honeypot_hits": [
+      {
+        "ext_id": "inilfcbddblabakgkjcmakkgjhpogojl",
+        "file": "000003.log",
+        "markers": [
+          "HONEYPOT",
+          "HONEYPOT-PASSWORD"
+        ],
+        "snippet": "\"HONEYPOT-PASSWORD\""
+      },
+      {
+        "ext_id": "inilfcbddblabakgkjcmakkgjhpogojl",
+        "file": "000003.log",
+        "markers": [
+          "HONEYPOT",
+          "HONEYPOT-OTP"
+        ],
+        "snippet": "diag_install;\"HONEYPOT-OTP beacon install err:TypeError:Failed to fetch\""
+      },
+      {
+        "ext_id": "inilfcbddblabakgkjcmakkgjhpogojl",
+        "file": "000003.log",
+        "markers": [
+          "HONEYPOT",
+          "HONEYPOT-OTP"
+        ],
+        "snippet": "diag_msg7\"HONEYPOT-OTP beacon msg err:TypeError:Failed to fetch\"V"
+      }
+    ],
+    "honeypot_found": true
+  },
+  "honeypot_exfil": true,
+  "honeypot_exfil_details": [
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ],
+      "where": "post_data",
+      "via": "cdp_service_worker"
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ],
+      "where": "post_data",
+      "via": "cdp_service_worker"
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ],
+      "where": "post_data",
+      "via": "cdp_service_worker"
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ],
+      "where": "post_data",
+      "via": "cdp_service_worker"
+    },
+    {
+      "url": "https://canary-c2.invalid/collect",
+      "method": "POST",
+      "markers": [
+        "HONEYPOT",
+        "HONEYPOT-PASSWORD"
+      ],
+      "where": "post_data",
+      "via": "cdp_service_worker"
+    }
+  ],
+  "honeypot_stored": true,
+  "page_hang_count": 0,
+  "api_calls": [],
+  "summary": {
+    "total_requests": 36,
+    "service_worker_requests": 9,
+    "external_domains": [
+      "canary-beacon.invalid",
+      "canary-c2.invalid",
+      "canary-cs.invalid",
+      "canary-frame.invalid",
+      "canary-inject.invalid",
+      "canary-page.invalid",
+      "canary-target-hit.invalid",
+      "canary-target.invalid",
+      "example.com",
+      "inilfcbddblabakgkjcmakkgjhpogojl"
+    ],
+    "external_domain_count": 10,
+    "post_requests": 5,
+    "requests_with_body": 5,
+    "new_tabs_opened": 8,
+    "scripts_injected": 17,
+    "dom_nodes_injected": 1264,
+    "page_hang_count": 0,
+    "honeypot_exfil": true,
+    "honeypot_stored": true,
+    "service_worker_count": 1
+  },
+  "startup": {
+    "attempts": [
+      {
+        "attempt": 1,
+        "launch_secs": 1.18,
+        "status": "ok",
+        "probe_secs": 0.01
+      }
+    ],
+    "status": "ok",
+    "profile": "corpus",
+    "playwright": "1.40.0",
+    "browser_version": "Chromium 120.0.6099.28",
+    "browser_major": 120,
+    "chromium_sandbox": false
+  },
+  "_t0": 20827.961017917,
+  "phases": [
+    {
+      "name": "load",
+      "status": "completed",
+      "budget_s": 15,
+      "t_start": 1.19,
+      "t_end": 4.23,
+      "reason": null
+    },
+    {
+      "name": "honeypot_pages",
+      "status": "completed",
+      "budget_s": 60,
+      "t_start": 4.23,
+      "t_end": 18.35,
+      "reason": null
+    },
+    {
+      "name": "target_matched",
+      "status": "completed",
+      "budget_s": 40,
+      "t_start": 18.35,
+      "t_end": 22.93,
+      "reason": null
+    },
+    {
+      "name": "extension_pages",
+      "status": "completed",
+      "budget_s": 30,
+      "t_start": 22.93,
+      "t_end": 23.08,
+      "reason": null
+    },
+    {
+      "name": "delayed_observation",
+      "status": "completed",
+      "budget_s": 15,
+      "t_start": 23.08,
+      "t_end": 26.08,
+      "reason": null
+    }
+  ],
+  "_current_phase": "delayed_observation",
+  "request_provenance": {
+    "example.com": false,
+    "canary-frame.invalid": true,
+    "canary-inject.invalid": true,
+    "canary-cs.invalid": true,
+    "canary-target.invalid": false,
+    "canary-page.invalid": false,
+    "canary-target-hit.invalid": true
+  },
+  "target_matched_hosts": [
+    "canary-target.invalid"
+  ],
+  "target_matched_visited": [
+    "canary-target.invalid"
+  ],
+  "run_status": {
+    "status": "complete",
+    "reason": null,
+    "phases_completed": 5,
+    "phases_total": 5
+  }
+}

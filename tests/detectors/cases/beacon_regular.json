@@ -1,0 +1,56 @@
+{
+  "description": "4 SW requests every 2.0 s to a host declared in host_permissions: 3 intervals, mean 2.0, cv 0 -> beaconing without the undeclared bonus; d = 8 -> risk 8 MINIMAL.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3,
+      "host_permissions": [
+        "*://beacon.bench.test/*"
+      ]
+    },
+    "network_requests": [
+      {
+        "url": "https://beacon.bench.test/ping?n=0",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 2.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=1",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 4.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=2",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 6.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=3",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 8.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "beaconing"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 8,
+    "level": "MINIMAL",
+    "breakdown": {
+      "static_score": 0,
+      "dynamic_score": 8
+    }
+  }
+}

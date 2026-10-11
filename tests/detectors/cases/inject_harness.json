@@ -1,0 +1,30 @@
+{
+  "description": "SCRIPT src on example.com (harness host) -> ignored.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "dom_activity": [
+      {
+        "type": "node_injected",
+        "tag": "SCRIPT",
+        "src": "https://example.com/a.js",
+        "page_url": "https://shop.bench.test/"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL"
+  }
+}

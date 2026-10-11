@@ -1,0 +1,26 @@
+{
+  "description": "honeypot_exfil = false -> no credential_exfil.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "honeypot_exfil": false
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL",
+    "breakdown": {
+      "dynamic_score": 0
+    }
+  }
+}

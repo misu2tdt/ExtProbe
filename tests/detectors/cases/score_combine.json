@@ -1,0 +1,11 @@
+{
+  "description": "Combination formula with both axes non-zero and no detector firing: 3 dangerous perms (9) + <all_urls> content script (15) = s 24; page_hang_count 1 = d 10 (runtime indicator, not one of the 6 detectors); s_eff = min(24, 35) = 24; risk = round(min(max(24,10) + 0.3*min(24,10), 100)) = round(24 + 3) = 27 -> LOW.",
+  "events": {
+    "manifest": {"name": "bench", "manifest_version": 3,
+                 "permissions": ["tabs", "cookies", "history"],
+                 "content_scripts": [{"matches": ["<all_urls>"], "js": ["c.js"]}]},
+    "page_hang_count": 1
+  },
+  "expect": {"fire": [], "not_fire": ["credential_exfil", "local_harvest", "undeclared_domain_contact", "beaconing", "script_injection", "unsolicited_tab"], "risk": 27, "level": "LOW",
+             "breakdown": {"static_score": 24, "static_effective": 24, "dynamic_score": 10}}
+}

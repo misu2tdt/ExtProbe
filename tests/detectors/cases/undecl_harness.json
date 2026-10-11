@@ -1,0 +1,30 @@
+{
+  "description": "SW request to example.com (harness host) -> ignored.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://example.com/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL"
+  }
+}

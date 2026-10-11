@@ -1,0 +1,28 @@
+{
+  "description": "about:blank tab opened in phase 'load' -> ignored (empty tab).",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "new_tabs": [
+      {
+        "url": "about:blank",
+        "phase": "load"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL"
+  }
+}

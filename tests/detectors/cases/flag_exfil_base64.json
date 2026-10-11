@@ -1,0 +1,58 @@
+{
+  "description": "Service worker POSTs the honeypot credentials base64-encoded (no marker verbatim). The sensor (sandbox/honeypot.py find_honeypot_any) decodes one layer and records honeypot_exfil=true, honeypot_exfil_encoding=base64; risk.py reads honeypot_exfil -> credential_exfil (d 80) plus undeclared_domain_contact (SW to an undeclared host, +30 capped at 100).",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://collect.bench.test/c",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 3.0,
+        "post_data": "{\"d\": \"dXNlcj1ob25leXVzZXImcGFzcz1IT05FWVBPVC1QQVNTV09SRC1YWVo3ODk=\"}",
+        "honeypot_markers": [
+          "HONEYPOT",
+          "HONEYPOT-PASSWORD",
+          "honeyuser"
+        ],
+        "honeypot_encoding": "base64"
+      }
+    ],
+    "honeypot_exfil": true,
+    "honeypot_exfil_encoding": "base64",
+    "honeypot_exfil_details": [
+      {
+        "url": "https://collect.bench.test/c",
+        "method": "POST",
+        "encoding": "base64",
+        "markers": [
+          "HONEYPOT",
+          "HONEYPOT-PASSWORD",
+          "honeyuser"
+        ],
+        "where": "post_data",
+        "via": "cdp_service_worker"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "credential_exfil",
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "local_harvest",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab",
+      "affiliate_hijack"
+    ],
+    "risk": 100,
+    "level": "CRITICAL",
+    "breakdown": {
+      "dynamic_score": 100
+    }
+  }
+}

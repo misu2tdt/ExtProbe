@@ -1,0 +1,12 @@
+{
+  "name": "ExtAnalyze Canary",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "Test fixture - co tinh trigger 6 kenh quan sat",
+  "permissions": ["storage", "tabs"],
+  "background": { "service_worker": "sw.js" },
+  "content_scripts": [
+    { "matches": ["<all_urls>"], "js": ["content.js"], "run_at": "document_idle" },
+    { "matches": ["*://*.canary-target.invalid/*"], "js": ["target_probe.js"], "run_at": "document_idle" }
+  ]
+}

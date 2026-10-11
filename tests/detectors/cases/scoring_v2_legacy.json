@@ -1,0 +1,76 @@
+{
+  "description": "Same v2 trace scored with the corpus rules (\"scoring\": \"legacy\" = risk.legacy_view, as eval/rescore.py --scoring legacy): beaconing counts page requests (8), affiliate_hijack off.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "startup": {
+      "profile": "v2"
+    },
+    "network_requests": [
+      {
+        "url": "https://video.bench.test/videoplayback?n=0",
+        "method": "POST",
+        "origin": "page",
+        "t": 3.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=1",
+        "method": "POST",
+        "origin": "page",
+        "t": 10.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=2",
+        "method": "POST",
+        "origin": "page",
+        "t": 17.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=3",
+        "method": "POST",
+        "origin": "page",
+        "t": 24.0
+      }
+    ],
+    "target_matched_hosts": [
+      "shop.bench.test"
+    ],
+    "target_matched_visited": [
+      "shop.bench.test"
+    ],
+    "target_page_probe": [
+      {
+        "host": "shop.bench.test",
+        "url_before_click": "https://shop.bench.test/",
+        "hrefs_served": [
+          "https://shop.bench.test/dp/TEST0001"
+        ],
+        "hrefs": [
+          "https://shop.bench.test/dp/TEST0001?tag=x-20"
+        ],
+        "clicks": []
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "beaconing"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "script_injection",
+      "unsolicited_tab",
+      "affiliate_hijack"
+    ],
+    "risk": 8,
+    "level": "MINIMAL",
+    "breakdown": {
+      "dynamic_score": 8
+    }
+  },
+  "scoring": "legacy"
+}

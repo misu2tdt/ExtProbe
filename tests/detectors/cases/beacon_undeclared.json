@@ -1,0 +1,53 @@
+{
+  "description": "As beacon_regular but the host is not in the manifest and origin is service_worker -> beaconing with the undeclared bonus (8 + 12) plus undeclared_domain_contact from SW (30); d = 50 -> risk 50 MEDIUM.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://beacon.bench.test/ping?n=0",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 2.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=1",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 4.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=2",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 6.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=3",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 8.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "beaconing",
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 50,
+    "level": "MEDIUM",
+    "breakdown": {
+      "static_score": 0,
+      "dynamic_score": 50
+    }
+  }
+}

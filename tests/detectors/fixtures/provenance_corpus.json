@@ -1,0 +1,261 @@
+{
+  "schema_version": "1.0",
+  "manifest": {
+    "name": "ExtAnalyze Provenance Benchmark Fixture",
+    "version": "1.0",
+    "manifest_version": 3,
+    "description": "Synthetic MV3 extension - controlled ground truth for C1 request-provenance attribution benchmark (eval/provenance_benchmark). Not a real product.",
+    "background": {
+      "service_worker": "sw.js"
+    },
+    "host_permissions": [
+      "*://gt-cscript.bench/*",
+      "*://gt-injected.bench/*",
+      "*://gt-async.bench/*",
+      "*://gt-sw.bench/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": [
+          "*://gt-cscript.bench/*"
+        ],
+        "js": [
+          "cs_direct.js"
+        ],
+        "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "*://gt-injected.bench/*"
+        ],
+        "js": [
+          "cs_inject.js"
+        ],
+        "world": "MAIN",
+        "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "*://gt-async.bench/*"
+        ],
+        "js": [
+          "cs_async.js"
+        ],
+        "run_at": "document_idle"
+      }
+    ]
+  },
+  "network_requests": [
+    {
+      "url": "https://gt-sw.bench/gt/service_worker",
+      "method": "GET",
+      "resource_type": "Fetch",
+      "origin": "service_worker",
+      "host": "gt-sw.bench",
+      "phase": "gt_load",
+      "t": 1.341
+    },
+    {
+      "url": "https://gt-page.bench/",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "gt-page.bench",
+      "phase": "gt_page_js",
+      "t": 3.24
+    },
+    {
+      "url": "https://gt-page.bench/gt/page_js",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "gt-page.bench",
+      "phase": "gt_page_js",
+      "t": 3.275
+    },
+    {
+      "url": "https://gt-cscript.bench/",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "gt-cscript.bench",
+      "phase": "gt_content_script",
+      "t": 4.83
+    },
+    {
+      "url": "https://gt-cscript.bench/gt/content_script",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "gt-cscript.bench",
+      "phase": "gt_content_script",
+      "t": 4.859
+    },
+    {
+      "url": "https://gt-injected.bench/",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "gt-injected.bench",
+      "phase": "gt_injected_script",
+      "t": 6.42
+    },
+    {
+      "url": "https://gt-injected.bench/gt/injected_script",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "gt-injected.bench",
+      "phase": "gt_injected_script",
+      "t": 6.448
+    },
+    {
+      "url": "https://gt-async.bench/",
+      "method": "GET",
+      "resource_type": "document",
+      "origin": "page",
+      "host": "gt-async.bench",
+      "phase": "gt_async_callback",
+      "t": 8.011
+    },
+    {
+      "url": "https://gt-async.bench/gt/async_callback",
+      "method": "GET",
+      "resource_type": "fetch",
+      "origin": "page",
+      "host": "gt-async.bench",
+      "phase": "gt_async_callback",
+      "t": 11.042
+    }
+  ],
+  "responses": [
+    {
+      "url": "https://gt-page.bench/",
+      "status": 200
+    },
+    {
+      "url": "https://gt-page.bench/gt/page_js",
+      "status": 200
+    },
+    {
+      "url": "https://gt-cscript.bench/",
+      "status": 200
+    },
+    {
+      "url": "https://gt-cscript.bench/gt/content_script",
+      "status": 200
+    },
+    {
+      "url": "https://gt-injected.bench/",
+      "status": 200
+    },
+    {
+      "url": "https://gt-injected.bench/gt/injected_script",
+      "status": 200
+    },
+    {
+      "url": "https://gt-async.bench/",
+      "status": 200
+    },
+    {
+      "url": "https://gt-async.bench/gt/async_callback",
+      "status": 200
+    }
+  ],
+  "console_logs": [
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    },
+    {
+      "type": "error",
+      "text": "Failed to load resource: net::ERR_NAME_NOT_RESOLVED"
+    }
+  ],
+  "errors": [],
+  "pages_visited": [
+    "https://gt-page.bench/",
+    "https://gt-cscript.bench/",
+    "https://gt-injected.bench/",
+    "https://gt-async.bench/"
+  ],
+  "new_tabs": [
+    {
+      "url": "about:blank",
+      "phase": "gt_page_js"
+    },
+    {
+      "url": "about:blank",
+      "phase": "gt_content_script"
+    },
+    {
+      "url": "about:blank",
+      "phase": "gt_injected_script"
+    },
+    {
+      "url": "about:blank",
+      "phase": "gt_async_callback"
+    }
+  ],
+  "navigations": [
+    {
+      "url": "https://gt-page.bench/"
+    },
+    {
+      "url": "https://gt-cscript.bench/"
+    },
+    {
+      "url": "https://gt-injected.bench/"
+    },
+    {
+      "url": "https://gt-async.bench/"
+    }
+  ],
+  "service_workers": [
+    {
+      "url": "chrome-extension://amdmeffdoajeoblkanjagdcpnhehhohj/sw.js"
+    }
+  ],
+  "dom_activity": [
+    {
+      "type": "node_injected",
+      "tag": "SCRIPT",
+      "src": "(inline)",
+      "page_url": "https://gt-page.bench/",
+      "phase": "gt_page_js",
+      "t": 3.269
+    },
+    {
+      "type": "mutation_summary",
+      "injected_nodes": 6,
+      "page_url": "https://gt-async.bench/",
+      "phase": "gt_async_callback",
+      "t": 10.532
+    }
+  ],
+  "extension_pages_opened": [],
+  "extension_ids_seen": [],
+  "extension_storage": {},
+  "honeypot_exfil": false,
+  "honeypot_exfil_details": [],
+  "honeypot_stored": false,
+  "page_hang_count": 0,
+  "api_calls": [],
+  "summary": {},
+  "_t0": 20868.684329207,
+  "_current_phase": "gt_drain",
+  "request_provenance": {
+    "gt-page.bench": false,
+    "gt-cscript.bench": true,
+    "gt-injected.bench": true,
+    "gt-async.bench": true
+  }
+}

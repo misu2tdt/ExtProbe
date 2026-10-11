@@ -1,0 +1,33 @@
+{
+  "description": "Same SW request, api.bench.test listed in host_permissions -> not undeclared.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3,
+      "host_permissions": [
+        "*://api.bench.test/*"
+      ]
+    },
+    "network_requests": [
+      {
+        "url": "https://api.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL"
+  }
+}

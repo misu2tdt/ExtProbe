@@ -1,0 +1,38 @@
+{
+  "description": "host_permissions only <all_urls>: match-all declares no host -> api.bench.test is undeclared. <all_urls> also counts as 1 dangerous permission (s 3); risk = round(30 + 0.3*3) = round(30.9) = 31 LOW.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3,
+      "host_permissions": [
+        "<all_urls>"
+      ]
+    },
+    "network_requests": [
+      {
+        "url": "https://api.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 31,
+    "level": "LOW",
+    "breakdown": {
+      "static_score": 3,
+      "dynamic_score": 30
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "description": "SW request to api.bench.test, not in the manifest -> undeclared_domain_contact (undeclared_domain_sw 30); risk 30 LOW.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://api.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 30,
+    "level": "LOW",
+    "breakdown": {
+      "static_score": 0,
+      "dynamic_score": 30
+    }
+  }
+}

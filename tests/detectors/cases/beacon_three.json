@@ -1,0 +1,45 @@
+{
+  "description": "3 requests every 2.0 s: below MIN_BEACON_REQUESTS (4) -> no beaconing.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3,
+      "host_permissions": [
+        "*://beacon.bench.test/*"
+      ]
+    },
+    "network_requests": [
+      {
+        "url": "https://beacon.bench.test/ping?n=0",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 2.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=1",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 4.0
+      },
+      {
+        "url": "https://beacon.bench.test/ping?n=2",
+        "method": "GET",
+        "origin": "service_worker",
+        "t": 6.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": null,
+    "level": null
+  }
+}

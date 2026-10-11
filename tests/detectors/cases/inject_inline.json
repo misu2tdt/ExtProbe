@@ -1,0 +1,30 @@
+{
+  "description": "Inline SCRIPT (src '(inline)') -> ignored: cannot be told apart from the page's own inline scripts.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "dom_activity": [
+      {
+        "type": "node_injected",
+        "tag": "SCRIPT",
+        "src": "(inline)",
+        "page_url": "https://shop.bench.test/"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL"
+  }
+}

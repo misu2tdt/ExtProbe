@@ -1,0 +1,46 @@
+{
+  "description": "3 undeclared SW hosts: 30 + 2*5 = 40 = undeclared_cap -> d 40, risk 40 MEDIUM.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://a.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      },
+      {
+        "url": "https://b.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      },
+      {
+        "url": "https://c.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 40,
+    "level": "MEDIUM",
+    "breakdown": {
+      "dynamic_score": 40
+    }
+  }
+}

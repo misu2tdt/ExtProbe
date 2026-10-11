@@ -1,0 +1,56 @@
+{
+  "description": "v2 trace: the same 4 regular requests from the extension's service worker -> beaconing fires, and the undeclared host also fires undeclared_domain_contact (30 + beaconing 8 + undeclared bonus 12 = d 50).",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://video.bench.test/videoplayback?n=0",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 3.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=1",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 10.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=2",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 17.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=3",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 24.0
+      }
+    ],
+    "startup": {
+      "profile": "v2"
+    }
+  },
+  "expect": {
+    "fire": [
+      "beaconing",
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "script_injection",
+      "unsolicited_tab",
+      "affiliate_hijack"
+    ],
+    "risk": 50,
+    "level": "MEDIUM",
+    "breakdown": {
+      "dynamic_score": 50
+    }
+  }
+}

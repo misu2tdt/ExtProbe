@@ -1,0 +1,29 @@
+{
+  "description": "Tab to an external host opened in phase 'load' (not a harness phase) -> unsolicited_tab; d 15 -> risk 15 LOW.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "new_tabs": [
+      {
+        "url": "https://welcome.bench.test/",
+        "phase": "load"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "unsolicited_tab"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection"
+    ],
+    "risk": 15,
+    "level": "LOW"
+  }
+}

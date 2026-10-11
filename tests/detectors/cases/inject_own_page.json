@@ -1,0 +1,35 @@
+{
+  "description": "Cross-origin SCRIPT on the extension's own popup page -> ignored. The own id comes from service_workers[].url, so the trace lists the extension's service worker.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "dom_activity": [
+      {
+        "type": "node_injected",
+        "tag": "SCRIPT",
+        "src": "https://cdn.bench.test/a.js",
+        "page_url": "chrome-extension://abcdefghijklmnopabcdefghijklmnop/popup.html"
+      }
+    ],
+    "service_workers": [
+      {
+        "url": "chrome-extension://abcdefghijklmnopabcdefghijklmnop/sw.js"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL"
+  }
+}

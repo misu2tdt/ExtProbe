@@ -1,0 +1,51 @@
+{
+  "description": "v2 trace: only utm_source/utm_medium added to the served link -> no fire (not in AFFILIATE_PARAMS).",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "target_matched_hosts": [
+      "shop.bench.test"
+    ],
+    "target_matched_visited": [
+      "shop.bench.test"
+    ],
+    "target_page_probe": [
+      {
+        "host": "shop.bench.test",
+        "url_before_click": "https://shop.bench.test/",
+        "hrefs_served": [
+          "https://shop.bench.test/dp/TEST0001",
+          "https://shop.bench.test/dp/TEST0002"
+        ],
+        "hrefs": [
+          "https://shop.bench.test/dp/TEST0001?utm_source=x&utm_medium=y",
+          "https://shop.bench.test/dp/TEST0002"
+        ],
+        "clicks": []
+      }
+    ],
+    "navigations": [],
+    "startup": {
+      "profile": "v2"
+    }
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab",
+      "affiliate_hijack"
+    ],
+    "risk": 0,
+    "level": "MINIMAL",
+    "breakdown": {
+      "dynamic_score": 0
+    }
+  }
+}

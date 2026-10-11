@@ -1,0 +1,28 @@
+{
+  "description": "extension_storage.honeypot_hits empty -> no local_harvest.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "extension_storage": {
+      "honeypot_hits": []
+    }
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 0,
+    "level": "MINIMAL",
+    "breakdown": {
+      "dynamic_score": 0
+    }
+  }
+}

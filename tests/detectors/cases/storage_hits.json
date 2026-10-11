@@ -1,0 +1,35 @@
+{
+  "description": "extension_storage.honeypot_hits has 1 entry (marker found in the extension's storage) -> local_harvest; d 30 -> risk 30 LOW.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "extension_storage": {
+      "honeypot_hits": [
+        {
+          "markers": [
+            "HONEYPOT"
+          ]
+        }
+      ]
+    }
+  },
+  "expect": {
+    "fire": [
+      "local_harvest"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 30,
+    "level": "LOW",
+    "breakdown": {
+      "dynamic_score": 30
+    }
+  }
+}

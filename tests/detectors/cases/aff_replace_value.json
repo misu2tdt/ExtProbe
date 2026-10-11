@@ -1,0 +1,50 @@
+{
+  "description": "v2 trace: served link has tag=orig-20; after the extension ran it carries tag=other-20 (existing affiliate code replaced; CWS affiliate ads policy 2025) -> affiliate_hijack. Weight 40 -> d 40, risk 40 MEDIUM.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "target_matched_hosts": [
+      "shop.bench.test"
+    ],
+    "target_matched_visited": [
+      "shop.bench.test"
+    ],
+    "target_page_probe": [
+      {
+        "host": "shop.bench.test",
+        "url_before_click": "https://shop.bench.test/",
+        "hrefs_served": [
+          "https://shop.bench.test/dp/TEST0001?tag=orig-20"
+        ],
+        "hrefs": [
+          "https://shop.bench.test/dp/TEST0001?tag=other-20"
+        ],
+        "clicks": []
+      }
+    ],
+    "navigations": [],
+    "startup": {
+      "profile": "v2"
+    }
+  },
+  "expect": {
+    "fire": [
+      "affiliate_hijack"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 40,
+    "level": "MEDIUM",
+    "breakdown": {
+      "dynamic_score": 40
+    }
+  }
+}

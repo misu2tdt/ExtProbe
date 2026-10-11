@@ -1,0 +1,55 @@
+{
+  "description": "v2 trace: 4 regular requests (every 7 s) started by a PAGE (origin page, no provenance) -- e.g. a video player on a welcome tab the extension opened -> v2 counts only extension-initiated requests -> no beaconing.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://video.bench.test/videoplayback?n=0",
+        "method": "POST",
+        "origin": "page",
+        "t": 3.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=1",
+        "method": "POST",
+        "origin": "page",
+        "t": 10.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=2",
+        "method": "POST",
+        "origin": "page",
+        "t": 17.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=3",
+        "method": "POST",
+        "origin": "page",
+        "t": 24.0
+      }
+    ],
+    "startup": {
+      "profile": "v2"
+    }
+  },
+  "expect": {
+    "fire": [],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab",
+      "affiliate_hijack"
+    ],
+    "risk": 0,
+    "level": "MINIMAL",
+    "breakdown": {
+      "dynamic_score": 0
+    }
+  }
+}

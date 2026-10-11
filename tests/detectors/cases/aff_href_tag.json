@@ -1,0 +1,52 @@
+{
+  "description": "v2 trace: served link /dp/TEST0001 appears on the page as /dp/TEST0001?tag=x-20 (Amazon tag added) -> affiliate_hijack; d 40 -> risk 40 MEDIUM.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "target_matched_hosts": [
+      "shop.bench.test"
+    ],
+    "target_matched_visited": [
+      "shop.bench.test"
+    ],
+    "target_page_probe": [
+      {
+        "host": "shop.bench.test",
+        "url_before_click": "https://shop.bench.test/",
+        "hrefs_served": [
+          "https://shop.bench.test/dp/TEST0001",
+          "https://shop.bench.test/dp/TEST0002"
+        ],
+        "hrefs": [
+          "https://shop.bench.test/dp/TEST0001?tag=x-20",
+          "https://shop.bench.test/dp/TEST0002"
+        ],
+        "clicks": []
+      }
+    ],
+    "navigations": [],
+    "startup": {
+      "profile": "v2"
+    }
+  },
+  "expect": {
+    "fire": [
+      "affiliate_hijack"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 40,
+    "level": "MEDIUM",
+    "breakdown": {
+      "dynamic_score": 40
+    }
+  }
+}

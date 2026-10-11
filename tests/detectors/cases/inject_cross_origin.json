@@ -1,0 +1,34 @@
+{
+  "description": "SCRIPT src https://cdn.bench.test/a.js on page https://shop.bench.test/ (cross-origin) -> script_injection; d 15 -> risk 15 LOW.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "dom_activity": [
+      {
+        "type": "node_injected",
+        "tag": "SCRIPT",
+        "src": "https://cdn.bench.test/a.js",
+        "page_url": "https://shop.bench.test/"
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "script_injection"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "unsolicited_tab"
+    ],
+    "risk": 15,
+    "level": "LOW",
+    "breakdown": {
+      "dynamic_score": 15
+    }
+  }
+}

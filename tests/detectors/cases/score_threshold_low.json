@@ -1,0 +1,11 @@
+{
+  "description": "Same dynamic signal (local_harvest, d 30) with a weaker manifest stays below 40: 3 dangerous perms (9) + <all_urls> content script (15) = s 24; risk = round(30 + 0.3*24) = round(37.2) = 37 -> LOW.",
+  "events": {
+    "manifest": {"name": "bench", "manifest_version": 3,
+                 "permissions": ["tabs", "cookies", "history"],
+                 "content_scripts": [{"matches": ["<all_urls>"], "js": ["c.js"]}]},
+    "extension_storage": {"honeypot_hits": [{"markers": ["HONEYPOT"]}]}
+  },
+  "expect": {"fire": ["local_harvest"], "not_fire": ["credential_exfil", "undeclared_domain_contact", "beaconing", "script_injection", "unsolicited_tab"], "risk": 37, "level": "LOW",
+             "breakdown": {"static_score": 24, "static_effective": 24, "dynamic_score": 30}}
+}

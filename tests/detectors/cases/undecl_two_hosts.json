@@ -1,0 +1,40 @@
+{
+  "description": "2 undeclared SW hosts: 30 + 1*5 (undeclared_per_extra) = d 35.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://a.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      },
+      {
+        "url": "https://b.bench.test/collect",
+        "method": "POST",
+        "origin": "service_worker",
+        "t": 1.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "undeclared_domain_contact"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 35,
+    "level": "LOW",
+    "breakdown": {
+      "dynamic_score": 35
+    }
+  }
+}

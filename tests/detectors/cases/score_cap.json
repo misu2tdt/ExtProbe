@@ -1,0 +1,10 @@
+{
+  "description": "Static alone is capped: 5 dangerous perms (15) + overprivileged (20) + <all_urls> content script (15) = s 50; no dynamic signal, d 0 < 15 -> s_eff = min(50, 35) = 35; risk = round(35 + 0.3*0) = 35 -> LOW.",
+  "events": {
+    "manifest": {"name": "bench", "manifest_version": 3,
+                 "permissions": ["tabs", "cookies", "webRequest", "scripting", "history"],
+                 "content_scripts": [{"matches": ["<all_urls>"], "js": ["c.js"]}]}
+  },
+  "expect": {"fire": [], "not_fire": ["credential_exfil", "local_harvest", "undeclared_domain_contact", "beaconing", "script_injection", "unsolicited_tab"], "risk": 35, "level": "LOW",
+             "breakdown": {"static_score": 50, "static_effective": 35, "dynamic_score": 0}}
+}

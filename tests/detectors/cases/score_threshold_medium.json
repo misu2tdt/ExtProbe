@@ -1,0 +1,10 @@
+{
+  "description": "MEDIUM threshold (40). Needs d >= 15 (otherwise s_eff <= 35 and risk <= 38), so local_harvest fires (d 30). 4 dangerous perms (12) + overprivileged (20) = s 32, no broad content script; s_eff = 32; risk = round(32 + 0.3*30) = 41 -> MEDIUM.",
+  "events": {
+    "manifest": {"name": "bench", "manifest_version": 3,
+                 "permissions": ["tabs", "cookies", "history", "scripting"]},
+    "extension_storage": {"honeypot_hits": [{"markers": ["HONEYPOT"]}]}
+  },
+  "expect": {"fire": ["local_harvest"], "not_fire": ["credential_exfil", "undeclared_domain_contact", "beaconing", "script_injection", "unsolicited_tab"], "risk": 41, "level": "MEDIUM",
+             "breakdown": {"static_score": 32, "static_effective": 32, "dynamic_score": 30}}
+}

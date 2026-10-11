@@ -1,0 +1,53 @@
+{
+  "description": "Same requests, no profile: legacy corpus behaviour (the paper's numbers) groups page + SW requests -> beaconing fires (8; the host is not undeclared because page-initiated requests are not counted as the extension's).",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "network_requests": [
+      {
+        "url": "https://video.bench.test/videoplayback?n=0",
+        "method": "POST",
+        "origin": "page",
+        "t": 3.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=1",
+        "method": "POST",
+        "origin": "page",
+        "t": 10.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=2",
+        "method": "POST",
+        "origin": "page",
+        "t": 17.0
+      },
+      {
+        "url": "https://video.bench.test/videoplayback?n=3",
+        "method": "POST",
+        "origin": "page",
+        "t": 24.0
+      }
+    ]
+  },
+  "expect": {
+    "fire": [
+      "beaconing"
+    ],
+    "not_fire": [
+      "credential_exfil",
+      "local_harvest",
+      "undeclared_domain_contact",
+      "script_injection",
+      "unsolicited_tab",
+      "affiliate_hijack"
+    ],
+    "risk": 8,
+    "level": "MINIMAL",
+    "breakdown": {
+      "dynamic_score": 8
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "description": "honeypot_exfil = true (sensor saw the honeypot marker leave in a request) -> credential_exfil; d 80 -> risk 80 HIGH.",
+  "events": {
+    "manifest": {
+      "name": "bench",
+      "manifest_version": 3
+    },
+    "honeypot_exfil": true
+  },
+  "expect": {
+    "fire": [
+      "credential_exfil"
+    ],
+    "not_fire": [
+      "local_harvest",
+      "undeclared_domain_contact",
+      "beaconing",
+      "script_injection",
+      "unsolicited_tab"
+    ],
+    "risk": 80,
+    "level": "HIGH",
+    "breakdown": {
+      "dynamic_score": 80
+    }
+  }
+}
