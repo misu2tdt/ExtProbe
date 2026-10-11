@@ -1,0 +1,54 @@
+# v2 profile (spike): Playwright 1.63.0 / Google Chrome for Testing 153.0.8010.12,
+# pinned by digest (manifest list). Identical to Dockerfile except the base image and
+# requirements.v2.txt; keep the two in step.
+# Build: docker build -f sandbox/Dockerfile.v2 -t extanalyze-sandbox:v2 sandbox
+FROM mcr.microsoft.com/playwright/python:v1.63.0-jammy@sha256:47a65aee64780daa8bad02b37e0ef14902851a3aa7ad0153234f784eb12422b0
+
+WORKDIR /sandbox
+
+# Cài thêm công cụ hệ thống
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        xvfb \
+        tcpdump \
+        curl \
+        ca-certificates \
+        unzip && \
+    rm -rf /var/lib/apt/lists/*
+
+# Python dependencies (base image v1.63 ships browsers but not the Python package)
+COPY requirements.v2.txt .
+RUN pip install --no-cache-dir -r requirements.v2.txt
+
+# Copy code + honey pages
+COPY . /sandbox/
+RUN chmod +x /sandbox/entrypoint.sh
+
+# Honeypot environment variables — nếu extension exfil các biến này,
+# ta thấy chuỗi HONEYPOT trong outgoing traffic => bằng chứng malicious tuyệt đối
+ENV OPENAI_API_KEY=sk-HONEYPOT-DO-NOT-USE-0000000000000000
+ENV GITHUB_TOKEN=ghp_HONEYPOTDONOTUSE0000000000000000000000
+ENV AWS_ACCESS_KEY_ID=AKIAHONEYPOT0000DONOTUSE
+ENV AWS_SECRET_ACCESS_KEY=HONEYPOTsecretkeyDoNotUse0000000000000000
+
+# Honeypot files — nếu extension đọc các file này => suspicious
+RUN mkdir -p /root/.ssh /root/.aws && \
+    printf -- "-----BEGIN HONEYPOT KEY-----\nHONEYPOT-DO-NOT-USE\n-----END HONEYPOT KEY-----\n" > /root/.ssh/id_rsa && \
+    chmod 600 /root/.ssh/id_rsa && \
+    printf "[default]\naws_access_key_id=AKIAHONEYPOT0000DONOTUSE\naws_secret_access_key=HONEYPOTsecretkeyDoNotUse\n" > /root/.aws/credentials
+
+ENV SANDBOX_PROFILE=v2
+# Chromium's own sandbox (no --no-sandbox) when the analysis runs as pwuser; see startup.py
+ENV SANDBOX_CHROMIUM_SANDBOX=1
+# Close the browser before stopping the CDP sensor, so SW requests sent during shutdown are
+# still recorded (analyze.py); record Playwright's SW requests and the CDP-vs-Playwright
+# counts (events["sw_request_crosscheck"], sw_crosscheck.py). Neither affects scoring.
+ENV SANDBOX_CDP_DRAIN_ON_CLOSE=1
+ENV SANDBOX_RECORD_PW_SW=1
+# target_matched also serves the unbranded product test page (/shop-test) and probes its links,
+# so affiliate_hijack can observe link rewriting; all-hosts-only extensions get it at
+# amazon.com and aliexpress.com (phases/actions.py). Budget raised to fit the second page.
+ENV SANDBOX_PRODUCT_PROBE=1
+ENV PHASE_BUDGET_TARGET_MATCHED=60
+
+ENTRYPOINT ["/sandbox/entrypoint.sh"]

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Test product page</title></head>
+<body>
+  <!-- Unbranded test page for measuring link rewriting. Served only inside the sandbox via
+       route.fulfill when SANDBOX_TARGET_PAGE=product_test.html (see phases/actions.py). -->
+  <h1>Test product page</h1>
+  <ul>
+    <li><a id="p1" href="/dp/TEST0001">Test product 1</a></li>
+    <li><a id="p2" href="/dp/TEST0002">Test product 2</a></li>
+    <li><a id="p3" href="/dp/TEST0003">Test product 3</a></li>
+  </ul>
+  <ul>
+    <li><a id="a1" href="/item/1000000000001.html">Test item 1</a></li>
+    <li><a id="a2" href="/item/1000000000002.html">Test item 2</a></li>
+  </ul>
+  <p><a id="buy" href="/dp/TEST0001?add=1">Add to cart</a></p>
+</body>
+</html>

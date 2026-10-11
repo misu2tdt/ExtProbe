@@ -1,0 +1,14 @@
+# ExtProbe profile v3. Built ON TOP OF the frozen v2 image, so Playwright 1.63, Chrome for
+# Testing 153, the honeypot environment and the v2 code under /sandbox are byte-identical to the
+# v2 profile (image id in FREEZE.md section 2). Only /sandbox/v3/ and the entrypoint are added.
+# Build (context = this folder):
+#   docker build -t extprobe-sandbox:v3 sandbox_v3
+# The base tag must point to the frozen v2 image id; eval/v3/build_v3.ps1 checks it first.
+FROM extprobe-sandbox:v2
+
+COPY . /sandbox/v3/
+RUN sed -i 's/\r$//' /sandbox/v3/entrypoint_v3.sh && chmod +x /sandbox/v3/entrypoint_v3.sh
+
+ENV SANDBOX_PROFILE=v3
+
+ENTRYPOINT ["/sandbox/v3/entrypoint_v3.sh"]

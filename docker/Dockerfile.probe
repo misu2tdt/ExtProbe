@@ -1,0 +1,13 @@
+# ExtProbe v3.1-probe. Built ON TOP OF the frozen v3 image: /sandbox (v2) and /sandbox/v3 are byte-identical to
+# extprobe-sandbox:v3 (eval/v3/FREEZE_v3.md); this adds /sandbox/v31/, the entrypoint and the managed Chrome policy
+# ProxyMode=direct at the path Chrome for Testing reads (eval/v3_1_probe/DESIGN.md §5). No extra capability.
+#   docker build -t extprobe-sandbox:v3.1-probe sandbox_v3_1_probe
+FROM extprobe-sandbox:v3
+COPY . /sandbox/v31/
+RUN mkdir -p /etc/opt/chrome_for_testing/policies/managed \
+ && cp /sandbox/v31/policies/extprobe_proxy.json /etc/opt/chrome_for_testing/policies/managed/extprobe_proxy.json \
+ && chown -R root:root /etc/opt/chrome_for_testing && chmod 0755 /etc/opt/chrome_for_testing/policies/managed \
+ && chmod 0644 /etc/opt/chrome_for_testing/policies/managed/extprobe_proxy.json \
+ && sed -i 's/\r$//' /sandbox/v31/entrypoint_v31.sh && chmod +x /sandbox/v31/entrypoint_v31.sh
+ENV SANDBOX_PROFILE=v3
+ENTRYPOINT ["/sandbox/v31/entrypoint_v31.sh"]

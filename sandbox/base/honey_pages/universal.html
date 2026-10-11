@@ -1,0 +1,22 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Home</title></head>
+<body>
+  <div id="app" class="feed">
+    <header><nav><a href="/">Home</a> <a href="/login">Login</a> <a href="/inbox">Inbox</a></nav></header>
+    <main>
+      <form id="login-form" action="/auth" method="post">
+        <input type="text" name="username" id="username" value="HONEYPOT-USER" autocomplete="username">
+        <input type="email" name="email" id="email" value="honeypot@example.com">
+        <input type="password" name="password" id="password" value="HONEYPOT-PASSWORD" autocomplete="current-password">
+        <input type="text" name="cardnumber" id="cardnumber" value="4111111111111111" autocomplete="cc-number">
+        <input type="text" name="cvv" id="cvv" value="123">
+        <button type="submit">Sign in</button>
+      </form>
+      <section class="content">
+        <article class="post" data-id="1"><h2>Post</h2><p>Sample feed content.</p></article>
+        <video src="/media/clip.mp4" controls></video>
+        <div class="thread"><div class="message">Sensitive message body for webmail-style readers.</div></div>
+      </section>
+    </main>
+  </div>
+  <script>fetch("https://canary-page.invalid/probe").catch(function(){});</script>
+</body></html>
