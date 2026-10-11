@@ -20,10 +20,23 @@ CSS = """
 body{background:var(--bg);color:var(--fg);font:14px/1.45 system-ui,sans-serif;margin:0 auto;max-width:1200px;padding:16px}
 table{border-collapse:collapse;width:100%;margin:6px 0 14px}th,td{border-bottom:1px solid var(--line);padding:4px 6px;
 text-align:left;vertical-align:top}th{color:var(--mut);font-weight:600}code,.u{font:12px ui-monospace,monospace;word-break:break-all}
-.CRITICAL,.HIGH{color:var(--hi);font-weight:700}.MEDIUM{color:var(--md);font-weight:700}.LOW{color:var(--lo)}.MINIMAL{color:var(--ok)}
+.flagged{color:var(--hi);font-weight:700}.review{color:var(--md);font-weight:700}.none{color:var(--ok)}
 details{border:1px solid var(--line);border-radius:6px;margin:8px 0;padding:6px 10px}summary{cursor:pointer;font-weight:600}
 .mut{color:var(--mut)}h3{margin:12px 0 4px;font-size:14px}
 """
+
+
+FLAG_AT, REVIEW_AT = 40, 15
+LABELS = ("Flagged for review", "Review suggested", "No notable behavior observed")
+NOTE = "The score prioritizes review; it is not a malware verdict."
+
+
+def label_of(score):
+    return LABELS[0] if score >= FLAG_AT else LABELS[1] if score >= REVIEW_AT else LABELS[2]
+
+
+def label_class(score):
+    return "flagged" if score >= FLAG_AT else "review" if score >= REVIEW_AT else "none"
 
 
 def e(x):
@@ -66,7 +79,7 @@ def sensors(ev):
 def sample_html(name, ev, res):
     sig = res["signals"]
     parts = [f'<details><summary>{e(name)} — {e(ev.get("manifest", {}).get("name"))} · '
-             f'<span class="{e(res["level"])}">{res["score"]} {e(res["level"])}</span> · {e(", ".join(res["fired"]) or "no signal")}</summary>']
+             f'<span class="{label_class(res["score"])}">{res["score"]} {e(label_of(res["score"]))}</span> · {e(", ".join(res["fired"]) or "no signal")}</summary>']
     parts.append("<h3>Signals</h3>" + table([{"signal": k, "fired": s["fired"], "weight": s["weight"], "class": s.get("class", "")}
                                              for k, s in sig.items()], ["signal", "fired", "weight", "class"]))
     parts.append("<h3>Extension-opened tabs (T2-4)</h3>" + table(sig["unsolicited_tab"]["details"],
@@ -108,13 +121,13 @@ def main():
         pkg = S.find_package(meta, a.samples)
         res = S.score_trace(ev, S.package_text(pkg) if pkg else None)
         rows.append({"sample": d.name, "name": ev.get("manifest", {}).get("name"), "score": res["score"],
-                     "level": res["level"], "signals": ", ".join(res["fired"]),
+                     "label": label_of(res["score"]), "signals": ", ".join(res["fired"]),
                      "static (display)": res["static_display"]["static_score"]})
         blocks.append(sample_html(d.name, ev, res))
     doc = (f"<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
            f"<title>ExtProbe v3 report</title><style>{CSS}</style></head><body><h1>ExtProbe v3 report</h1>"
-           f"<p class='mut'>Scoring: eval/v3/SCORING_v3.md. Flag = score ≥ {S.FLAG_THRESHOLD}. Static is shown, not scored.</p>"
-           + table(rows, ["sample", "name", "score", "level", "signals", "static (display)"]) + "".join(blocks) + "</body></html>")
+           f"<p class='mut'>Scoring: eval/v3/SCORING_v3.md. Flag = score ≥ {S.FLAG_THRESHOLD}. Static is shown, not scored. {NOTE}</p>"
+           + table(rows, ["sample", "name", "score", "label", "signals", "static (display)"]) + "".join(blocks) + "</body></html>")
     out = Path(a.out) if a.out else root / "report_v3.html"
     out.write_text(doc, encoding="utf-8")
     print(out)
