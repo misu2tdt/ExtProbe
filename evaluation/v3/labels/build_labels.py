@@ -493,6 +493,8 @@ def main():
                            sum(1 for o in out if (o["sentry_reason"] or "(not in Sentry)") == k and o["v3_score"] != "")),
                  pct(sum(1 for o in out if (o["sentry_reason"] or "(not in Sentry)") == k and o["v2_score"] != "" and int(o["v2_score"]) >= 40),
                      sum(1 for o in out if (o["sentry_reason"] or "(not in Sentry)") == k and o["v2_score"] != ""))] for k, v in sr.most_common()])
+    # The id below is the one extension cited by the Sentry `findings/` report; it is only tested for membership in the 313 dev samples
+    # (it is not an in-the-wild set A id).
     L += ["", "Sentry columns: `extension_id, name, reason, source, insert_date_fmt, blocklist, store, version, sha256`. "
           "`reason` is the removal category assigned by Sentry (not a behaviour finding); `source` is a URL or `Store Monitoring`. "
           f"Sentry's sha256 equals our sample's sha256 for {sum(1 for o in out if o['sentry_sha256_same'] == 'true')} of "

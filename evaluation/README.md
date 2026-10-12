@@ -9,8 +9,9 @@ not in this repository); only the items marked *runs here* work from the reposit
 | `v2/` | paper-number pipeline of the v2 profile. `precomputed/` = the four result files (`summary.csv` with benign extensions anonymised, `metrics_summary.json`, `pr_roc_points_{raw,verified}.csv`). `check_paper_numbers.py --precomputed` *runs here*; the other scripts need the recorded traces in `data/v2_results/` (override: `EXTPROBE_V2_RESULTS`) |
 | `v2/ab/`, `v2/baseline/`, `v2/expanded/`, `v2/benign_ext/`, `v2/ablation_stimulus/`, `v2/sensitivity/` | v2 results and selection records |
 | `v3/` | v3 criteria, selection, labels, audit, dev / test / malware-test / in-the-wild results (`results.md`), operating points. `as_run/` = frozen scripts of the held-out test run, byte-identical, **not runnable in this layout** |
-| `v3/in_the_wild/` | criteria + amendments, labeling guide, aggregate results; `as_run/` = download / dossier / run scripts |
+| `v3/in_the_wild/` | criteria + amendments, labeling guide, aggregate results and blind-labelling summary (`labeling.md`); `as_run/` = download / dossier / run scripts |
 | `probe/` | v3.1-probe: `CRITERIA.md` (+ amendments), `DESIGN.md`, `IMAGE.md`, `results.md`, `posthoc.md`; `run_probe.py` runs the probe image; `as_run/` = trial scripts |
+| `reproducibility.md`, `reproducibility/` | does this repository reproduce the development repository's results? Re-scoring of 1,319 archived traces (0 mismatches), image id match, 11-run live smoke re-run; the scripts take folders as arguments |
 | `provenance_benchmark/` | controlled benchmark of the request-attribution mechanism (synthetic, ground truth by construction) |
 | `malware_test/` | runner script of the MADWeb test as it was run |
 

@@ -219,3 +219,12 @@ obtained.
 - The flag rate (score >= 40, Wilson 95 %) of **T2 alone** is reported next to that of Sentry-only samples and of all of
   Set A.
 - Results are published as aggregates; per-sample flags are kept outside the repository until the labels are reconciled.
+
+## Amendment 4 (2026-10-12, before any labeling)
+
+Raters: the two human raters are replaced by two LLM agents from different vendors (Rater A: Claude, fresh session;
+Rater B: Gemini via Antigravity or GPT via Codex). Each agent runs in a fresh session, receives only a copy of the
+dossiers (no mapping.csv), LABELING_GUIDE.md and a fixed prompt (verbatim in labeling_llm/PROMPT.md). Model name, version
+and run date are recorded. Cohen's kappa between the two agents is reported. Disagreements are adjudicated by one
+author, with a written reason; the adjudicator does not see mapping.csv before adjudication is complete. Final label =
+agreed label or adjudicated label.

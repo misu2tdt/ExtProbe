@@ -8,6 +8,9 @@ ENTRIES = ("scoring", "scoring/v3", "scoring/probe", "sandbox/base", "sandbox/v3
 
 
 def setup():
+    if not (ROOT / "scoring").is_dir():
+        raise SystemExit("extprobe: scoring/ is not next to the extprobe package. Install from a clone of the repository in editable mode "
+                         "(git clone ..., then pip install -e .); a plain `pip install .` does not copy scoring/, report/ and sandbox/.")
     for rel in reversed(ENTRIES):
         p = str(ROOT / rel)
         if p not in sys.path:

@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import io
 import json
+import os
 import re
 import shutil
 import struct
@@ -25,13 +26,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))      # report/ is imported as a namespace package
 IMAGE_V3 = "extprobe-sandbox:v3"
 IMAGE_PROBE = "extprobe-sandbox:v3.1-probe"
-# the file that records the id of each image, and the build command that produces it
+# the file that records the id of each frozen image
 IMAGE_DOCS = {IMAGE_V3: ROOT / "docs" / "v3" / "IMAGE.md", IMAGE_PROBE: ROOT / "evaluation" / "probe" / "IMAGE.md"}
-BUILD_CMD = {
-    IMAGE_V3: ["docker build -f docker/Dockerfile.base -t extprobe-sandbox:v2 sandbox/base",
-               "docker build -f docker/Dockerfile.v3 -t extprobe-sandbox:v3 sandbox/v3"],
-    IMAGE_PROBE: ["docker build -f docker/Dockerfile.probe -t extprobe-sandbox:v3.1-probe sandbox/probe"],
-}
 DEFAULT_TIMEOUT = {IMAGE_V3: 180, IMAGE_PROBE: 240}
 RUN_NAME = "run"          # folder name of the single run inside <out>/traces (no extension id in paths)
 EXIT_OK, EXIT_USAGE, EXIT_ENV, EXIT_RUN = 0, 2, 3, 4
@@ -80,13 +76,11 @@ def check_docker():
     try:
         p = _docker("version", "--format", "{{.Server.Version}}", timeout=30)
     except FileNotFoundError:
-        raise AnalyzeError("Docker was not found on PATH. Install Docker (Docker Desktop on Windows/macOS, Docker Engine on Linux) "
-                           "and make sure the 'docker' command works.")
+        raise AnalyzeError("Docker was not found on PATH: install Docker (Docker Desktop, or Docker Engine on Linux) and check that `docker version` works.")
     except subprocess.TimeoutExpired:
-        raise AnalyzeError("Docker did not answer within 30 s. Is the Docker daemon running?")
+        raise AnalyzeError("Docker did not answer within 30 s: is the Docker daemon running? (start Docker Desktop, or `sudo systemctl start docker`)")
     if p.returncode != 0:
-        raise AnalyzeError("Docker is installed but its daemon is not reachable (start Docker Desktop / the docker service).\n"
-                           + (p.stderr or "").strip()[-300:])
+        raise AnalyzeError("Docker is installed but its daemon is not running: start Docker Desktop (or `sudo systemctl start docker`), then retry.")
 
 
 def recorded_image_id(image):
@@ -105,28 +99,23 @@ def recorded_image_id(image):
 def check_image(image, skip_digest=False):
     p = _docker("image", "inspect", image, "--format", "{{.Id}}")
     if p.returncode != 0:
-        build = "\n  ".join(BUILD_CMD[image])
-        raise AnalyzeError(f"Docker image {image} is not present locally.\n"
-                           f"No registry image is published, so `docker pull` does not apply; build it from this repository (run in the repo root):\n"
-                           f"  {build}\n"
-                           f"or all three images at once: powershell -File docker/build.ps1  (see docker/README.md)")
+        raise AnalyzeError(f"Docker image {image} is not present locally: build it with `python docker/build.py` and pass `--image extprobe-local:v3` "
+                           f"(`--probe --image extprobe-local:v3.1-probe` for probe mode), or load/pull the frozen image (see README).")
     got = p.stdout.strip()
-    want = recorded_image_id(image)
+    want = recorded_image_id(image) if image in IMAGE_DOCS else None
     if want and got != want and not skip_digest:
-        raise AnalyzeError(f"Image {image} has id {got}\n"
-                           f"but {IMAGE_DOCS[image].relative_to(ROOT).as_posix()} records {want}.\n"
-                           f"Local ids differ between builds (docker/README.md). If this image was built from this repository, "
-                           f"repeat with --skip-image-check; the result is then not tied to the recorded image.")
+        raise AnalyzeError(f"Image {image} has id {got}, but {IMAGE_DOCS[image].relative_to(ROOT).as_posix()} records {want}: use the frozen image, "
+                           f"or pass --skip-image-check (result not tied to the recorded image); an image from docker/build.py is used with --image.")
     return got
 
 
-def run_container(image, crx, run_dir, timeout):
+def run_container(image, crx, run_dir, timeout, platform=None):
     """Same limits as evaluation/v3/run_v3.py. Returns docker's exit code."""
     (run_dir / "output").mkdir(parents=True, exist_ok=True)
     staged = run_dir / "extension.crx"
     shutil.copy2(crx, staged)
     host = str(run_dir.resolve()).replace("\\", "/")
-    cmd = ["docker", "run", "--rm", "-v", f"{host}:/work", "--tmpfs", "/work/output/extension_unpacked:size=1g",
+    cmd = ["docker", "run", "--rm", *(["--platform", platform] if platform else []), "-v", f"{host}:/work", "--tmpfs", "/work/output/extension_unpacked:size=1g",
            "--memory", "3g", "--pids-limit", "512", "--cap-drop", "ALL", "--cap-add", "NET_RAW", "--cap-add", "CHOWN",
            "--cap-add", "SETUID", "--cap-add", "SETGID", "--cap-add", "KILL", "--security-opt", "no-new-privileges",
            image, "/work/extension.crx", "/work/output", str(timeout)]
@@ -192,15 +181,22 @@ def parse(argv):
     ap.add_argument("--probe", action="store_true", help="probe mode: image v3.1-probe, scored with score_v31")
     ap.add_argument("--out", default="extprobe-out", help="output directory (default: ./extprobe-out)")
     ap.add_argument("--timeout", type=int, default=None, help="in-container time budget in seconds (default 180; 240 with --probe)")
+    ap.add_argument("--image", default=None, help="local image to run instead of the frozen one (extprobe-sandbox:v3, or :v3.1-probe with --probe); "
+                    "the image id is then not compared with IMAGE.md (e.g. an image built by docker/build.py)")
+    ap.add_argument("--platform", default=None, help="platform to run the container as, e.g. linux/amd64 on Apple Silicon "
+                    "(default: $DOCKER_DEFAULT_PLATFORM if set, else Docker's default)")
     ap.add_argument("--skip-image-check", action="store_true", help="do not compare the local image id with the one recorded in IMAGE.md")
     return ap.parse_args(argv)
 
 
 def run(a):
-    image = IMAGE_PROBE if a.probe else IMAGE_V3
+    image = a.image or (IMAGE_PROBE if a.probe else IMAGE_V3)
+    platform = a.platform or os.environ.get("DOCKER_DEFAULT_PLATFORM") or None
     out = Path(a.out)
     check_docker()
-    image_id = check_image(image, a.skip_image_check)
+    image_id = check_image(image, a.skip_image_check or image not in IMAGE_DOCS)
+    if image not in IMAGE_DOCS:
+        print(f"[extprobe] note: custom image {image}; its id is not compared with the recorded one, so the result is not tied to the frozen image", flush=True)
     out.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="extprobe-") as tmp:
         crx = pack_input(a.target, Path(tmp) / "extension.crx")
@@ -209,7 +205,7 @@ def run(a):
         shutil.rmtree(run_dir, ignore_errors=True)
         started = time.strftime("%Y-%m-%dT%H:%M:%S%z")
         print(f"[extprobe] running {image} on {Path(a.target).name} ...", flush=True)
-        code = run_container(image, crx, run_dir, a.timeout or DEFAULT_TIMEOUT[image])
+        code = run_container(image, crx, run_dir, a.timeout or DEFAULT_TIMEOUT[IMAGE_PROBE if a.probe else IMAGE_V3], platform)
         if code != 0:
             print(f"[extprobe] warning: container exit code {code}", file=sys.stderr)
         ev, res, extra = score_run(run_dir, a.probe, crx)

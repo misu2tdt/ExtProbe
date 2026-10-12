@@ -29,7 +29,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[2]
 OUT = Path(__file__).resolve().parent / "candidates_listing.csv"
 BASE = "https://chromewebstore.google.com/category/extensions/"
-UA = "Mozilla/5.0 (compatible; extprobe-research/1.0; benign-extension survey; +<REPO_URL>)"
+UA = "Mozilla/5.0 (compatible; extprobe-research/1.0; benign-extension survey; +https://github.com/misu2tdt/ExtProbe)"
 DELAY_S = 2.0
 ID_RE = re.compile(r"[a-p]{32}")
 

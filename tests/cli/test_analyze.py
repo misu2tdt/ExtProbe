@@ -65,15 +65,38 @@ def test_docker_daemon_down(monkeypatch, capsys):
     assert "daemon" in capsys.readouterr().err
 
 
-def test_image_missing_prints_build_commands(monkeypatch, capsys):
+def test_image_missing_gives_one_line_hint(monkeypatch, capsys):
     def fake(cmd, **k):
         return _proc(0, "27.0") if cmd[1] == "version" else _proc(1, err="No such image")
     monkeypatch.setattr(subprocess, "run", fake)
     assert A.main(["examples/canary"]) == A.EXIT_ENV
-    err = capsys.readouterr().err
-    assert "extprobe-sandbox:v3 is not present" in err and "docker build -f docker/Dockerfile.v3" in err
+    err = capsys.readouterr().err.strip()
+    assert len(err.splitlines()) == 1 and "Traceback" not in err
+    assert "extprobe-sandbox:v3 is not present" in err and "python docker/build.py" in err and "--image extprobe-local:v3" in err
     assert A.main(["examples/canary", "--probe"]) == A.EXIT_ENV
-    assert "docker build -f docker/Dockerfile.probe" in capsys.readouterr().err
+    assert "extprobe-local:v3.1-probe" in capsys.readouterr().err
+
+
+def test_docker_hints_are_one_line(monkeypatch, capsys):
+    def boom(*a, **k):
+        raise FileNotFoundError
+    monkeypatch.setattr(subprocess, "run", boom)
+    assert A.main(["examples/canary"]) == A.EXIT_ENV
+    err = capsys.readouterr().err.strip()
+    assert len(err.splitlines()) == 1 and "Docker was not found" in err
+    monkeypatch.setattr(subprocess, "run", lambda *a, **k: _proc(1, err="Cannot connect to the Docker daemon\nsecond line"))
+    assert A.main(["examples/canary"]) == A.EXIT_ENV
+    err = capsys.readouterr().err.strip()
+    assert len(err.splitlines()) == 1 and "daemon is not running" in err
+
+
+def test_not_editable_install_gives_one_line(monkeypatch, tmp_path):
+    from extprobe import paths
+    monkeypatch.setattr(paths, "ROOT", tmp_path)            # a folder without scoring/ = a non-editable install
+    with pytest.raises(SystemExit) as e:
+        paths.setup()
+    msg = str(e.value)
+    assert "\n" not in msg and "pip install -e ." in msg
 
 
 def test_image_id_mismatch_and_skip(monkeypatch):

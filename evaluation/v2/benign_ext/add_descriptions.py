@@ -21,7 +21,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 CSV_PATH = HERE / "candidates_listing.csv"
-UA = "Mozilla/5.0 (compatible; extprobe-research/1.0; benign-extension survey; +<REPO_URL>)"
+UA = "Mozilla/5.0 (compatible; extprobe-research/1.0; benign-extension survey; +https://github.com/misu2tdt/ExtProbe)"
 
 
 def detail_description(url):

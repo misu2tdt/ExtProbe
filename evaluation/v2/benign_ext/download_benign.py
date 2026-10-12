@@ -43,7 +43,7 @@ REPORT_CSV = HERE / "download_report.csv"
 PRODVERSION = "150.0.7871.187"
 URL = ("https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3"
        f"&prodversion={PRODVERSION}&x=id%3D{{id}}%26installsource%3Dondemand%26uc")
-UA = "Mozilla/5.0 (compatible; extprobe-research/1.0; benign-extension survey; +<REPO_URL>)"
+UA = "Mozilla/5.0 (compatible; extprobe-research/1.0; benign-extension survey; +https://github.com/misu2tdt/ExtProbe)"
 DELAY_S, RETRIES = 2.0, 2
 MAX_BYTES = 120 * 2**20
 

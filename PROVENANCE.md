@@ -30,6 +30,7 @@ The sha256 is of the document text at that commit in the private repository.
 | `7fdded9` | 2026-10-10 15:18 | `b10e7576734e1b4382072207d1f7e1177ac6d54d335a405ec36cdc3c6476f940` | v3 in-the-wild criteria, amendment 2: label undisclosed-collection (added after the download, b (published copy differs from the original: one set-A id replaced by `<set-A-id>`; original sha256 shown) |
 | `a7b76ac` | 2026-10-10 15:26 | `45688eddc1e05d70bd6247e58b3e751740572f1b4ef903e6790626867de0e9ab` | v3 in-the-wild criteria, amendment 2 clarification: cookies, credentials and page content sent  **text inserted inside the earlier text, nothing deleted** (see below) (published copy differs from the original: one set-A id replaced by `<set-A-id>`; original sha256 shown) |
 | `6bc7e62` | 2026-10-10 18:26 | `91a27a3b88683e06fe4aece965a09c0f75c657867487e38c4ff72b9635d87ba6` | v3 in-the-wild criteria, amendment 3: T2 / Sentry-only tiers for set A (written after the run,  (published copy differs from the original: one set-A id replaced by `<set-A-id>`; original sha256 shown) |
+| `94199d2` | 2026-10-12 15:26 | `474c5b94ba0bf7a682d54e76270729030fc76430c51b93ff60e3f9ae6c2af850` | v3 in-the-wild criteria, amendment 4: two LLM agents from different vendors replace the two human raters (written before any labelling; no label existed). Published copy: ids redacted as above |
 
 **Exception.** Commit `a7b76ac` is not purely append-only: it **inserted 3 lines in the middle of amendment 2** (no line was deleted), 8 minutes
 after `7fdded9` and before any run ("before any run" in its message). All other steps only append to the end of the previous text.
@@ -81,6 +82,8 @@ Note on the v2 benign-set expansion criteria: its second version (`06443ed`, the
 | v3 dev audit report | `9e4f2da` | 2026-10-08 14:52 |
 | MADWeb malware test results | `64eed1e` | 2026-10-10 15:18 |
 | in-the-wild results (aggregates only) | `b6214b2` | 2026-10-10 18:30 |
+| in-the-wild labelling: rater sheets and adjudication (private; labels made under amendment 4, mapping not yet opened) | `d80f89c` | 2026-10-12 17:05 |
+| in-the-wild labelling results, kappa 0.862 (aggregates published as `evaluation/v3/in_the_wild/labeling.md`) | `901f6b2` | 2026-10-12 17:08 |
 | v3.1-probe trial `results.md` (unchanged output of `analysis.py`) | `4886e2d` | 2026-10-11 17:55 |
 | v3.1-probe post-hoc analysis, erratum | `46cd529`, `03cabd9` | 2026-10-11 17:59, 18:42 |
 | v2 expanded evaluation results | `4ebe024` | 2026-10-07 21:36 |

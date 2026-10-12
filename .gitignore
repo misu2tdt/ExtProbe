@@ -34,3 +34,7 @@ out/
 extprobe-out/
 *.egg-info/
 CLAUDE.local.md
+repro_check/
+build/
+dist/
+out_probe/
