@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "extprobe"
+version = "0.1.0"
+description = "ExtProbe: pre-installation behavior analysis of Chrome extensions with attributable runtime evidence."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Duong Tien Tran" },
+    { name = "Truong Tuan Phat Tran" },
+    { name = "Duc Ly Vu" },
+]
+# The CLI, scoring and report use only the standard library; the sandbox has its own requirements (sandbox/base/requirements.v2.txt).
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+# extprobe analyze | verify-freeze | score-v3 | score-v31
+extprobe = "extprobe.__main__:main"
+
+[tool.setuptools]
+# Only the CLI package is installed. scoring/, report/, sandbox/ and evaluation/ are read from the repository checkout
+# (extprobe/paths.py), so install in editable mode from a clone:  pip install -e .
+packages = ["extprobe"]

@@ -28,3 +28,8 @@ CLAUDE.md
 traces*/
 __pycache__/
 .pytest_cache/
+
+# --- ExtProbe outputs / packaging
+out/
+extprobe-out/
+*.egg-info/
