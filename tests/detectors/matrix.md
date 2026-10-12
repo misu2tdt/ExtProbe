@@ -71,3 +71,5 @@ worker/risk.py. Cell: **fire** = indicator true, `-` = not. Sources:
 | script_injection | 1 (inject_cross_origin) | 40 | no | no |
 | unsolicited_tab | 1 (tab_load_phase) | 40 | fire | no |
 | affiliate_hijack | 4 (aff_href_tag, aff_redirect_network, aff_replace_value, scoring_v2_auto) | 37 | no | no |
+
+> Note: `sandbox/smoke_test.py`, `sandbox/canary/`, `eval/...` and the `/tmp/smoke_out/...` paths named here refer to the development environment. They are not included in this release; the canary extension is `examples/canary/` (see the path map in `PROVENANCE.md`).

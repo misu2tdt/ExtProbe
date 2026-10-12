@@ -70,6 +70,8 @@ Other commands: `extprobe verify-freeze`, `extprobe score-v3 --traces DIR`, `ext
 | 15 to 39 | Review suggested |
 | below 15 | No notable behavior observed |
 
+JSON written with `--out` keeps the frozen scorer's legacy severity names; the mapping to the three report levels is listed in `docs/DETECTORS.md`.
+
 **What the extension did.** One sentence per detector that fired: which component acted, what it did, to which destination, how many times. Example: *"The service worker sent a honeypot password to canary-c2.invalid (10 requests, plain text)."*
 
 **Signals.** The detectors that fired and their weights; the others are listed in one line ("Not observed: …"). The weights add up to the score, capped at 100.

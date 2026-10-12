@@ -16,3 +16,7 @@ not in this repository); only the items marked *runs here* work from the reposit
 
 Environment variables: `EXTPROBE_V2_RESULTS` (recorded v2 traces, default `data/v2_results`), `EXTPROBE_VERDICTS_LOCAL`
 (manual verdicts that name benign extensions, default `data/verdicts_local.json`, available on request).
+
+## Label terminology
+
+Terms such as "verified-malicious", "malicious-confirmed", "confirmed malicious" and the column `label_verified` come from the provenance categories of the source datasets (human-reviewed versus news-sourced) and from the label review recorded in `v3/labels/`. They do **not** mean that ExtProbe or the authors verified malicious behavior. Historical files keep their original wording.

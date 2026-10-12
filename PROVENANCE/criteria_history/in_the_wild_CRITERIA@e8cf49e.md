@@ -113,10 +113,10 @@ kept in their original benign sets; a sensitivity analysis recomputes the benign
 
 | set | ID | Sentry reason | Sentry date |
 |---|---|---|---|
-| dev benign (new) | `bkkbcggnhapdmkeljlodobbkopceiche` | Spyware | 2026-09-29 |
-| dev benign (new) | `gbdjcgalliefpinpmggefbloehmmknca` | Policy Violation | 2026-09-18 |
-| dev benign (new) | `ndgimibanhlabgdgjcpbbndiehljcpfh` | Adware | 2026-10-05 |
-| test benign | `abnmgemfnjndaolfflfpjcckiamamein` | Policy Violation | 2026-09-30 |
+| dev benign (new) | `<sentry-id>` | Spyware | 2026-09-29 |
+| dev benign (new) | `<sentry-id>` | Policy Violation | 2026-09-18 |
+| dev benign (new) | `<sentry-id>` | Adware | 2026-10-05 |
+| test benign | `<sentry-id>` | Policy Violation | 2026-09-30 |
 
 ## Appendix B. Unresolved observation from the feasibility check
 

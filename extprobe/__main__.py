@@ -1,5 +1,4 @@
 ﻿"""python -m extprobe <command>: analyze, verify-freeze, score-v3, score-v31."""
-import runpy
 import sys
 
 from extprobe import paths
@@ -12,8 +11,8 @@ def main(argv=None):
         print("usage: extprobe {analyze TARGET | verify-freeze | score-v3 ARGS... | score-v31 ARGS...}\n"
               "  analyze TARGET     [--probe] [--out DIR]: sandbox run + score + report.html/report.json (TARGET: .crx or unpacked dir)\n"
               "  verify-freeze      check the frozen files against PROVENANCE/frozen_files.tsv (sha256)\n"
-              "  score-v3 ARGS      run scoring/v3/score_v3.py unchanged (--traces DIR [--samples DIR] [--out FILE])\n"
-              "  score-v31 ARGS     run scoring/probe/score_v31.py (--traces DIR ...)\n"
+              "  score-v3 ARGS      run scoring/v3/score_v3.py unchanged (--traces DIR [--samples DIR] [--out FILE]); levels printed as in the report\n"
+              "  score-v31 ARGS     run scoring/probe/score_v31.py (--traces DIR ...); levels printed as in the report\n"
               )
         return 0
     cmd, rest = argv[0], argv[1:]
@@ -22,9 +21,8 @@ def main(argv=None):
         return vf(rest)
     if cmd in ("score-v3", "score-v31"):
         script = root / "scoring" / ("v3" if cmd == "score-v3" else "probe") / ("score_v3.py" if cmd == "score-v3" else "score_v31.py")
-        sys.argv = [str(script), *rest]
-        runpy.run_path(str(script), run_name="__main__")
-        return 0
+        from extprobe.levels import relabel_v3_line, relabel_v31_line, run_scoring
+        return run_scoring(script, rest, relabel_v3_line if cmd == "score-v3" else relabel_v31_line)
     if cmd == "analyze":
         from extprobe.analyze import main as an
         return an(rest)

@@ -8,13 +8,14 @@
 ## Reading the result
 
 `GET /jobs/<job_id>` returns `risk_score` (0-100), `risk_level`, and the full
-`behavioral_report` (produced by `worker/risk.py`). To make sense of it:
+`behavioral_report` (produced by `scoring/risk.py`). To make sense of it:
 
 - **`risk_score`/`risk_level`**: combines a *static* score (manifest permissions/
   hosts alone) and a *dynamic* score (observed runtime behavior) — dynamic-first,
   so broad permissions alone (e.g. an ad blocker) cannot reach MEDIUM+ without
   corroborating runtime evidence. Levels: `risk_score` ≥ 90 `CRITICAL`, ≥ 70
   `HIGH`, ≥ 40 `MEDIUM`, ≥ 15 `LOW`, else `MINIMAL`.
+  The reports and the CLI show three levels instead: score ≥ 40 (legacy `MEDIUM`, `HIGH`, `CRITICAL`) = "Flagged for review", 15-39 (legacy `LOW`) = "Review suggested", below 15 (legacy `MINIMAL`) = "No notable behavior observed".
 - **`behavioral_report.indicators`**: 11 booleans — 4 static (`overprivileged`,
   `has_suspicious_host`, `broad_injection`, `causes_page_hang`) and 7 **dynamic
   detectors** (`affiliate_hijack` only on v2 traces), each backed by a MITRE ATT&CK
@@ -62,16 +63,16 @@
   login — AliExpress rewriting is still caught through `s.click.aliexpress.com`);
   ShareASale `sscid` (its help article now redirects to the Awin home page); Rakuten
   `ranEAID`, `ranSiteID` (not confirmed on an official page read directly).
-  Weight: `AFFILIATE_HIJACK_WEIGHT = 40` in `worker/risk.py`, the single place it is set
+  Weight: `AFFILIATE_HIJACK_WEIGHT = 40` in `scoring/risk.py`, the single place it is set
   (author's decision, 2026-10-02): highly specific behaviour with no benign explanation and
   0 hits on clean samples including coupon extensions; prohibited by name in the CWS
   affiliate policy (2025); 40 = MEDIUM, kept below credential_exfil (80). Sensitivity 30 vs
-  40: `eval/sensitivity/affiliate_weight.md`. Reports show a "CWS policy violation" banner
+  40: `evaluation/v2/sensitivity/affiliate_weight.md`. Reports show a "CWS policy violation" banner
   when it fires (display only).
 
   A `MEDIUM+` verdict generally means at least one dynamic detector fired, not
   just "this extension asked for broad permissions." Full detector logic, weights,
-  and the exact scoring formula are documented in `worker/risk.py`'s module
+  and the exact scoring formula are documented in `scoring/risk.py`'s module
   docstring.
 
 To debug the sandbox directly, without the API/worker/queue:

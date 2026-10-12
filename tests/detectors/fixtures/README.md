@@ -39,3 +39,5 @@ docker run --rm --shm-size=2g --entrypoint bash -v "<repo>/eval/provenance_bench
 ```
 
 Timestamps and request ids differ between runs; the detector verdicts should not.
+
+> Note: `sandbox/smoke_test.py`, `sandbox/canary/`, `eval/...` and the `/tmp/smoke_out/...` paths named here refer to the development environment. They are not included in this release; the canary extension is `examples/canary/` (see the path map in `PROVENANCE.md`).

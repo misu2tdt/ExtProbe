@@ -6,7 +6,7 @@ were used. Dates are git author dates on the author's machine (the local clock i
 
 * Check the frozen files: `python -m extprobe verify-freeze` (sha256 of content, list in `PROVENANCE/frozen_files.tsv`).
 * Text of every version of the criteria documents: `PROVENANCE/criteria_history/` (one file per commit).
-* Differences between published files and the private originals: `PROVENANCE/modifications.tsv` (sha256 of both forms and the reason).
+* Differences between published files and the private originals: `PROVENANCE/modifications.tsv` (sha256 of both forms and the reason). Before a release, refresh the published hashes with `python PROVENANCE/update_modifications.py` (`--check` only reports stale rows).
 
 ## 1. Tags and freezes
 
@@ -36,6 +36,7 @@ after `7fdded9` and before any run ("before any run" in its message). All other 
 Amendment 3 (`6bc7e62`) was written **after the run**, before any trace or score was read (its commit message says so); it adds the
 T2 / Sentry-only tiers.
 One extension id of set A that appeared in Appendix B of the criteria is replaced by `<set-A-id>` in the published copies (original sha256 above).
+Four extension ids of benign dev / test sets that the Sentry list also contains (section 4 of the criteria, "Four IDs of the benign dev / test sets are listed by Sentry") are replaced by `<sentry-id>` in the published copies; reasons and dates are kept. **All sha256 values in this section are those of the original documents in the private development repository, not of the redacted public copies.** The sha256 of the published `evaluation/v3/in_the_wild/CRITERIA.md` is in `PROVENANCE/modifications.tsv`; the copies in `PROVENANCE/criteria_history/` are redacted in the same way.
 
 ### 2.2 v3.1-probe trial (`evaluation/probe/CRITERIA.md`)
 
@@ -116,3 +117,29 @@ of every file in `PROVENANCE/frozen_files.tsv`. A rebuilt image will have a diff
   Frozen files that are not carried are listed as `NOT CARRIED` in `PROVENANCE/frozen_files.tsv`.
 * **Scripts that need private inputs** (ids, packages, dossiers, git history) are kept byte-identical in `as_run/` folders as records and are not
   runnable in this layout.
+
+## 6. Path map (development repository -> this repository)
+
+Documents copied from the development repository keep their original paths. Read them with this map (it is derived from `PROVENANCE/frozen_files.tsv` and `PROVENANCE/modifications.tsv`).
+
+| development repository | this repository |
+|---|---|
+| `eval/` | `evaluation/` (v2 scripts and results in `evaluation/v2/`; `eval/ab/`, `eval/expanded/`, ... under `evaluation/v2/`; `eval/results/summary.csv` = `evaluation/v2/precomputed/summary.csv`) |
+| `eval/v3/` | `evaluation/v3/` |
+| `eval/v3_1_probe/` | `evaluation/probe/` |
+| `eval/v3/score_v3.py` | `scoring/v3/score_v3.py` |
+| `eval/v3_1_probe/score_v31.py` | `scoring/probe/score_v31.py` |
+| `eval/v3/report_v3.py` | `report/report_v3.py` |
+| `eval/v3/SCORING_v3.md`, `eval/v3/IMAGE.md`, `eval/v3/FREEZE_v3.md` | `docs/v3/SCORING_v3.md`, `docs/v3/IMAGE.md`, `docs/v3/FREEZE_v3.md` |
+| `eval/v3/test_analysis.py`, `run_v3_test.ps1` | `evaluation/v3/as_run/` |
+| `eval/v3/build_v3.ps1` / `build_v3.ps1` | `docker/build.ps1` |
+| `worker/risk.py` | `scoring/risk.py` |
+| `worker/test_signals.py` | `tests/risk/test_signals.py` |
+| `sandbox/*.py`, `sandbox/sensors/`, `sandbox/phases/`, `sandbox/honey_pages/` | `sandbox/base/` (same sub-folders) |
+| `sandbox/Dockerfile.v2` | `docker/Dockerfile.base` |
+| `sandbox_v3/` | `sandbox/v3/` (its `Dockerfile` = `docker/Dockerfile.v3`) |
+| `sandbox_v3_1_probe/` | `sandbox/probe/` (its Dockerfile = `docker/Dockerfile.probe`) |
+| `sandbox/canary/` | `examples/canary/` |
+| `docs/samples_manifest_*.csv` | `evaluation/manifests/` |
+| `FREEZE.md` | `docs/provenance/FREEZE_v2.md` |
+| `eval/batch_run.py`, `eval/baseline_extanalysis/`, `sandbox/smoke_test.py`, `sandbox/experiments/`, `worker/` (service), `sandbox/Dockerfile` | not carried (see section 5) |
