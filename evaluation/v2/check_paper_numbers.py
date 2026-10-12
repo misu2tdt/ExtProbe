@@ -8,13 +8,14 @@ Expected (paper):
   raw:      AUC 0.4854, @40 TP=199 FP=14 FN=111 TN=17
 
 Full mode re-runs rescore.py -> apply_verified_labels.py -> save_metrics.py on a TEMPORARY copy of the traces
-(<data/v2_results>/<ext_id>/{meta.json, output/events.json}) and also checks that the regenerated summary.csv is byte-identical to the
-one in data/v2_results/. It needs the trace archive (release asset) and data/verdicts_local.json (manual verdicts that name benign
+(<data/v2_results>/<ext_id>/{meta.json, output/events.json}) and also checks that the regenerated summary.csv is identical to the
+one in data/v2_results/ (line endings are ignored: csv.writer always writes CRLF, git may store LF). It needs the trace archive (release asset) and data/verdicts_local.json (manual verdicts that name benign
 extensions; available on request).
 
 --precomputed re-derives the 10 metric checks (AUC and TP/FP/FN/TN, raw and verified) from the shipped summary.csv with the same
 save_metrics.py code; the two trace-dependent checks are reported as SKIPPED ("requires Zenodo traces"). The shipped
-metrics_summary.json and pr_roc_points_*.csv are compared with the regenerated ones as additional consistency lines.
+metrics_summary.json and pr_roc_points_*.csv are compared with the regenerated ones as additional consistency lines (CSV: line endings ignored,
+see above).
 In the shipped summary.csv the ids and names of benign extensions are replaced by pseudonyms; the metrics use only label, verified_label,
 risk and run_status.
 
@@ -46,6 +47,16 @@ SKIP_NOTE = "requires Zenodo traces"
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def lf(data: bytes) -> bytes:
+    """CRLF -> LF. save_metrics / apply_verified_labels write CSV with csv.writer (CRLF on every OS); a checkout may hold LF (Linux CI,
+    .gitattributes eol=lf) or CRLF (Windows autocrlf). The comparison is about the content, not the line endings."""
+    return data.replace(b"\r\n", b"\n")
+
+
+def sha256_lf(path: Path) -> str:
+    return hashlib.sha256(lf(path.read_bytes())).hexdigest()
 
 
 def copy_traces(dst: Path) -> None:
@@ -98,7 +109,7 @@ def run_full(tmpdir: Path) -> list:
     with contextlib.redirect_stdout(io.StringIO()):
         apply_verified_labels.main()
     checks = metric_checks(run_save_metrics(tmp_results))
-    ref, new = sha256(RESULTS / "summary.csv"), sha256(tmp_results / "summary.csv")
+    ref, new = sha256_lf(RESULTS / "summary.csv"), sha256_lf(tmp_results / "summary.csv")
     checks.append(("summary.csv SHA-256", ref[:16], new[:16], ref == new))
     return checks
 
@@ -118,7 +129,7 @@ def run_precomputed(tmpdir: Path):
         extra.append((f"shipped metrics_summary.json == regenerated ({mode})",
                       a["auc_roc"] == b["auc_roc"] and a["at_threshold_40"] == b["at_threshold_40"]))
         sp, rp = PRECOMPUTED / f"pr_roc_points_{mode}.csv", tmp_results / f"pr_roc_points_{mode}.csv"
-        extra.append((f"shipped pr_roc_points_{mode}.csv == regenerated", sp.read_bytes() == rp.read_bytes()))
+        extra.append((f"shipped pr_roc_points_{mode}.csv == regenerated", lf(sp.read_bytes()) == lf(rp.read_bytes())))
     return checks, extra
 
 

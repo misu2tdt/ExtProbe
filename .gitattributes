@@ -1,2 +1,4 @@
 # Shell scripts phai LF: chay trong Linux container, CRLF se pha shebang
 *.sh text eol=lf
+# CSV result files: LF in every checkout (csv.writer writes CRLF; evaluation/v2/check_paper_numbers.py ignores line endings)
+*.csv text eol=lf
