@@ -1,5 +1,7 @@
 # ExtProbe
 
+Research prototype accompanying a SANER 2027 tool-demo submission. Demo video: <VIDEO_URL>.
+
 **ExtProbe: pre-installation behavior analysis of Chrome extensions with attributable runtime evidence.**
 
 ## What it does
@@ -11,13 +13,15 @@
 
 **The score prioritizes review; it is not a malware verdict.**
 
+![Top of an ExtProbe report for the demo extension: score, what the extension did, signals](docs/img/report.png)
+
 ## Requirements
 
 | | |
 |---|---|
 | Docker | Docker Engine or Docker Desktop. The sandbox runs inside a container with 3 GB of memory and a 512-process limit. |
 | Python | 3.11 or newer. The CLI, scoring and report use only the standard library. |
-| Disk / RAM | Each image is about 2.4 GB (v2, v3 and v3.1-probe share layers, so all three need less than 3 × 2.4 GB). One run is limited to 3 GB of memory, so Docker needs at least that much available. |
+| Disk / RAM | Each image is about 2.4 GB (the base image, v3 and v3.1-probe share layers, so all three need less than 3 × 2.4 GB). One run is limited to 3 GB of memory, so Docker needs at least that much available. |
 | OS tried | Windows 11 with Docker Desktop (Linux containers). The tests and `verify-freeze` also run on Ubuntu in CI; Docker runs on Linux and macOS have not been tried by the authors. |
 
 ## Quickstart (5 minutes)
@@ -30,7 +34,7 @@ pip install -e .
 
 # 2. get the sandbox image
 <IMAGE_PULL_COMMAND>                  # a prebuilt image will be published later; until then, build it:
-docker build -f docker/Dockerfile.base -t extprobe-sandbox:v2 sandbox/base
+docker build -f docker/Dockerfile.base -t extprobe-sandbox:v2 sandbox/base   # base image (tag name kept for reproducibility)
 docker build -f docker/Dockerfile.v3   -t extprobe-sandbox:v3 sandbox/v3
 #   probe mode also needs: docker build -f docker/Dockerfile.probe -t extprobe-sandbox:v3.1-probe sandbox/probe
 #   (or all three: powershell -File docker/build.ps1)
@@ -82,7 +86,7 @@ Other commands: `extprobe verify-freeze`, `extprobe score-v3 --traces DIR`, `ext
 extprobe analyze path/to/extension --probe --out out/
 ```
 
-Some behavior only appears after a user clicks something. The probe opens the pages the manifest declares (popup, options), lists their visible controls, and clicks them in priority order, filling forms with fake `PROBE` values. Limits: at most 15 clicks, 3 levels deep, a 30-second budget for the whole exploration (often much less: a small popup takes a few seconds). It never clicks controls that look destructive or financial (delete, reset, uninstall, buy, …), log-in or sign-up controls, or links to external sites. An extension with no popup or options page gives the probe nothing to do (the run then equals a normal v3 run). It uses the image `extprobe-sandbox:v3.1-probe` and is scored with `score_v31`, which is `score_v3` applied to the run with the effects of the clicks themselves removed.
+Some behavior only appears after a user clicks something. The probe opens the pages the manifest declares (popup, options), lists their visible controls, and clicks them in priority order, filling forms with fake `PROBE` values. Limits: at most 15 clicks, 3 levels deep, a time budget of at most 30 seconds (5.6 s in our test). It never clicks controls that look destructive or financial (delete, reset, uninstall, buy, …), log-in or sign-up controls, or links to external sites. An extension with no popup or options page gives the probe nothing to do (the run then equals a normal v3 run). It uses the image `extprobe-sandbox:v3.1-probe` and is scored with `score_v31`, which is `score_v3` applied to the run with the effects of the clicks themselves removed.
 
 **Proxy safety.** An extension can ask Chrome to route traffic through a proxy. In probe mode that never takes effect: a managed Chrome policy (`ProxyMode=direct`, baked into the image) makes the setting uncontrollable, `chrome.proxy.settings` calls are recorded and neutralized in every extension context, and a monitor checks the effective configuration every 2 seconds. Calls the extension made are listed under Diagnostics (`proxy_set_calls`, `proxy_configured`, `policy_in_force`, `proxy_unwrapped_set`).
 
@@ -127,13 +131,12 @@ See [REPRODUCE.md](REPRODUCE.md). The quick checks need no Docker: `python -m py
 Cite this software with [CITATION.cff](CITATION.cff) (GitHub's "Cite this repository"), or:
 
 ```bibtex
-@inproceedings{extprobe,
-  title     = {<PAPER_TITLE>},
-  author    = {Tran, Duong Tien and Tran, Truong Tuan Phat and Vu, Duc Ly},
-  booktitle = {Proc. IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER), Tool Demonstrations},
-  year      = {2027},
-  note      = {Software: <REPO_URL>}
+@software{extprobe,
+  title  = {ExtProbe},
+  author = {Tran, Duong Tien and Tran, Truong Tuan Phat and Vu, Duc Ly},
+  year   = {2026},
+  url    = {<REPO_URL>}
 }
 ```
 
-Licensed under the MIT License ([LICENSE](LICENSE)). Contact: <CONTACT_EMAIL>.
+Licensed under the MIT License ([LICENSE](LICENSE)). Contact: tien.tran2213442bku@hcmut.edu.vn.
