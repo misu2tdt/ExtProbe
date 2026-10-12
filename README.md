@@ -82,11 +82,11 @@ Other commands: `extprobe verify-freeze`, `extprobe score-v3 --traces DIR`, `ext
 extprobe analyze path/to/extension --probe --out out/
 ```
 
-Some behavior only appears after a user clicks something. The probe opens the pages the manifest declares (popup, options), lists their visible controls, and clicks them in priority order, filling forms with fake `PROBE` values: at most 15 clicks, 3 levels deep, about 30 seconds. It uses the image `extprobe-sandbox:v3.1-probe` and is scored with `score_v31`, which is `score_v3` applied to the run with the effects of the clicks themselves removed.
+Some behavior only appears after a user clicks something. The probe opens the pages the manifest declares (popup, options), lists their visible controls, and clicks them in priority order, filling forms with fake `PROBE` values. Limits: at most 15 clicks, 3 levels deep, a 30-second budget for the whole exploration (often much less: a small popup takes a few seconds). It never clicks controls that look destructive or financial (delete, reset, uninstall, buy, …), log-in or sign-up controls, or links to external sites. An extension with no popup or options page gives the probe nothing to do (the run then equals a normal v3 run). It uses the image `extprobe-sandbox:v3.1-probe` and is scored with `score_v31`, which is `score_v3` applied to the run with the effects of the clicks themselves removed.
 
-**Proxy safety.** An extension can ask Chrome to route traffic through a proxy. In probe mode that never takes effect: a managed Chrome policy (`ProxyMode=direct`, baked into the image) makes the setting uncontrollable, `chrome.proxy.settings` calls are recorded and neutralized in every extension context, and a monitor checks the effective configuration every 2 seconds. The report shows what the extension tried.
+**Proxy safety.** An extension can ask Chrome to route traffic through a proxy. In probe mode that never takes effect: a managed Chrome policy (`ProxyMode=direct`, baked into the image) makes the setting uncontrollable, `chrome.proxy.settings` calls are recorded and neutralized in every extension context, and a monitor checks the effective configuration every 2 seconds. Calls the extension made are listed under Diagnostics (`proxy_set_calls`, `proxy_configured`, `policy_in_force`, `proxy_unwrapped_set`).
 
-**Limits.** The probe clicks only controls that have a visible label in English. Controls without a label or with a non-English label are skipped and counted. It cannot log in, so behavior behind a sign-in is not reached.
+**Limits.** The probe clicks only controls that have a visible label in English. Controls without a label or with a non-English label are skipped and counted (`skipped_unlabeled`, `skipped_non_english` in Diagnostics). It cannot create an account or log in, so behavior behind a sign-in is not reached; such pages are recorded as `login_gate`. It also does not enumerate popups built in shadow DOM or iframes, or `select` menus (`evaluation/probe/DESIGN.md`, section 8).
 
 ## Safety
 
@@ -117,10 +117,10 @@ See [REPRODUCE.md](REPRODUCE.md). The quick checks need no Docker: `python -m py
 
 ## Limitations
 
-- A run is short (tens of seconds of extension activity). Behavior that needs more time, such as a delayed payload, may not appear.
-- Behavior behind a login, a specific website, a purchase or other real interaction can stay hidden. The probe only clicks English-labeled controls on the extension's own pages.
-- The score is a prioritization aid. In the evaluation it flags some benign extensions and misses some harmful ones (see `evaluation/v3/operating_points/results.md`); a human reads the evidence.
-- Local Docker image ids are not reproducible between builds; `PROVENANCE.md` records the ids used for the evaluations.
+- A run is short: about 40-50 s per extension (container wall time, median; 90th percentile about 60 s). The observation phases are fixed: about 3 s of loading, about 14 s on the honeypot pages, then up to about 33 s of target-matched pages. Behavior that waits longer, or on a remote configuration or timer (for example a 60-second delay before a banner), may not appear. *Sources: `evaluation/v3/operating_points/results.md` (run time table); `evaluation/v3/audit/report.md` (delay example); `evaluation/probe/DESIGN.md` (sections 8 and the phase durations in the beaconing check).*
+- Behavior behind a login, a specific website or real interaction can stay hidden. In the probe trial, 5 of 43 samples sat behind a login gate, and the probe produced no click in 24 of the 43 samples, mostly because all controls were non-English or on the deny list. The probe clicks only English-labeled controls. *Sources: `evaluation/probe/results.md` (login_gate row), `evaluation/probe/posthoc.md` (section 1), `evaluation/probe/CRITERIA.md`.*
+- The score is a prioritization aid, not a classifier you can rely on alone. At the threshold of 40, v3 flagged 8.9% of the held-out benign set (17 of 192) and 14.7% (41/278) of dev samples labeled malicious by public datasets of mixed provenance (111 of the 278 with human-reviewed labels, the rest news-sourced; see `evaluation/v3/labels/report.md`); on the in-the-wild set A it flagged 2.3% (5 of 215). Many harmful behaviors are therefore not flagged, and some benign extensions are. *Sources: `evaluation/v3/test/results.md`, `evaluation/v3/operating_points/results.md`, `evaluation/v3/in_the_wild/results.md`, `evaluation/v3/labels/report.md`.*
+- Local Docker image ids are not reproducible between builds; `PROVENANCE.md` (section 4) records the ids used for the evaluations, and `docker/README.md` explains what pins the build.
 
 ## Citation, license, contact
 
