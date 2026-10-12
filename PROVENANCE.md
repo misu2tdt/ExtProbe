@@ -104,6 +104,8 @@ of every file in `PROVENANCE/frozen_files.tsv`. A rebuilt image will have a diff
 | corpus profile (paper) | `sha256:31f312f7e0d2a406030cab12f25ca469367c4a3de12bfcb2177ef7496b2bab64` | `mcr.microsoft.com/playwright/python:v1.40.0-jammy@sha256:5656288def8576b31903becabac255b19bc01ee961ddb499de3418d52f55ed2a` (Chromium 120); its Dockerfile is not carried |
 | superseded probe images (never used for the official trial) | `sha256:8348c13a1c220775ae0fccada1173994227562794cd3824cfab91d22b38e5b3d` (iptables egress gate), `sha256:2ae86e6e0042ac66de2a6deeaef77641189e682f7163212db2f03ec58b24e7c8` (before the second review) | |
 
+**Container run configuration.** The images and entrypoints are the frozen ones. `extprobe analyze` of this release starts the container with the evaluation's limits and capabilities plus `--cap-add FOWNER`, `--cap-add SYS_CHROOT` and `--security-opt seccomp=docker/seccomp_profile.json` (Playwright's profile, Apache-2.0, see `docker/seccomp_profile.NOTICE`), so that Chromium's own sandbox works on Linux hosts (found in GitHub Codespaces). The evaluations were run on Docker Desktop on Windows without them; they do not change what is collected.
+
 ## 5. What is not published, and what was changed for publication
 
 * **In-the-wild set A** (215 extensions): no per-extension data. `evaluation/v3/in_the_wild/set_A_summary.md` gives the count, the sha256 of the

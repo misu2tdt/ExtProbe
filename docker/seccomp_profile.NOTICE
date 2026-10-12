@@ -1,0 +1,16 @@
+Third-party file: seccomp_profile.json
+
+  seccomp_profile.json is Playwright's Docker seccomp profile, copied unchanged.
+
+  Source:    https://github.com/microsoft/playwright/blob/ae935a43d9e376e4759548f6b3c6905c7b282333/utils/docker/seccomp_profile.json
+             (ae935a4 is the last commit that touched the file; it was identical on main, 606f017a1b51, when it was fetched)
+  Raw URL:   https://raw.githubusercontent.com/microsoft/playwright/main/utils/docker/seccomp_profile.json
+  Fetched:   2026-10-13
+  SHA-256:   cc3e61cabda6bbc1e53e54d27ba4d55a9d3be829b6dd1a596f4a7b31b1cc7849
+  Copyright: Microsoft Corporation (Playwright)
+  License:   Apache License 2.0, https://github.com/microsoft/playwright/blob/main/LICENSE
+             full text: docker/LICENSE-APACHE-2.0 in this repository (standard text, also https://www.apache.org/licenses/LICENSE-2.0)
+
+Why it is here: Docker's default seccomp profile blocks unshare(CLONE_NEWUSER), which Chromium's namespace sandbox needs on Linux hosts.
+This profile allows it, so `extprobe analyze` can run the container with the Chromium sandbox enabled (see docs/TROUBLESHOOTING.md and
+REPRODUCE.md). JSON cannot hold comments, so the notice is in this file. Update it if the profile is replaced.

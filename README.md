@@ -87,13 +87,13 @@ ExtProbe is for analysts, store or enterprise reviewers and researchers who want
 | Disk | About 2.5 GB for the images: the base image, v3 and v3.1-probe share layers (v3 and probe add under 1 MB). A source build also leaves Docker build cache, which can add several GB (`docker builder prune` removes it). |
 | RAM | One analysis is limited to 3 GB of memory and 512 processes, so Docker (Docker Desktop: Settings > Resources) must be able to give 3 GB. |
 | Time | About 25 to 60 s per extension (the canary takes about 45 s). Building from source took 14 s with a warm cache and 26 s with `--no-cache` when the Playwright base image was already on the machine; on a fresh machine add the download of that image (about 2 GB). |
-| OS tried | Windows 11 with Docker Desktop. The tests and `verify-freeze` also run on Ubuntu in CI; Docker runs on Linux and macOS have not been tried by the authors. |
+| OS tried | Windows 11 with Docker Desktop; Linux x86_64 in GitHub Codespaces. The tests and `verify-freeze` also run on Ubuntu in CI. Docker runs on macOS have not been tried by the authors. |
 
 Problems with Docker, antivirus or the image: see [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md).
 
 ### Platform notes
 
-- **x86_64 (Windows, Linux, Intel Mac): supported.** Tested on Windows 11 with Docker Desktop.
+- **x86_64 (Windows, Linux, Intel Mac): supported.** Tested on Windows 11 with Docker Desktop and on Linux x86_64 in GitHub Codespaces (Docker 29, docker-in-docker).
 - **Apple Silicon (M1 and later): untested by the authors.** The images are `linux/amd64`. Enable Rosetta emulation in Docker Desktop, then build and run with `--platform linux/amd64` (or `export DOCKER_DEFAULT_PLATFORM=linux/amd64`, which `docker/build.py` and `extprobe analyze` honor). Emulation is slower than native, and timing-dependent detectors may differ from the frozen results. GitHub Codespaces avoids the emulation.
 
 ## Usage
@@ -223,4 +223,4 @@ Cite this software with [CITATION.cff](CITATION.cff) (GitHub's "Cite this reposi
 }
 ```
 
-Licensed under the MIT License ([LICENSE](LICENSE)). Contact: tien.tran2213442bku@hcmut.edu.vn.
+Licensed under the MIT License ([LICENSE](LICENSE)). Third-party file: `docker/seccomp_profile.json` is Playwright's Docker seccomp profile, Apache-2.0 (source and date in [docker/seccomp_profile.NOTICE](docker/seccomp_profile.NOTICE), full license text in [docker/LICENSE-APACHE-2.0](docker/LICENSE-APACHE-2.0)). Contact: tien.tran2213442bku@hcmut.edu.vn.

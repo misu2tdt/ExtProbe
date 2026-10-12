@@ -122,3 +122,54 @@ def test_build_py_platform(monkeypatch, args, env, expect):
     assert len(builds) == 3
     for cmd in builds:
         assert (["--platform", "linux/amd64"] == cmd[cmd.index("--platform"):cmd.index("--platform") + 2]) if expect else "--platform" not in cmd
+
+
+# ---- Linux: capabilities, Playwright's seccomp profile, failure log ----
+def _docker_run_cmd(monkeypatch, tmp_path):
+    crx = tmp_path / "e.crx"
+    crx.write_bytes(b"Cr24")
+    calls = _capture_run(monkeypatch)
+    A.run_container("mine:v3", crx, tmp_path / "run", 10)
+    return calls[-1]
+
+
+def _pairs(cmd, flag):
+    return [cmd[i + 1] for i, x in enumerate(cmd) if x == flag]
+
+
+def test_run_container_linux_caps_and_seccomp(monkeypatch, tmp_path):
+    cmd = _docker_run_cmd(monkeypatch, tmp_path)
+    caps = _pairs(cmd, "--cap-add")
+    assert {"FOWNER", "SYS_CHROOT"} <= set(caps)                           # Linux hosts (Codespaces)
+    assert {"NET_RAW", "CHOWN", "SETUID", "SETGID", "KILL"} <= set(caps)    # the evaluation configuration is kept
+    assert _pairs(cmd, "--cap-drop") == ["ALL"] and "--privileged" not in cmd
+    sec = _pairs(cmd, "--security-opt")
+    assert "no-new-privileges" in sec and not any("unconfined" in s for s in sec)
+    prof = [s for s in sec if s.startswith("seccomp=")]
+    assert len(prof) == 1
+    path = Path(prof[0][len("seccomp="):])
+    assert path.is_absolute() and path.is_file() and path == A.SECCOMP_PROFILE
+
+
+def test_seccomp_profile_is_valid_and_allows_userns():
+    import json
+    d = json.loads(A.SECCOMP_PROFILE.read_bytes().decode("utf-8"))
+    assert "defaultAction" in d
+    names = {n for rule in d["syscalls"] for n in rule.get("names", [])}
+    assert "unshare" in names and "clone" in names                        # Chromium's namespace sandbox
+    assert (ROOT / "docker" / "seccomp_profile.NOTICE").is_file()
+
+
+def test_failed_container_output_is_kept_and_tail_printed(monkeypatch, tmp_path, capsys):
+    crx = tmp_path / "e.crx"
+    crx.write_bytes(b"Cr24")
+    out = "\n".join(f"line {i}" for i in range(30))
+    monkeypatch.setattr(subprocess, "run", lambda cmd, **k: subprocess.CompletedProcess(cmd, 1, out, "Failed to launch the browser process\n"))
+    assert A.run_container("mine:v3", crx, tmp_path / "run", 10) == 1
+    log = (tmp_path / "run" / "docker_output.log").read_text(encoding="utf-8")
+    assert "line 0" in log and "line 29" in log and "Failed to launch the browser process" in log and "exit code 1" in log
+    err = capsys.readouterr().err
+    assert "line 29" in err and "Failed to launch" in err and "line 5" not in err      # only the last 20 lines
+    monkeypatch.setattr(subprocess, "run", lambda cmd, **k: subprocess.CompletedProcess(cmd, 0, "ok", ""))
+    A.run_container("mine:v3", crx, tmp_path / "run2", 10)
+    assert not (tmp_path / "run2" / "docker_output.log").exists()

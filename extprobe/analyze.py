@@ -28,6 +28,7 @@ IMAGE_V3 = "extprobe-sandbox:v3"
 IMAGE_PROBE = "extprobe-sandbox:v3.1-probe"
 # the file that records the id of each frozen image
 IMAGE_DOCS = {IMAGE_V3: ROOT / "docs" / "v3" / "IMAGE.md", IMAGE_PROBE: ROOT / "evaluation" / "probe" / "IMAGE.md"}
+SECCOMP_PROFILE = ROOT / "docker" / "seccomp_profile.json"      # Playwright's profile (Apache-2.0), see docker/seccomp_profile.NOTICE
 DEFAULT_TIMEOUT = {IMAGE_V3: 180, IMAGE_PROBE: 240}
 RUN_NAME = "run"          # folder name of the single run inside <out>/traces (no extension id in paths)
 EXIT_OK, EXIT_USAGE, EXIT_ENV, EXIT_RUN = 0, 2, 3, 4
@@ -115,13 +116,30 @@ def run_container(image, crx, run_dir, timeout, platform=None):
     staged = run_dir / "extension.crx"
     shutil.copy2(crx, staged)
     host = str(run_dir.resolve()).replace("\\", "/")
+    if not SECCOMP_PROFILE.is_file():
+        raise AnalyzeError(f"seccomp profile not found: {SECCOMP_PROFILE} (is this a complete checkout of the repository?)")
     cmd = ["docker", "run", "--rm", *(["--platform", platform] if platform else []), "-v", f"{host}:/work", "--tmpfs", "/work/output/extension_unpacked:size=1g",
            "--memory", "3g", "--pids-limit", "512", "--cap-drop", "ALL", "--cap-add", "NET_RAW", "--cap-add", "CHOWN",
-           "--cap-add", "SETUID", "--cap-add", "SETGID", "--cap-add", "KILL", "--security-opt", "no-new-privileges",
+           "--cap-add", "SETUID", "--cap-add", "SETGID", "--cap-add", "KILL",
+           # Added for Linux hosts (found in Codespaces: Docker 29, docker-in-docker); the frozen entrypoint and image are unchanged.
+           # FOWNER: the entrypoint chmods the bind-mounted /work/output, which the host user owns; without it root gets "Operation not permitted".
+           "--cap-add", "FOWNER",
+           # SYS_CHROOT: Chromium's zygote chroots to /proc/self/fdinfo/ when its sandbox starts.
+           "--cap-add", "SYS_CHROOT",
+           # Docker's default seccomp profile blocks unshare(CLONE_NEWUSER), which Chromium's namespace sandbox needs. Playwright's own profile
+           # allows it, so the Chromium sandbox stays enabled (seccomp=unconfined would work but is far too broad).
+           "--security-opt", f"seccomp={SECCOMP_PROFILE}",
+           "--security-opt", "no-new-privileges",
            image, "/work/extension.crx", "/work/output", str(timeout)]
     try:
         p = subprocess.run(cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=timeout + 90)
         (run_dir / "container.log").write_text((p.stdout or "")[-20000:], encoding="utf-8")
+        if p.returncode != 0:
+            log = run_dir / "docker_output.log"                     # the container is --rm: keep what docker printed
+            text = f"$ {' '.join(cmd)}\nexit code {p.returncode}\n--- stdout ---\n{p.stdout or ''}\n--- stderr ---\n{p.stderr or ''}\n"
+            log.write_text(text, encoding="utf-8")
+            tail = "\n".join(((p.stdout or "") + (p.stderr or "")).splitlines()[-20:])
+            print(f"[extprobe] container exited with code {p.returncode}; last 20 lines (everything is in {log}):\n{tail}", file=sys.stderr)
         return p.returncode
     except subprocess.TimeoutExpired:
         raise AnalyzeError("The container did not finish in time and was abandoned (docker wall timeout).", EXIT_RUN)
@@ -135,7 +153,7 @@ def score_run(run_dir, probe, crx):
     import score_v3 as S
     evp = run_dir / "output" / "events.json"
     if not evp.exists():
-        raise AnalyzeError("The sandbox produced no events.json (see container.log in the traces folder).", EXIT_RUN)
+        raise AnalyzeError("The sandbox produced no events.json (see container.log and, if the container failed, docker_output.log in the traces folder).", EXIT_RUN)
     ev = json.loads(evp.read_text(encoding="utf-8"))
     rs = ev.get("run_status") or {}
     if rs.get("status") == "failed":

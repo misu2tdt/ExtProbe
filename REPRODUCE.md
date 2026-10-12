@@ -50,6 +50,8 @@ extprobe analyze examples/canary --image extprobe-local:v3 --out out/
 # expected in both cases: 100, Flagged for review, credential_exfil, local_harvest, unsolicited_tab
 ```
 
+The release runs the container with CAP_FOWNER, CAP_SYS_CHROOT and Playwright's seccomp profile (`docker/seccomp_profile.json`) in addition to the configuration of the evaluations, so that the Chromium sandbox works on Linux hosts (the evaluations ran on Docker Desktop on Windows, where this was not needed). These settings do not change the collected behavior: the canary and the demo give the same score and detectors on Docker Desktop with and without them.
+
 Local image ids are not reproducible between builds. A source build has a different id from the frozen image (`--image` skips the id check); the build is pinned by the base-image digest, `sandbox/base/requirements.v2.txt` and the sha256 of every frozen file. The ids used for the evaluations are in `PROVENANCE.md` (section 4).
 
 ## 4. How to read PROVENANCE.md
