@@ -176,19 +176,14 @@ def build_json(name, sha, image, image_id, probe, res, extra, started):
             "static_display": res["static_display"], **extra, "note": NOTE}
 
 
-def build_html(name, ev, res, probe):
+def build_html(name, ev, res, probe, extra=None):
     import report.report_v3 as R
-    sc = res["score"]
-    row = [{"sample": name, "name": ev.get("manifest", {}).get("name"), "score": sc, "label": R.label_of(sc),
-            "signals": ", ".join(res["fired"]), "static (display)": res["static_display"]["static_score"]}]
     mode = "probe mode (v3.1)" if probe else "v3"
+    diag = {"probe": extra["probe"], "view": extra["view"]} if extra and probe else None
     return ("<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
             f"<title>ExtProbe report</title><style>{R.CSS}</style></head><body><h1>ExtProbe report</h1>"
-            f"<p><span class='{R.label_class(sc)}' style='font-size:18px'>{sc} / 100 &mdash; {R.e(R.label_of(sc))}</span></p>"
-            f"<p class='mut'>{R.e(R.NOTE)} Mode: {mode}. Flagged for review = score &ge; {R.FLAG_AT}; "
-            f"review suggested = {R.REVIEW_AT}&ndash;{R.FLAG_AT - 1}. Static is shown, not scored.</p>"
-            + R.table(row, ["sample", "name", "score", "label", "signals", "static (display)"]) + R.sample_html(name, ev, res)
-            + "</body></html>")
+            f"<p class='mut'>{R.e(name)} &middot; {R.e(ev.get('manifest', {}).get('name'))} &middot; {mode}</p>"
+            + R.headline(res) + R.analyst_sections(ev, res, diag) + "</body></html>")
 
 
 def parse(argv):
@@ -221,7 +216,7 @@ def run(a):
     name = Path(a.target).name
     (out / "report.json").write_text(json.dumps(build_json(name, sha, image, image_id, a.probe, res, extra, started),
                                                 indent=1, ensure_ascii=False, default=str), encoding="utf-8")
-    (out / "report.html").write_text(build_html(name, ev, res, a.probe), encoding="utf-8")
+    (out / "report.html").write_text(build_html(name, ev, res, a.probe, extra), encoding="utf-8")
     from report.report_v3 import NOTE
     print(f"score:     {res['score']} / 100")
     print(f"level:     {label_of(res['score'])}")

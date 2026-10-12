@@ -136,3 +136,59 @@ def test_reports_use_only_the_three_labels(score):
             assert bad not in low, bad
         assert "it is not a malware verdict" in low
     assert A.label_of(score) in html and json.loads(js)["label"] == A.label_of(score)
+
+
+# ---- analyst report: sentences, merged evidence, no internal codes ----
+INTERNAL = (r"\bT[12]-\d", r"\bA[24]\b", "v3 sensors")
+
+
+def _exfil_trace(n=3, **kw):
+    import score_v3 as S
+    ev = {"manifest": {"name": "t", "permissions": [], "host_permissions": [], "content_scripts": []}, "startup": {"profile": "v3"},
+          "install_ts": 1000.0, "service_workers": [{"url": "chrome-extension://" + "a" * 32 + "/sw.js"}],
+          "network_requests": [{"origin": "service_worker", "source": "cdp_sw", "resource_type": "Fetch", "url": "https://c2.example-evil.net/collect",
+                                "method": "POST", "post_data": '{"cred":"HONEYPOT-PASSWORD","pad":"' + "x" * 300 + '"}',
+                                "ts": 1000.0 + 1000 * i, "phase_ts": "load"} for i in range(n)],
+          "page_request_initiators": [], "dom_activity": [], "page_api_hooks": [], "tabs_v3": [], "new_tabs": [],
+          "extension_storage": {}, "page_hang_count": 0}
+    ev.update(kw)
+    return ev, S.score_trace(ev)
+
+
+def test_sentence_counts_merge_and_excerpt_limit():
+    import report.report_v3 as R
+    ev, res = _exfil_trace(3)
+    assert res["signals"]["credential_exfil"]["fired"]
+    (k, sentence, rows), = [x for x in R.what_it_did(ev, res) if x[0] == "credential_exfil"]
+    assert sentence == ("The service worker sent a honeypot password to c2.example-evil.net (3 requests, plain text).")
+    assert len(rows) == 1 and rows[0]["Count"] == "×3"                     # three identical requests -> one line
+    assert rows[0]["First–last"] == "+0.0 to +2.0 s"
+    assert rows[0]["From"] == "sw.js" and rows[0]["Phase"] == "load"
+    assert len(rows[0]["Data (max 120 chars)"]) <= 120
+
+
+def test_signals_lists_only_fired_and_not_observed():
+    import re
+    import report.report_v3 as R
+    ev, res = _exfil_trace(2)
+    html = R.analyst_sections(ev, res)
+    assert "Credential exfiltration" in html and "+80" in html
+    assert re.search(r"Not observed: [^<]*Beaconing", html)
+    assert not re.search(r"Not observed: [^<]*Credential exfiltration", html)
+    assert "<details><summary>Diagnostics</summary>" in html            # collapsed (no 'open')
+    assert html.index("Evidence") < html.index("Diagnostics") < html.index("Manifest risk (shown for information, not scored)")
+
+
+def test_no_internal_codes_in_report():
+    import re
+    import report.report_v3 as R
+    ev, res = _exfil_trace(2)
+    page = R.headline(res) + R.analyst_sections(ev, res) + R.sample_html("s", ev, res)
+    for pat in INTERNAL:
+        assert not re.search(pat, page), pat
+
+
+def test_clean_trace_says_nothing_notable():
+    import report.report_v3 as R
+    ev, res = _exfil_trace(0)
+    assert res["score"] == 0 and "No notable behavior was observed" in R.analyst_sections(ev, res)
