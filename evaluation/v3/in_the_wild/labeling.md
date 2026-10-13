@@ -45,4 +45,4 @@ Both are missed because the identifier rules of `score_v3` do not cover the patt
 
 ## 6. Case study (pattern only)
 
-One flagged sample, labelled undisclosed-collection, sends the visited URLs and page titles to the developer's own server while its store listing declares no data collection. It was flagged by `history_exfil` (50 points).
+One flagged sample, labelled undisclosed-collection, sends the full URL of each visited page to the developer's own server (the service worker, in requests made while the harness visited its pages; no page titles were seen in the requests) while its store listing declares no data collection. It was flagged by `history_exfil` (50 points).
