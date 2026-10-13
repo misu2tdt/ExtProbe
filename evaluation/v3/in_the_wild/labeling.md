@@ -1,6 +1,6 @@
 # In-the-wild audit: blind labelling (aggregates only)
 
-Aggregates only: no extension ID, name or domain, no code-to-sample mapping, no rater sheets and no free-text reasons. The mapping and the rater sheets stay in the private development repository. Plan: `CRITERIA.md`, Amendments 2 and 4. Flag = score >= 40 (v3 as frozen, one run per set). Wilson 95% intervals (the `wilson` function of `evaluation/v3/audit/summarize.py`).
+Aggregates only, plus `ratings.csv` (anonymous dossier codes `L-001`..`L-026` with the flag and the labels of rater A, rater B and the final label; no extension ID, name or domain, no code-to-sample mapping, no rater sheets and no free-text reasons). `python evaluation/v3/in_the_wild/compute_kappa.py --ratings evaluation/v3/in_the_wild/ratings.csv` reproduces section 2. The mapping and the rater sheets stay in the private development repository. Plan: `CRITERIA.md`, Amendments 2 and 4. Flag = score >= 40 (v3 as frozen, one run per set). Wilson 95% intervals (the `wilson` function of `evaluation/v3/audit/summarize.py`).
 
 ## 1. Protocol
 

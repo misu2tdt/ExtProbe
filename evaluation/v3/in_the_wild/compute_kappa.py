@@ -8,8 +8,9 @@
 --matrix   square CSV of counts: first row = header ("", label1, label2, ...), then one row per rater-A label: label, n(A=label,B=label1), ...
            (rows = rater A, columns = rater B, same label order in rows and columns).
 Prints n, exact agreement k/n, expected chance agreement, Cohen's kappa (unweighted, over the labels that occur) and the confusion matrix.
-The per-dossier labels of the in-the-wild audit are NOT in this repository (the rater sheets name developer domains and stay in the private
-development repository); see evaluation/v3/in_the_wild/labeling.md for the published aggregates (24/26 agreement, kappa 0.862).
+The anonymous per-dossier labels of the in-the-wild audit are in evaluation/v3/in_the_wild/ratings.csv (columns dossier_id, flagged, rater_a, rater_b, final;
+no extension id, name, domain or free text). The rater sheets with evidence and the dossier-to-extension mapping stay in the private development repository.
+Expected result on ratings.csv: 24 / 26 agreement, kappa 0.862 (summary in evaluation/v3/in_the_wild/labeling.md).
 """
 import argparse
 import csv

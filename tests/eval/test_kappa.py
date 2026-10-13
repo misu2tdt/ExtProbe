@@ -29,3 +29,20 @@ def test_ratings_and_matrix_agree(tmp_path):
 def test_perfect_agreement_and_label_order():
     r = K.from_ratings([("x", "x"), ("y", "y"), ("y", "y")])
     assert r["kappa"] == 1.0 and r["agree"] == 3
+
+
+def test_published_ratings_reproduce_the_reported_numbers():
+    import csv
+    from collections import Counter
+    p = ROOT / "evaluation/v3/in_the_wild/ratings.csv"
+    rows = list(csv.DictReader(open(p, encoding="utf-8", newline="")))
+    assert [r["dossier_id"] for r in rows] == [f"L-{i:03d}" for i in range(1, 27)]
+    r = K.from_ratings([(x["rater_a"], x["rater_b"]) for x in rows])
+    assert (r["n"], r["agree"]) == (26, 24) and round(r["kappa"], 3) == 0.862
+    assert Counter(x["final"] for x in rows) == {"undisclosed-collection": 3, "grey": 8, "benign": 15}      # 0 harmful
+    flagged = [x for x in rows if x["flagged"] == "yes"]
+    assert len(flagged) == 6 and not [x for x in flagged if x["final"] == "benign"]
+    unflagged = [x for x in rows if x["flagged"] == "no"]
+    assert len(unflagged) == 20 and sum(x["final"] == "undisclosed-collection" for x in unflagged) == 2
+    text = p.read_text(encoding="utf-8")
+    assert "http" not in text and "." not in text and not __import__("re").search(r"[a-p]{32}", text)
