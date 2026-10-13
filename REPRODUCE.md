@@ -35,7 +35,7 @@ The paper's table and figure numbers are not recorded in this repository; the fi
 
 Scripts in an `as_run/` folder are kept exactly as they were run, as a record; they read private inputs and are not runnable in this layout.
 
-Re-scoring the archived traces reproduces all reported scores and flags exactly (1,319 traces, 0 mismatches); live re-runs can differ for timing-dependent detectors (10/11 identical flags in a smoke re-run); see [evaluation/reproducibility.md](evaluation/reproducibility.md). The blind labelling of the in-the-wild audit is summarized in [evaluation/v3/in_the_wild/labeling.md](evaluation/v3/in_the_wild/labeling.md).
+Re-scoring the archived traces reproduces all reported scores and flags exactly (1,319 traces, 0 mismatches); live re-runs can differ for timing-dependent detectors (10/11 identical flags in a smoke re-run); see [evaluation/reproducibility.md](evaluation/reproducibility.md). A repeat on Linux (GitHub Codespaces, image built from source) gave the same flags, detectors and scores as the Windows re-run in 11 of 11 runs (section "Linux (GitHub Codespaces)" of that page). The blind labelling of the in-the-wild audit is summarized in [evaluation/v3/in_the_wild/labeling.md](evaluation/v3/in_the_wild/labeling.md).
 
 ## 3. Re-running the sandbox yourself
 

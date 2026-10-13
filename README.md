@@ -126,6 +126,22 @@ extprobe analyze examples/demo --image extprobe-local:v3 --out out/    # Option 
 
 If the `extprobe` command is not on your PATH, use `python -m extprobe analyze ...`. Options: `--probe` (probe mode, below), `--image TAG`, `--platform linux/amd64`, `--timeout SECONDS`, `--skip-image-check`, `--out DIR` (default `extprobe-out`). Other commands: `extprobe verify-freeze`, `extprobe score-v3 --traces DIR`, `extprobe score-v31 --traces DIR`.
 
+## Analyze your own extension
+
+1. Find the extension's id: the 32 letters at the end of its Chrome Web Store URL (`https://chromewebstore.google.com/detail/<name>/<id>`).
+2. Download its `.crx` from Google's own update service, the endpoint Chrome itself uses (no third-party download site). This only downloads the file; nothing is installed.
+   ```bash
+   EXT_ID=abcdefghijklmnopabcdefghijklmnop          # replace with the id
+   curl -L -o ext.crx "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D${EXT_ID}%26uc"
+   ```
+   PowerShell: `$id = "abcdefghijklmnopabcdefghijklmnop"; Invoke-WebRequest "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D$id%26uc" -OutFile ext.crx`. Check the store's terms for your use. An already unpacked extension folder (with `manifest.json`) works as well.
+3. Analyze it (keep `--out` inside your working folder; add `--platform linux/amd64` on Apple Silicon):
+   ```bash
+   python -m extprobe analyze ext.crx --image extprobe-local:v3 --out out/       # Option B image; omit --image with the frozen image
+   ```
+
+Only Manifest V3 extensions are supported. Treat the `.crx` as untrusted: never open it outside the sandbox. **Most benign extensions show "No notable behavior observed"; that is the expected result.** A "Review suggested" or "Flagged for review" level means "look at the evidence", not "malicious": on the held-out benign set 17 of 192 extensions were flagged (see [Evaluation summary](#evaluation-summary)).
+
 ## Reading the report
 
 **Level.** The score maps to one of three levels. The wording is deliberate: it says where to look, not what the extension is.

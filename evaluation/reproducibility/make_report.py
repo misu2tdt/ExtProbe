@@ -5,9 +5,45 @@ _ap = argparse.ArgumentParser(description="Write REPORT.md from rescore_summary.
 _ap.add_argument("--summary", required=True)
 _ap.add_argument("--smoke", required=True)
 _ap.add_argument("--out", required=True)
+_ap.add_argument("--linux-expected", help="optional: expected.csv of the Linux smoke bundle (adds the Linux subsection)")
+_ap.add_argument("--linux-results", help="optional: results.csv written by the bundle's run.sh")
+_ap.add_argument("--linux-env", default="", help="optional: environment line of the Linux run")
 _a = _ap.parse_args()
 S = json.loads(Path(_a.summary).read_text(encoding="utf-8"))
 M = json.loads(Path(_a.smoke).read_text(encoding="utf-8"))
+
+
+def linux_section():
+    """Optional subsection: the same 11 runs repeated on a Linux host (labels only)."""
+    if not (_a.linux_expected and _a.linux_results):
+        return []
+    import csv
+    rd = lambda f: {r["label"]: r for r in csv.DictReader(open(f, encoding="utf-8", newline=""))}
+    exp, res = rd(_a.linux_expected), rd(_a.linux_results)
+    det = lambda s: set(x for x in (s or "").split(";") if x)
+    fl = lambda sc: "FLAG" if int(sc) >= 40 else "no"
+    rows, n = [], dict(w_flag=0, w_det=0, w_score=0, o_flag=0, o_det=0, c=0)
+    for lab, e in exp.items():
+        r = res[lab]
+        sc = int(r["score"])
+        n["c"] += 1
+        n["w_flag"] += (sc >= 40) == (e["windows_rerun_flag"] == "yes")
+        n["w_det"] += det(r["detectors"]) == det(e["windows_rerun_detectors"])
+        n["w_score"] += sc == int(e["windows_rerun_score"])
+        n["o_flag"] += (sc >= 40) == (e["original_flag"] == "yes")
+        n["o_det"] += det(r["detectors"]) == det(e["original_detectors"])
+        rows.append(f"| {lab} | {fl(e['original_score'])} {e['original_score']} | {fl(e['windows_rerun_score'])} {e['windows_rerun_score']} | {fl(sc)} {sc} | "
+                    f"{'yes' if (sc >= 40) == (e['windows_rerun_flag'] == 'yes') and det(r['detectors']) == det(e['windows_rerun_detectors']) else 'NO'} |")
+    c = n["c"]
+    return ["### Linux (GitHub Codespaces)", "",
+            "The same 11 runs were repeated on a Linux host. Environment: " + (_a.linux_env or "Linux x86_64") + ".", "",
+            "| run | original | Windows re-run | Linux re-run | Linux = Windows (flag and detectors)? |", "|---|---|---|---|---|", *rows, "",
+            f"Summary ({c} runs, {'all' if all(r['exit_code'] == '0' for r in res.values()) else 'NOT all'} with exit code 0): same flag as the Windows re-run {n['w_flag']}/{c}, same detectors {n['w_det']}/{c}, same score {n['w_score']}/{c}; "
+            f"same flag as the original run {n['o_flag']}/{c}, same detectors {n['o_det']}/{c} (the differences are F3, U3 and U4 described above).", "",
+            "Platform and image build do not change the results here: the differences from the original run are shared by both re-runs.", ""]
+
+
+LIN = linux_section()
 names = {"test_v3": "held-out benign test set", "dev_v3": "dev set", "itw_A": "in-the-wild set A", "itw_B": "in-the-wild set B",
          "probe_a": "v3.1-probe trial (a), score_v31", "probe_b": "v3.1-probe trial (b), score_v31"}
 L = ["# Reproducibility check: this repository against the development repository", "",
@@ -70,7 +106,7 @@ L += ["", f"Same score {same_score}/{len(M)}, same flag@40 {same_flag}/{len(M)},
       "- Everything else (canary, F1, F2, F4, F5, U1, U2, U5) has the same score and the same detector set, including F4 at exactly 40, the threshold.", "",
       "Live runs reproduce the flag in 10 of 11 cases; the deterministic re-scoring in section 1 is exact. The differences are properties of live execution (timing, the real network), not of the scorer.", "",
       "A second smoke re-run of the same 11 samples (run with the argument-based scripts of this folder) gave the same scores and detector sets in all 11 runs, including F3, so the differences to the original runs are stable on this machine. One possible cause, not tested: the original runs executed two containers in parallel, the re-runs ran one at a time, which can shift request timing.", "",
-      "## How to repeat", "",
+      *LIN, "## How to repeat", "",
       "The scripts are in `evaluation/reproducibility/`; folders are command-line arguments. They need the archived traces and packages of the development repository (a checkout, or a folder with the same layout: `eval/v3/test/traces_v3`, `eval/v3/dev/traces`, `eval/v3/in_the_wild/traces_A` / `traces_B`, `eval/v3_1_probe/traces_a` / `traces_b`, `samples/`; see the path map in `PROVENANCE.md`). These are not part of this repository.", "",
       "```bash",
       "pip install -e .",
@@ -81,6 +117,13 @@ L += ["", f"Same score {same_score}/{len(M)}, same flag@40 {same_flag}/{len(M)},
       "```", "",
       "- The reference for the sets with no recorded per-sample file is the old scorer run on the same stored traces; the same package folder is given to both scorers.",
       "- `run_scores.py` takes a few minutes for the dev set (611 traces), seconds for the others. `smoke.py` runs about 45 s per sample.",
+      "- **Linux smoke re-run** (GitHub Codespaces or any Linux x86-64 host with Docker; the container cannot see `/tmp` under docker-in-docker, so output stays inside the repository):", "",
+      "```bash",
+      "python docker/build.py                                                   # image extprobe-local:v3",
+      "bash evaluation/reproducibility/linux_smoke_run.sh BUNDLE_DIR            # BUNDLE_DIR/expected.csv + BUNDLE_DIR/samples/F1.crx ... U5.crx; canary needs no file",
+      "python evaluation/reproducibility/linux_smoke_compare.py BUNDLE_DIR/expected.csv extprobe-out/linux_smoke/results.csv",
+      "```", "",
+      "  Output goes to `extprobe-out/linux_smoke/` (`OUT`, `IMAGE`, `PYTHON` and `LABELS` can be set; see the header of the script). **The 10 `.crx` files are not distributed** (no packages are published): obtain the same packages separately. The sha256 of every package of the held-out benign set is in `evaluation/manifests/samples_manifest_benign_test.csv`; the mapping from the labels F1-F5 and U1-U5 to those packages (`expected.csv`, which also holds the expected scores) is not published and is available from the authors. Without the packages, `LABELS=canary` still checks the canary.",
       "- Not covered: the MADWeb malware test traces, and re-running the sandbox on the dev, set A / B or probe samples (only the 11 smoke runs)."]
 Path(_a.out).write_text("\n".join(L) + "\n", encoding="utf-8")
 print("\n".join(L[:30]))

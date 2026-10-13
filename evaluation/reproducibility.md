@@ -82,6 +82,28 @@ Live runs reproduce the flag in 10 of 11 cases; the deterministic re-scoring in 
 
 A second smoke re-run of the same 11 samples (run with the argument-based scripts of this folder) gave the same scores and detector sets in all 11 runs, including F3, so the differences to the original runs are stable on this machine. One possible cause, not tested: the original runs executed two containers in parallel, the re-runs ran one at a time, which can shift request timing.
 
+### Linux (GitHub Codespaces)
+
+The same 11 runs were repeated on a Linux host. Environment: GitHub Codespaces (x86_64), Docker 29.8.2 with docker-in-docker, image extprobe-local:v3 built from source with docker/build.py, container started by extprobe analyze with the release flags (--cap-add FOWNER, --cap-add SYS_CHROOT, Playwright's seccomp profile; the Chromium sandbox stays enabled).
+
+| run | original | Windows re-run | Linux re-run | Linux = Windows (flag and detectors)? |
+|---|---|---|---|---|
+| F1 | FLAG 65 | FLAG 65 | FLAG 65 | yes |
+| F2 | FLAG 45 | FLAG 45 | FLAG 45 | yes |
+| F3 | FLAG 100 | no 35 | no 35 | yes |
+| F4 | FLAG 40 | FLAG 40 | FLAG 40 | yes |
+| F5 | FLAG 100 | FLAG 100 | FLAG 100 | yes |
+| U1 | no 0 | no 0 | no 0 | yes |
+| U2 | no 30 | no 30 | no 30 | yes |
+| U3 | no 10 | no 0 | no 0 | yes |
+| U4 | no 25 | no 15 | no 15 | yes |
+| U5 | no 0 | no 0 | no 0 | yes |
+| canary | FLAG 100 | FLAG 100 | FLAG 100 | yes |
+
+Summary (11 runs, all with exit code 0): same flag as the Windows re-run 11/11, same detectors 11/11, same score 11/11; same flag as the original run 10/11, same detectors 8/11 (the differences are F3, U3 and U4 described above).
+
+Platform and image build do not change the results here: the differences from the original run are shared by both re-runs.
+
 ## How to repeat
 
 The scripts are in `evaluation/reproducibility/`; folders are command-line arguments. They need the archived traces and packages of the development repository (a checkout, or a folder with the same layout: `eval/v3/test/traces_v3`, `eval/v3/dev/traces`, `eval/v3/in_the_wild/traces_A` / `traces_B`, `eval/v3_1_probe/traces_a` / `traces_b`, `samples/`; see the path map in `PROVENANCE.md`). These are not part of this repository.
@@ -96,4 +118,13 @@ python evaluation/reproducibility/make_report.py --summary work/rescore_summary.
 
 - The reference for the sets with no recorded per-sample file is the old scorer run on the same stored traces; the same package folder is given to both scorers.
 - `run_scores.py` takes a few minutes for the dev set (611 traces), seconds for the others. `smoke.py` runs about 45 s per sample.
+- **Linux smoke re-run** (GitHub Codespaces or any Linux x86-64 host with Docker; the container cannot see `/tmp` under docker-in-docker, so output stays inside the repository):
+
+```bash
+python docker/build.py                                                   # image extprobe-local:v3
+bash evaluation/reproducibility/linux_smoke_run.sh BUNDLE_DIR            # BUNDLE_DIR/expected.csv + BUNDLE_DIR/samples/F1.crx ... U5.crx; canary needs no file
+python evaluation/reproducibility/linux_smoke_compare.py BUNDLE_DIR/expected.csv extprobe-out/linux_smoke/results.csv
+```
+
+  Output goes to `extprobe-out/linux_smoke/` (`OUT`, `IMAGE`, `PYTHON` and `LABELS` can be set; see the header of the script). **The 10 `.crx` files are not distributed** (no packages are published): obtain the same packages separately. The sha256 of every package of the held-out benign set is in `evaluation/manifests/samples_manifest_benign_test.csv`; the mapping from the labels F1-F5 and U1-U5 to those packages (`expected.csv`, which also holds the expected scores) is not published and is available from the authors. Without the packages, `LABELS=canary` still checks the canary.
 - Not covered: the MADWeb malware test traces, and re-running the sandbox on the dev, set A / B or probe samples (only the 11 smoke runs).
