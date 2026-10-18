@@ -1,6 +1,7 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "ExtProbe"
+title: "ExtProbe: Pre-Installation Behavior Analysis of Chrome Extensions with Attributable Runtime Evidence"
+version: "1.0-saner"
 type: software
 abstract: >-
   ExtProbe is an open-source dynamic-analysis tool for Chrome Manifest V3
