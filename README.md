@@ -1,5 +1,7 @@
 # ExtProbe
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23449077.svg)](https://doi.org/10.5281/zenodo.23449077)
+
 **ExtProbe: pre-installation behavior analysis of Chrome extensions with attributable runtime evidence.**
 
 Research prototype accompanying a SANER 2027 tool-demo submission. Demo video: (available before submission).
@@ -218,6 +220,13 @@ PROVENANCE/      frozen-file list and criteria history; PROVENANCE.md explains t
 ## Reproducing the paper
 
 See [REPRODUCE.md](REPRODUCE.md). The quick checks need no Docker: `python -m pytest -q`, `extprobe verify-freeze`, `python evaluation/v2/check_paper_numbers.py --precomputed`. Re-scoring the archived traces reproduces every reported score and flag exactly; see [evaluation/reproducibility.md](evaluation/reproducibility.md).
+
+## Archive and data
+
+- Software (this release): https://doi.org/10.5281/zenodo.23449077 (tag `v1.0-saner`)
+- Archived traces (1,319; reported subset restricted): Zenodo DOIs will be added here.
+
+The trace records hold redacted `events.json` traces (and `events_probe.json` for the probe runs) that `extprobe score-v3` and `score-v31` re-score without Docker; each record has its own README. The reported subset is released only on request.
 
 ## Limitations
 
