@@ -2,9 +2,9 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23449077.svg)](https://doi.org/10.5281/zenodo.23449077)
 
-**ExtProbe: pre-installation behavior analysis of Chrome extensions with attributable runtime evidence.**
+**ExtProbe: a sandbox for inspecting Chrome extension behavior before installation.**
 
-Research prototype accompanying a SANER 2027 tool-demo submission. Demo video: (available before submission).
+Research prototype accompanying a SANER 2027 tool-demo submission. Demo video: https://youtu.be/vBHNPCh5fcg
 
 ## For reviewers: 10-minute check
 
@@ -16,7 +16,7 @@ Three ways to run it, in order of preference. The check is the same on all of th
 | **2. Local x86_64 machine** | Windows, Linux or Intel Mac with Docker, Git and Python 3.11+. Tested on Windows 11 with Docker Desktop. |
 | **3. Apple Silicon (experimental)** | M1 and later. Runs the amd64 image under emulation; untested by the authors. |
 
-**Path 1: Codespaces.** On the repository page choose **Code > Codespaces > Create codespace on main** (the repository is private: use a GitHub account that has access). Wait for the setup to finish: it installs the CLI with `pip install -e ".[dev]"` and starts Docker (docker-in-docker; the devcontainer asks for 4 CPUs and 8 GB). Then do steps (b) and (c) in the terminal.
+**Path 1: Codespaces.** On the repository page choose **Code > Codespaces > Create codespace on main**. Wait for the setup to finish: it installs the CLI with `pip install -e ".[dev]"` and starts Docker (docker-in-docker; the devcontainer asks for 4 CPUs and 8 GB). Then do steps (b) and (c) in the terminal.
 
 **Path 2: local machine.**
 
@@ -111,7 +111,7 @@ pip install -e .                         # editable: the CLI reads scoring/, rep
 
 **Get the sandbox image.** Choose one:
 
-- **Option A: the published frozen image (exact reproduction).** A registry image will be published before submission. Until then, use Option B, or ask the authors for a pre-built image file (`docker load -i extprobe-sandbox-v3.tar`). `extprobe analyze` checks that a frozen image's id matches the one recorded in `docs/v3/IMAGE.md`.
+- **Option A: the published frozen image (exact reproduction).** The frozen image is available from the authors on request as a file (`docker load -i extprobe-sandbox-v3.tar`); Option B gives functionally equivalent results. `extprobe analyze` checks that a frozen image's id matches the one recorded in `docs/v3/IMAGE.md`.
 - **Option B: build from source (functionally equivalent, different image id).**
   ```bash
   python docker/build.py                 # builds extprobe-local:base, :v3 and :v3.1-probe
@@ -134,15 +134,20 @@ If the `extprobe` command is not on your PATH, use `python -m extprobe analyze .
 2. Download its `.crx` from Google's own update service, the endpoint Chrome itself uses (no third-party download site). This only downloads the file; nothing is installed.
    ```bash
    EXT_ID=abcdefghijklmnopabcdefghijklmnop          # replace with the id
-   curl -L -o ext.crx "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D${EXT_ID}%26uc"
+   curl -L -o "${EXT_ID}.crx" "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D${EXT_ID}%26uc"
    ```
-   PowerShell: `$id = "abcdefghijklmnopabcdefghijklmnop"; Invoke-WebRequest "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D$id%26uc" -OutFile ext.crx`. Check the store's terms for your use. An already unpacked extension folder (with `manifest.json`) works as well.
+   PowerShell: `$id = "abcdefghijklmnopabcdefghijklmnop"; Invoke-WebRequest "https://clients2.google.com/service/update2/crx?response=redirect&prodversion=153.0&acceptformat=crx2,crx3&x=id%3D$id%26uc" -OutFile "$id.crx"`. Check the store's terms for your use. An already unpacked extension folder (with `manifest.json`) works as well.
+
+   The file name is up to you; the report records the input file name and its SHA-256, so naming the file after the store id keeps reports traceable. Reusing the same file name or --out folder overwrites the previous run.
 3. Analyze it (keep `--out` inside your working folder; add `--platform linux/amd64` on Apple Silicon):
    ```bash
-   python -m extprobe analyze ext.crx --image extprobe-local:v3 --out out/       # Option B image; omit --image with the frozen image
+   python -m extprobe analyze "${EXT_ID}.crx" --image extprobe-local:v3 --out "out-${EXT_ID}/"       # Option B image; omit --image with the frozen image
    ```
+   PowerShell: `python -m extprobe analyze "$id.crx" --image extprobe-local:v3 --out "out-$id"`.
 
-Only Manifest V3 extensions are supported. Treat the `.crx` as untrusted: never open it outside the sandbox. **Most benign extensions show "No notable behavior observed"; that is the expected result.** A "Review suggested" or "Flagged for review" level means "look at the evidence", not "malicious": on the held-out benign set 17 of 192 extensions were flagged (see [Evaluation summary](#evaluation-summary)).
+   Then open `out-<id>/report.html` in a browser (in Codespaces, see the note under the 10-minute check).
+
+Only Manifest V3 extensions are supported: for a Manifest V2 extension Chrome refuses to load the package, and `extprobe analyze` stops with `extprobe analyze: The sandbox could not analyze this extension: load failed: extension_load_failed: Cannot install extension because it uses an unsupported manifest version.` followed by a pointer to `docs/TROUBLESHOOTING.md` (the text after `extension_load_failed:` is Chrome's own message; the command has no separate Manifest V2 check). Treat the `.crx` as untrusted: never open it outside the sandbox. **Most benign extensions show "No notable behavior observed"; that is the expected result.** A "Review suggested" or "Flagged for review" level means "look at the evidence", not "malicious": on the held-out benign set 17 of 192 extensions were flagged (see [Evaluation summary](#evaluation-summary)).
 
 ## Reading the report
 
