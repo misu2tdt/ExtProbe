@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
-title: "ExtProbe: Pre-Installation Behavior Analysis of Chrome Extensions with Attributable Runtime Evidence"
+title: "ExtProbe: A Sandbox for Inspecting Chrome Extension Behavior Before Installation"
 version: "1.0-saner"
 type: software
 abstract: >-

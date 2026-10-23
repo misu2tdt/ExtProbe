@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "extprobe"
 version = "0.1.0"
-description = "ExtProbe: pre-installation behavior analysis of Chrome extensions with attributable runtime evidence."
+description = "A sandbox for inspecting Chrome extension behavior before installation"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }

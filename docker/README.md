@@ -4,7 +4,7 @@ Three images, layered: the base image (v2 core), v3 on top of it, and v3.1-probe
 
 ## Option A: the published frozen image (recommended, exact reproduction)
 
-A registry image will be published before submission; until then use Option B, or ask the authors for a pre-built image file (`docker load -i extprobe-sandbox-v3.tar`). It provides `extprobe-sandbox:v3` and `extprobe-sandbox:v3.1-probe`, the images the evaluations were run with. Their ids are recorded in `PROVENANCE.md` and in `docs/v3/IMAGE.md` / `evaluation/probe/IMAGE.md`.
+The frozen image is available from the authors on request as a file (`docker load -i extprobe-sandbox-v3.tar`); building from source (Option B) gives functionally equivalent results. It provides `extprobe-sandbox:v3` and `extprobe-sandbox:v3.1-probe`, the images the evaluations were run with. Their ids are recorded in `PROVENANCE.md` and in `docs/v3/IMAGE.md` / `evaluation/probe/IMAGE.md`.
 
 ## Option B: build from source (any OS)
 

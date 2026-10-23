@@ -82,7 +82,7 @@ ExtProbe is for analysts, store or enterprise reviewers and researchers who want
 
 | | |
 |---|---|
-| Docker | Docker Engine or Docker Desktop with **Linux containers**; tested with Docker 27.4.0 on Windows 11 (Docker Desktop, WSL 2 backend). The daemon must be running, and on Linux your user must be allowed to run `docker` without `sudo`. Docker needs internet access to build (base image from `mcr.microsoft.com`, apt and pip packages) or to pull the image. |
+| Docker | Docker Engine or Docker Desktop with **Linux containers**; tested with Docker 27.4.0 on Windows 11 (Docker Desktop, WSL 2 backend). The daemon must be running, and on Linux your user must be allowed to run `docker` without `sudo`. Docker needs internet access to build (base image from `mcr.microsoft.com`, apt and pip packages); Option A instead loads the frozen image from a file obtained from the authors. |
 | Git | to clone the repository. |
 | Python | 3.11 or newer, with `pip` (3.13 and 3.11 were used for the tests). Installing needs internet once, for the build backend (`setuptools`). ExtProbe itself has no Python dependencies; `pytest` is needed only to run the tests (3 tests are skipped unless Playwright is installed). |
 | CPU | x86-64 (`linux/amd64`); the frozen images are amd64. Apple Silicon: see the platform notes below. |
